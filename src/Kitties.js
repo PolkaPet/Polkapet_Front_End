@@ -6,6 +6,8 @@ import { TxButton } from './substrate-lib/components'
 
 import KittyCards from './KittyCards'
 
+
+
 const parseKitty = ({ dna, price, gender, owner }) => ({
   dna,
   price: price.toJSON(),
@@ -13,18 +15,18 @@ const parseKitty = ({ dna, price, gender, owner }) => ({
   owner: owner.toJSON(),
 })
 
-function toHexString(byteArray) {
-  var s = '0x'
-  byteArray.forEach(function (byte) {
-    s += ('0' + (byte & 0xff).toString(16)).slice(-2)
-  })
-  return s
-}
+// Construct a Kitty ID from storage key
+const convertToKittyHash = entry =>
+  `0x${entry[0].toJSON().slice(-64)}`;
+
+
 
 export default function Kitties(props) {
   const { api, keyring } = useSubstrateState()
   const [kitties, setKitties] = useState([])
   const [status, setStatus] = useState('')
+
+
 
   const subscribeCount = () => {
     let unsub = null
@@ -35,7 +37,7 @@ export default function Kitties(props) {
         const entries = await api.query.kittiesModule.kitties.entries()
         const kittiesMap = entries.map(entry => {
           return {
-            id: toHexString(entry[0].slice(-32)),
+            id: convertToKittyHash(entry),
             ...parseKitty(entry[1].unwrap()),
           }
         })

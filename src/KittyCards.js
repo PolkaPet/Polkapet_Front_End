@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {  useState } from 'react'
 import {
   Button,
   Card,
@@ -25,6 +25,7 @@ const TransferModal = props => {
   }
 
   const confirmAndClose = unsub => {
+    console.log(formValue.target)
     setOpen(false)
     if (unsub && typeof unsub === 'function') unsub()
   }
@@ -78,11 +79,7 @@ const TransferModal = props => {
 const SetPrice = props => {
   const { kitty, setStatus } = props
   const [open, setOpen] = React.useState(false)
-  const [formValue, setFormValue] = React.useState({})
-
-  const formChange = key => (ev, el) => {
-    setFormValue({ ...formValue, [key]: el.value })
-  }
+  const [formValue, setFormValue] = useState(0)
 
   const confirmAndClose = unsub => {
     setOpen(false)
@@ -108,7 +105,8 @@ const SetPrice = props => {
             fluid
             label="Price"
             placeholder="Enter Price"
-            onChange={formChange('target')}
+            type="number"
+            onChange={(_, { value }) => setFormValue(value)}
           />
         </Form>
       </Modal.Content>
@@ -124,7 +122,7 @@ const SetPrice = props => {
           attrs={{
             palletRpc: 'kittiesModule',
             callable: 'setPrice',
-            inputParams: [kitty.id, formValue.target],
+            inputParams: [kitty.id, formValue],
             paramFields: [true, true],
           }}
         />
@@ -187,11 +185,64 @@ const BuyKitty = props => {
   )
 }
 
+// --- Buy Kitty ---
+
+const RemovePrice = props => {
+  const { kitty, setStatus } = props
+  const [open, setOpen] = React.useState(false)
+
+  const confirmAndClose = unsub => {
+    setOpen(false)
+    if (unsub && typeof unsub === 'function') unsub()
+  }
+
+  if (!kitty.price) {
+    return <></>
+  }
+
+  return (
+    <Modal
+      onClose={() => setOpen(false)}
+      onOpen={() => setOpen(true)}
+      open={open}
+      trigger={
+        <Button basic color="green">
+          Remove Price
+        </Button>
+      }
+    >
+      <Modal.Header>Remove Price</Modal.Header>
+      <Modal.Content>
+        <Form>
+          <Form.Input fluid label="Kitty ID" readOnly value={kitty.id} />
+        </Form>
+      </Modal.Content>
+      <Modal.Actions>
+        <Button basic color="grey" onClick={() => setOpen(false)}>
+          Cancel
+        </Button>
+        <TxButton
+          label="Remove Price"
+          type="SIGNED-TX"
+          setStatus={setStatus}
+          onClick={confirmAndClose}
+          attrs={{
+            palletRpc: 'kittiesModule',
+            callable: 'removePrice',
+            inputParams: [kitty.id],
+            paramFields: [true],
+          }}
+        />
+      </Modal.Actions>
+    </Modal>
+  )
+}
+
 // --- About Kitty Card ---
 
 const KittyCard = props => {
   const { kitty, setStatus } = props
-  const { dna = null, owner = null, gender = null, price = null } = kitty
+  const {id = null, dna = null, owner = null, gender = null, price = null } = kitty
   const displayDna = dna && dna.toJSON()
   const { currentAccount } = useSubstrateState()
   const isSelf = currentAccount.address === kitty.owner
@@ -209,6 +260,7 @@ const KittyCard = props => {
           DNA: {displayDna}
         </Card.Meta>
         <Card.Description>
+          <p style={{ overflowWrap: 'break-word' }}>kitti_id: {id}</p>
           <p style={{ overflowWrap: 'break-word' }}>Gender: {gender}</p>
           <p style={{ overflowWrap: 'break-word' }}>Owner: {owner}</p>
           <p style={{ overflowWrap: 'break-word' }}>
@@ -220,6 +272,7 @@ const KittyCard = props => {
         {owner === currentAccount.address ? (
           <>
             <SetPrice kitty={kitty} setStatus={setStatus} />
+            <RemovePrice kitty={kitty} setStatus={setStatus} />
             <TransferModal kitty={kitty} setStatus={setStatus} />
           </>
         ) : (

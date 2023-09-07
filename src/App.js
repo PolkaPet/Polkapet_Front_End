@@ -22,9 +22,11 @@ import NodeInfo from './NodeInfo'
 import TemplateModule from './TemplateModule'
 import Transfer from './Transfer'
 import Upgrade from './Upgrade'
+import Kitties from './Kitties';
 
 function Main() {
   const { apiState, apiError, keyringState } = useSubstrateState()
+  
 
   const loader = text => (
     <Dimmer active>
@@ -83,6 +85,9 @@ function Main() {
           </Grid.Row>
           <Grid.Row>
             <TemplateModule />
+          </Grid.Row>
+          <Grid.Row>
+            <Kitties />
           </Grid.Row>
         </Grid>
       </Container>
