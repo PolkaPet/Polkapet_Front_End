@@ -41,6 +41,20 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
+    <canvas id="canvas" width="640" height="480" style="display: none;"></canvas>
+    <button id="loadWasmButton" style="display: none;">Load Wasm</button>
+    <script src="./flappy.js"></script>
+    <script>
+      window.addEventListener("load", async () => {
+        // Attach an event listener to the button
+        const loadWasmButton = document.getElementById("loadWasmButton");
+        loadWasmButton.addEventListener("click", async () => {
+          await wasm_bindgen("./flappy_bg.wasm");
+          // You can perform additional actions after loading Wasm here
+        });
+      });
+    </script>
+
     <a
       class="github-fork-ribbon right-bottom fixed"
       target="_blank"

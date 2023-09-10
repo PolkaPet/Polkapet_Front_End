@@ -5,9 +5,7 @@ import {
   Menu,
   Button,
   Dropdown,
-  Container,
   Icon,
-  Image,
   Label,
 } from 'semantic-ui-react'
 
@@ -50,23 +48,7 @@ function Main(props) {
   }
 
   return (
-    <Menu
-      attached="top"
-      tabular
-      style={{
-        backgroundColor: '#fff',
-        borderColor: '#fff',
-        paddingTop: '1em',
-        paddingBottom: '1em',
-      }}
-    >
-      <Container>
-        <Menu.Menu>
-          <Image
-            src={`${process.env.PUBLIC_URL}/assets/substrate-logo.png`}
-            size="mini"
-          />
-        </Menu.Menu>
+
         <Menu.Menu position="right" style={{ alignItems: 'center' }}>
           {!currentAccount ? (
             <span>
@@ -103,8 +85,6 @@ function Main(props) {
           />
           <BalanceAnnotation />
         </Menu.Menu>
-      </Container>
-    </Menu>
   )
 }
 
