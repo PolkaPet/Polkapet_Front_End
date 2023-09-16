@@ -12,7 +12,7 @@ import NodeInfo from './NodeInfo'
 import TemplateModule from './TemplateModule'
 import Transfer from './Transfer'
 import Upgrade from './Upgrade'
-import Kitties from './Pokapets'
+import Polkapets from './Polkapets';
 import './styles/blockchaininfo.css'
 
 function Main() {
@@ -41,7 +41,7 @@ function Main() {
             <TemplateModule />
           </Grid.Row>
           <Grid.Row>
-            <Kitties />
+            <Polkapets />
           </Grid.Row>
         </Grid>
       </Container>

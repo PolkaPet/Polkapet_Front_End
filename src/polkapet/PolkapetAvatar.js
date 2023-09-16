@@ -35,15 +35,10 @@ const dnaToAttributes = dna => {
   }
 }
 
-const KittyAvatar = props => {
-  const outerStyle = { height: '160px', position: 'relative', width: '50%' }
-  const innerStyle = {
-    height: '150px',
-    position: 'absolute',
-    top: '3%',
-    left: '50%',
-  }
-  const { dna } = props
+const PolkapetAvatar = props => {
+  const outerStyle = { height: '160px', position: 'relative', width: '50%' };
+  const innerStyle = { height: '150px', position: 'absolute', top: '3%', left: '50%' };
+  const { dna } = props;
 
   if (!dna) return null
 
@@ -59,4 +54,4 @@ const KittyAvatar = props => {
   )
 }
 
-export default KittyAvatar
+export default PolkapetAvatar;
