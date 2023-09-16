@@ -1,4 +1,4 @@
-import React, {  useState } from 'react'
+import React, { useState } from 'react'
 import {
   Button,
   Card,
@@ -242,7 +242,13 @@ const RemovePrice = props => {
 
 const KittyCard = props => {
   const { kitty, setStatus } = props
-  const {id = null, dna = null, owner = null, gender = null, price = null } = kitty
+  const {
+    id = null,
+    dna = null,
+    owner = null,
+    gender = null,
+    price = null,
+  } = kitty
   const displayDna = dna && dna.toJSON()
   const { currentAccount } = useSubstrateState()
   const isSelf = currentAccount.address === kitty.owner

@@ -1,13 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 
-import {
-  Menu,
-  Button,
-  Dropdown,
-  Icon,
-  Label,
-} from 'semantic-ui-react'
+import { Menu, Button, Dropdown, Icon, Label } from 'semantic-ui-react'
 
 import { useSubstrate, useSubstrateState } from './substrate-lib'
 
@@ -48,43 +42,42 @@ function Main(props) {
   }
 
   return (
-
-        <Menu.Menu position="right" style={{ alignItems: 'center' }}>
-          {!currentAccount ? (
-            <span>
-              Create an account with Polkadot-JS Extension (
-              <a target="_blank" rel="noreferrer" href={CHROME_EXT_URL}>
-                Chrome
-              </a>
-              ,&nbsp;
-              <a target="_blank" rel="noreferrer" href={FIREFOX_ADDON_URL}>
-                Firefox
-              </a>
-              )&nbsp;
-            </span>
-          ) : null}
-          <CopyToClipboard text={acctAddr(currentAccount)}>
-            <Button
-              basic
-              circular
-              size="large"
-              icon="user"
-              color={currentAccount ? 'green' : 'red'}
-            />
-          </CopyToClipboard>
-          <Dropdown
-            search
-            selection
-            clearable
-            placeholder="Select an account"
-            options={keyringOptions}
-            onChange={(_, dropdown) => {
-              onChange(dropdown.value)
-            }}
-            value={acctAddr(currentAccount)}
-          />
-          <BalanceAnnotation />
-        </Menu.Menu>
+    <Menu.Menu position="right" style={{ alignItems: 'center' }}>
+      {!currentAccount ? (
+        <span>
+          Create an account with Polkadot-JS Extension (
+          <a target="_blank" rel="noreferrer" href={CHROME_EXT_URL}>
+            Chrome
+          </a>
+          ,&nbsp;
+          <a target="_blank" rel="noreferrer" href={FIREFOX_ADDON_URL}>
+            Firefox
+          </a>
+          )&nbsp;
+        </span>
+      ) : null}
+      <CopyToClipboard text={acctAddr(currentAccount)}>
+        <Button
+          basic
+          circular
+          size="large"
+          icon="user"
+          color={currentAccount ? 'green' : 'red'}
+        />
+      </CopyToClipboard>
+      <Dropdown
+        search
+        selection
+        clearable
+        placeholder="Select an account"
+        options={keyringOptions}
+        onChange={(_, dropdown) => {
+          onChange(dropdown.value)
+        }}
+        value={acctAddr(currentAccount)}
+      />
+      <BalanceAnnotation />
+    </Menu.Menu>
   )
 }
 

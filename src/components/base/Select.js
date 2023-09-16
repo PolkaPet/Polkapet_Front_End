@@ -1,47 +1,59 @@
-import React,{useState,createRef} from "react";
-import "../../styles/base/Select.css";
+import React, { useState, createRef } from 'react'
+import '../../styles/base/Select.css'
 
-const Select = ({items,onChange}) => {
+const Select = ({ items, onChange }) => {
+  const [isOpen, setOpen] = useState(false)
+  const [value, setValue] = useState(null)
 
-  const [isOpen, setOpen] = useState(false);
-  const [value, setValue] = useState(null);
+  const optionRef = createRef()
 
-  const optionRef = createRef();
-
-  const setSelect = (value) => {
-    setValue(value);
-    onClick();
-    onChange(value);
+  const setSelect = value => {
+    setValue(value)
+    onClick()
+    onChange(value)
   }
 
-
   const onClick = () => {
-    if(!isOpen){
-      optionRef.current.style.display = 'block';
-      setOpen(!isOpen);
-    }else{
-      optionRef.current.style.display = 'none';
-      setOpen(!isOpen);
+    if (!isOpen) {
+      optionRef.current.style.display = 'block'
+      setOpen(!isOpen)
+    } else {
+      optionRef.current.style.display = 'none'
+      setOpen(!isOpen)
     }
   }
 
-
   return (
     <div className="dropdown">
-      <button className="dropdown-toggle" type="button" aria-haspopup="true" onClick={onClick}>
-        {value ? value : "Select from Options"}
+      <button
+        className="dropdown-toggle"
+        type="button"
+        aria-haspopup="true"
+        onClick={onClick}
+      >
+        {value ? value : 'Select from Options'}
       </button>
-      <ul className="dropdown-menu" role="listbox" aria-expanded="false" ref={optionRef} >
-        
-        {items && items.map((item,index)=>(
-            <li role="option" tabIndex={index} key={index} onClick={() => setSelect(item)} >
-            {item}
-          </li>
-        ))}
-        
+      <ul
+        className="dropdown-menu"
+        role="listbox"
+        aria-expanded="false"
+        ref={optionRef}
+      >
+        {items &&
+          items.map((item, index) => (
+            // eslint-disable-next-line jsx-a11y/role-has-required-aria-props
+            <li
+              role="option"
+              tabIndex={index}
+              key={index}
+              onClick={() => setSelect(item)}
+            >
+              {item}
+            </li>
+          ))}
       </ul>
     </div>
-  );
-};
+  )
+}
 
-export default Select;
+export default Select

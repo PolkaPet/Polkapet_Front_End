@@ -1,21 +1,21 @@
-import React, { useState, useRef, useEffect } from "react";
-import Card from "./Card";
-import AccordionHeader from "./AccordionHeader";
+import React, { useState, useRef, useEffect } from 'react'
+import Card from './Card'
+import AccordionHeader from './AccordionHeader'
 
-const Accordion = ({child }) => {
-  const [isOpen, setOpen] = useState(false);
-  const accordionRef = useRef();
+const Accordion = ({ child }) => {
+  const [isOpen, setOpen] = useState(false)
+  const accordionRef = useRef()
 
-  useEffect(() => accordionRef.current.style.minHeight = '50px',[]);
+  useEffect(() => (accordionRef.current.style.minHeight = '50px'), [])
 
   const open = () => {
     if (!isOpen) {
-      setOpen(!isOpen);
-      console.log(child);
-      accordionRef.current.style.height = "auto";
+      setOpen(!isOpen)
+      console.log(child)
+      accordionRef.current.style.height = 'auto'
     } else {
-      setOpen(!isOpen);
-      accordionRef.current.style.height = "50px";
+      setOpen(!isOpen)
+      accordionRef.current.style.height = '50px'
     }
   }
 
@@ -35,7 +35,7 @@ const Accordion = ({child }) => {
         </>
       }
     />
-  );
-};
+  )
+}
 
-export default Accordion;
+export default Accordion

@@ -1,17 +1,17 @@
-import React from "react";
-import "../styles/Hero.css";
-import { useNavigate } from "react-router-dom";
-import Header from "./Header";
+import React from 'react'
+import '../styles/Hero.css'
+import { useNavigate } from 'react-router-dom'
+import Header from './Header'
 
 const Hero = () => {
-  let navigate = useNavigate();
+  let navigate = useNavigate()
 
   const goExplore = () => {
-    navigate("/explore");
-  };
+    navigate('/explore')
+  }
   const goCreate = () => {
-    navigate("/create");
-  };
+    navigate('/create')
+  }
 
   return (
     <div id="hero">
@@ -27,10 +27,12 @@ const Hero = () => {
         <button id="explore" onClick={goExplore}>
           Explore
         </button>
-        <button id="create" onClick={goCreate}>Create</button>
+        <button id="create" onClick={goCreate}>
+          Create
+        </button>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Hero;
+export default Hero

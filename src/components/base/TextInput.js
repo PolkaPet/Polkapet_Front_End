@@ -1,17 +1,23 @@
-import React from "react";
-import '../../styles/base/TextInput.css';
+import React from 'react'
+import '../../styles/base/TextInput.css'
 
 //Base Input Component
 //Usage: <Input width='550px' height='30px' />
 
-const TextInput = ({width,height, placeholder='default input', icon,type}) => {
+const TextInput = ({
+  width,
+  height,
+  placeholder = 'default input',
+  icon,
+  type,
+}) => {
   return (
     <div className="search-wrapper">
       <div
         className="search-container"
         style={{
-          width:`${width}`,
-          height:`${height}`,
+          width: `${width}`,
+          height: `${height}`,
           background: `radial-gradient(
                     circle,
                     rgba(255, 255, 255, 0.05) 0%,
@@ -20,11 +26,11 @@ const TextInput = ({width,height, placeholder='default input', icon,type}) => {
                 )`,
         }}
       >
-        <input id="search" placeholder={placeholder} type={type}/>
+        <input id="search" placeholder={placeholder} type={type} />
         {icon}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default TextInput;
+export default TextInput

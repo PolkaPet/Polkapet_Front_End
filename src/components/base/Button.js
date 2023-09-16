@@ -1,16 +1,16 @@
-import React, { useState } from "react";
-import "../../styles/base/Button.css";
+import React, { useState } from 'react'
+import '../../styles/base/Button.css'
 
 const Button = ({
-  width = "80px",
-  height = "30px",
-  color = "#ffffff",
+  width = '80px',
+  height = '30px',
+  color = '#ffffff',
   onClick,
-  textColor = "black",
+  textColor = 'black',
   textContent = 'Button',
-  child
+  child,
 }) => {
-  const [isHover, setHover] = useState(false);
+  const [isHover, setHover] = useState(false)
 
   return (
     <button
@@ -23,13 +23,13 @@ const Button = ({
         height: `${height}`,
         color: `${isHover ? textColor : color}`,
         border: `1px solid ${color}`,
-        transition: "background-color .5 ease-in-out",
-        backgroundColor: isHover ? color : "transparent",
+        transition: 'background-color .5 ease-in-out',
+        backgroundColor: isHover ? color : 'transparent',
       }}
     >
       {child ? child : textContent}
     </button>
-  );
-};
+  )
+}
 
-export default Button;
+export default Button

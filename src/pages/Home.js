@@ -1,29 +1,18 @@
-
 import React, { createRef } from 'react'
-import Hero from "../components/Hero";
-import "../styles/Home.css";
-import CardList from "../components/CardList";
-import { hotDropsData } from "../constants/MockupData";
-import Pokapets from "../Pokapets";
-import {  useSubstrateState } from '../substrate-lib'
-import {
-  Dimmer,
-  Loader,
-  Grid,
-  Message,
-} from 'semantic-ui-react'
-
-
-
-
+import Hero from '../components/Hero'
+import '../styles/Home.css'
+import CardList from '../components/CardList'
+import { hotDropsData } from '../constants/MockupData'
+import Pokapets from '../Pokapets'
+import { useSubstrateState } from '../substrate-lib'
+import { Dimmer, Loader, Grid, Message } from 'semantic-ui-react'
 
 const Home = () => {
-  const loadWasmButton = document.getElementById('loadWasmButton');
-const loadcanvas = document.getElementById('canvas');
-loadWasmButton.style.display = "none";
-loadcanvas.style.display = "none";
+  const loadWasmButton = document.getElementById('loadWasmButton')
+  const loadcanvas = document.getElementById('canvas')
+  loadWasmButton.style.display = 'none'
+  loadcanvas.style.display = 'none'
   const { apiState, apiError, keyringState } = useSubstrateState()
-  
 
   const loader = text => (
     <Dimmer active>
@@ -56,16 +45,9 @@ loadcanvas.style.display = "none";
 
   const contextRef = createRef()
 
-
-
   return (
-    <div id="home"  ref={contextRef}>
-    
-      
+    <div id="home" ref={contextRef}>
       <Hero list={hotDropsData} />
-       
-       
-      
 
       <p id="card-list-header-text"> Hot Drops </p>
       <div id="list-container">
@@ -73,7 +55,7 @@ loadcanvas.style.display = "none";
       </div>
       <Pokapets />
     </div>
-  );
-};
+  )
+}
 
-export default Home;
+export default Home

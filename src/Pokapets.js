@@ -5,8 +5,6 @@ import { useSubstrateState } from './substrate-lib'
 
 import KittyCards from './pokapet/KittyCards'
 
-
-
 const parseKitty = ({ dna, price, gender, owner }) => ({
   dna,
   price: price.toJSON(),
@@ -15,10 +13,7 @@ const parseKitty = ({ dna, price, gender, owner }) => ({
 })
 
 // Construct a Kitty ID from storage key
-const convertToKittyHash = entry =>
-  `0x${entry[0].toJSON().slice(-64)}`;
-
-
+const convertToKittyHash = entry => `0x${entry[0].toJSON().slice(-64)}`
 
 export default function Pokapets(props) {
   const { api, keyring } = useSubstrateState()
@@ -28,7 +23,7 @@ export default function Pokapets(props) {
     let unsub = null
 
     const asyncFetch = async () => {
-      unsub = await api.query.kittiesModule.kittyCnt(async count => {
+      unsub = await api.query.kittiesModule?.kittyCnt(async count => {
         // Fetch all kitty keys
         const entries = await api.query.kittiesModule.kitties.entries()
         const kittiesMap = entries.map(entry => {
@@ -52,9 +47,8 @@ export default function Pokapets(props) {
 
   return (
     <Grid.Column width={16}>
-      <h1 style={{color:"white"}}>Pokapets</h1>
-      <KittyCards kitties={kitties}  />
-
+      <h1 style={{ color: 'white' }}>Pokapets</h1>
+      <KittyCards kitties={kitties} />
     </Grid.Column>
   )
 }

@@ -1,15 +1,7 @@
 import React from 'react'
-import {
-  Container,
-
-  Grid,
-
-} from 'semantic-ui-react'
-
-
+import { Container, Grid } from 'semantic-ui-react'
 
 import { DeveloperConsole } from './substrate-lib/components'
-
 
 import Balances from './Balances'
 import BlockNumber from './BlockNumber'
@@ -20,16 +12,12 @@ import NodeInfo from './NodeInfo'
 import TemplateModule from './TemplateModule'
 import Transfer from './Transfer'
 import Upgrade from './Upgrade'
-import Kitties from './Pokapets';
+import Kitties from './Pokapets'
 import './styles/blockchaininfo.css'
 
 function Main() {
-
-
-
   return (
-    <div style={{marginTop: "90px", backgroundColor: "white"}} >
-
+    <div style={{ marginTop: '90px', backgroundColor: 'white' }}>
       <Container>
         <Grid stackable columns="equal">
           <Grid.Row stretched>
@@ -63,9 +51,5 @@ function Main() {
 }
 
 export default function BlockchainInfo() {
-  return (
-   
-      <Main />
-
-  )
+  return <Main />
 }

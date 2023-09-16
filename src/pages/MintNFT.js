@@ -1,23 +1,14 @@
-
 import React, { createRef } from 'react'
-import "../styles/Home.css";
-import Pokapets from "../Pokapets";
-import MintPokapet from "../pokapet/MintPokapet"
-import {  useSubstrateState } from '../substrate-lib'
-import {
-  Dimmer,
-  Loader,
-  Grid,
-  Message,
-} from 'semantic-ui-react'
+import '../styles/Home.css'
+import Pokapets from '../Pokapets'
+import MintPokapet from '../pokapet/MintPokapet'
+import { useSubstrateState } from '../substrate-lib'
+import { Dimmer, Loader, Grid, Message } from 'semantic-ui-react'
 
-import Header from '../components/Header';
-
-
+import Header from '../components/Header'
 
 const Home = () => {
   const { apiState, apiError, keyringState } = useSubstrateState()
-  
 
   const loader = text => (
     <Dimmer active>
@@ -50,20 +41,16 @@ const Home = () => {
 
   const contextRef = createRef()
 
-
-
   return (
-    <div id="home"  ref={contextRef}>
-    
-        <Header />
-        <div style={{marginTop:"90px"}}>
-        <  MintPokapet />
-        </div>
-    
-      <Pokapets />
-      
-    </div>
-  );
-};
+    <div id="home" ref={contextRef}>
+      <Header />
+      <div style={{ marginTop: '90px' }}>
+        <MintPokapet />
+      </div>
 
-export default Home;
+      <Pokapets />
+    </div>
+  )
+}
+
+export default Home

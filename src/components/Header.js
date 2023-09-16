@@ -1,20 +1,14 @@
 import React, { createRef } from 'react'
 
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom'
 
 import 'semantic-ui-css/semantic.min.css'
-import {
-  Dimmer,
-  Loader,
-  Grid,
-  Message,
-} from 'semantic-ui-react'
-import {  useSubstrateState } from '../substrate-lib'
+import { Dimmer, Loader, Grid, Message } from 'semantic-ui-react'
+import { useSubstrateState } from '../substrate-lib'
 import AccountSelector from '../AccountSelector'
 
 function Main() {
   const { apiState, apiError, keyringState } = useSubstrateState()
-  
 
   const loader = text => (
     <Dimmer active>
@@ -48,35 +42,29 @@ function Main() {
   const contextRef = createRef()
 
   return (
-    <div >
-              <div id="header">
-        <Link to='/' id='logo'>Pokapet</Link>
+    <div>
+      <div id="header">
+        <Link to="/" id="logo">
+          Pokapet
+        </Link>
 
         <div id="link-containers">
-          <Link to='/' >Home</Link>
-          <Link to='/mintnft' >MintNFT</Link>
-          <Link to='/game' >Game</Link>
-          <a>Community</a>
-          <a>Q&A</a>
-          <a>White Paper</a>
-          <Link to='/blockchaininfo' >Blockchain Info</Link>
-          
-
+          <Link to="/">Home</Link>
+          <Link to="/mintnft">MintNFT</Link>
+          <Link to="/game">Game</Link>
+          <Link to="/community">Community</Link>
+          <Link to="/qa">Q&A</Link>
+          <Link to="/white-paper">White Paper</Link>
+          <Link to="/blockchaininfo">Blockchain Info</Link>
         </div>
         {/* <div context={contextRef}><AccountSelector /> </div> */}
-         
-        <AccountSelector context={contextRef}/>
-      </div>
-  
 
+        <AccountSelector context={contextRef} />
+      </div>
     </div>
   )
 }
 
 export default function Header() {
-  return (
-   
-      <Main />
-
-  )
+  return <Main />
 }

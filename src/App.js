@@ -1,14 +1,7 @@
 import React, { createRef } from 'react'
-import {
-  Dimmer,
-  Loader,
-  Grid,
-  Message,
-  
-} from 'semantic-ui-react'
+import { Dimmer, Loader, Grid, Message } from 'semantic-ui-react'
 
-
-import {  useSubstrateState } from './substrate-lib'
+import { useSubstrateState } from './substrate-lib'
 import Header from './components/Header'
 
 import BlockchainInfo from './BlockchainInfo'
@@ -16,7 +9,6 @@ import './styles/blockchaininfo.css'
 
 function Main() {
   const { apiState, apiError, keyringState } = useSubstrateState()
-  
 
   const loader = text => (
     <Dimmer active>
@@ -51,23 +43,13 @@ function Main() {
 
   return (
     <div ref={contextRef}>
-   
-          <Header />
+      <Header />
 
-       
-          <BlockchainInfo />
-
-   
-      
-  
+      <BlockchainInfo />
     </div>
   )
 }
 
 export default function App() {
-  return (
-   
-      <Main />
-
-  )
+  return <Main />
 }

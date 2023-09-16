@@ -1,13 +1,13 @@
-import React from "react";
-import "../../styles/base/Card.css";
+import React from 'react'
+import '../../styles/base/Card.css'
 
 const Card = React.forwardRef(
   (
     {
-      width = "250px",
-      height = "300px",
+      width = '250px',
+      height = '300px',
       child,
-      blurColor = "rgba(48,118,234,0.2)",
+      blurColor = 'rgba(48,118,234,0.2)',
       onClick,
     },
     ref
@@ -30,5 +30,5 @@ const Card = React.forwardRef(
       {child}
     </div>
   )
-);
-export default Card;
+)
+export default Card
