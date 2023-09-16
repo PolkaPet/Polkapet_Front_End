@@ -1,8 +1,8 @@
 
 import React, { createRef } from 'react'
 import "../styles/Home.css";
-import Pokapets from "../Pokapets";
-import MintPokapet from "../pokapet/MintPokapet"
+import Polkapets from "../Polkapets";
+import MintPolkapet from "../polkapet/MintPolkapet"
 import {  useSubstrateState } from '../substrate-lib'
 import {
   Dimmer,
@@ -57,10 +57,10 @@ const Home = () => {
     
         <Header />
         <div style={{marginTop:"90px"}}>
-        <  MintPokapet />
+        <  MintPolkapet />
         </div>
     
-      <Pokapets />
+      <Polkapets />
       
     </div>
   );

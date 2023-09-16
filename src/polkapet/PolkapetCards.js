@@ -9,14 +9,14 @@ import {
   Label,
 } from 'semantic-ui-react'
 
-import KittyAvatar from './KittyAvatar'
+import PolkapetAvatar from './PolkapetAvatar'
 import { useSubstrateState } from '../substrate-lib'
 import { TxButton } from '../substrate-lib/components'
 
 // --- Transfer Modal ---
 
 const TransferModal = props => {
-  const { kitty, setStatus } = props
+  const { polkapet, setStatus } = props
   const [open, setOpen] = React.useState(false)
   const [formValue, setFormValue] = React.useState({})
 
@@ -41,10 +41,10 @@ const TransferModal = props => {
         </Button>
       }
     >
-      <Modal.Header>Kitty Transfer</Modal.Header>
+      <Modal.Header>Polkapet Transfer</Modal.Header>
       <Modal.Content>
         <Form>
-          <Form.Input fluid label="Kitty ID" readOnly value={kitty.id} />
+          <Form.Input fluid label="Pet ID" readOnly value={polkapet.id} />
           <Form.Input
             fluid
             label="Receiver"
@@ -63,9 +63,9 @@ const TransferModal = props => {
           setStatus={setStatus}
           onClick={confirmAndClose}
           attrs={{
-            palletRpc: 'kittiesModule',
+            palletRpc: 'polkapetModule',
             callable: 'transfer',
-            inputParams: [formValue.target, kitty.id],
+            inputParams: [formValue.target, polkapet.id],
             paramFields: [true, true],
           }}
         />
@@ -77,7 +77,7 @@ const TransferModal = props => {
 // --- Set Price ---
 
 const SetPrice = props => {
-  const { kitty, setStatus } = props
+  const { polkapet, setStatus } = props
   const [open, setOpen] = React.useState(false)
   const [formValue, setFormValue] = useState(0)
 
@@ -97,10 +97,10 @@ const SetPrice = props => {
         </Button>
       }
     >
-      <Modal.Header>Set Kitty Price</Modal.Header>
+      <Modal.Header>Set Pet Price</Modal.Header>
       <Modal.Content>
         <Form>
-          <Form.Input fluid label="Kitty ID" readOnly value={kitty.id} />
+          <Form.Input fluid label="Pet ID" readOnly value={polkapet.id} />
           <Form.Input
             fluid
             label="Price"
@@ -120,9 +120,9 @@ const SetPrice = props => {
           setStatus={setStatus}
           onClick={confirmAndClose}
           attrs={{
-            palletRpc: 'kittiesModule',
+            palletRpc: 'polkapetModule',
             callable: 'setPrice',
-            inputParams: [kitty.id, formValue],
+            inputParams: [polkapet.id, formValue],
             paramFields: [true, true],
           }}
         />
@@ -131,10 +131,10 @@ const SetPrice = props => {
   )
 }
 
-// --- Buy Kitty ---
+// --- Buy Pet ---
 
-const BuyKitty = props => {
-  const { kitty, setStatus } = props
+const BuyPolkapet = props => {
+  const { polkapet, setStatus } = props
   const [open, setOpen] = React.useState(false)
 
   const confirmAndClose = unsub => {
@@ -142,7 +142,7 @@ const BuyKitty = props => {
     if (unsub && typeof unsub === 'function') unsub()
   }
 
-  if (!kitty.price) {
+  if (!polkapet.price) {
     return <></>
   }
 
@@ -153,15 +153,15 @@ const BuyKitty = props => {
       open={open}
       trigger={
         <Button basic color="green">
-          Buy Kitty
+          Buy Pet
         </Button>
       }
     >
-      <Modal.Header>Buy Kitty</Modal.Header>
+      <Modal.Header>Buy Pet</Modal.Header>
       <Modal.Content>
         <Form>
-          <Form.Input fluid label="Kitty ID" readOnly value={kitty.id} />
-          <Form.Input fluid label="Price" readOnly value={kitty.price} />
+          <Form.Input fluid label="Pet ID" readOnly value={polkapet.id} />
+          <Form.Input fluid label="Price" readOnly value={polkapet.price} />
         </Form>
       </Modal.Content>
       <Modal.Actions>
@@ -169,14 +169,14 @@ const BuyKitty = props => {
           Cancel
         </Button>
         <TxButton
-          label="Buy Kitty"
+          label="Buy Pet"
           type="SIGNED-TX"
           setStatus={setStatus}
           onClick={confirmAndClose}
           attrs={{
-            palletRpc: 'kittiesModule',
-            callable: 'buyKitty',
-            inputParams: [kitty.id, kitty.price],
+            palletRpc: 'polkapetModule',
+            callable: 'buyPolkapet',
+            inputParams: [polkapet.id, polkapet.price],
             paramFields: [true, true],
           }}
         />
@@ -185,67 +185,67 @@ const BuyKitty = props => {
   )
 }
 
-// --- Buy Kitty ---
 
-const RemovePrice = props => {
-  const { kitty, setStatus } = props
-  const [open, setOpen] = React.useState(false)
 
-  const confirmAndClose = unsub => {
-    setOpen(false)
-    if (unsub && typeof unsub === 'function') unsub()
-  }
+// const RemovePrice = props => {
+//   const { pet, setStatus } = props
+//   const [open, setOpen] = React.useState(false)
 
-  if (!kitty.price) {
-    return <></>
-  }
+//   const confirmAndClose = unsub => {
+//     setOpen(false)
+//     if (unsub && typeof unsub === 'function') unsub()
+//   }
 
-  return (
-    <Modal
-      onClose={() => setOpen(false)}
-      onOpen={() => setOpen(true)}
-      open={open}
-      trigger={
-        <Button basic color="green">
-          Remove Price
-        </Button>
-      }
-    >
-      <Modal.Header>Remove Price</Modal.Header>
-      <Modal.Content>
-        <Form>
-          <Form.Input fluid label="Kitty ID" readOnly value={kitty.id} />
-        </Form>
-      </Modal.Content>
-      <Modal.Actions>
-        <Button basic color="grey" onClick={() => setOpen(false)}>
-          Cancel
-        </Button>
-        <TxButton
-          label="Remove Price"
-          type="SIGNED-TX"
-          setStatus={setStatus}
-          onClick={confirmAndClose}
-          attrs={{
-            palletRpc: 'kittiesModule',
-            callable: 'removePrice',
-            inputParams: [kitty.id],
-            paramFields: [true],
-          }}
-        />
-      </Modal.Actions>
-    </Modal>
-  )
-}
+//   if (!pet.price) {
+//     return <></>
+//   }
+
+//   return (
+//     <Modal
+//       onClose={() => setOpen(false)}
+//       onOpen={() => setOpen(true)}
+//       open={open}
+//       trigger={
+//         <Button basic color="green">
+//           Remove Price
+//         </Button>
+//       }
+//     >
+//       <Modal.Header>Remove Price</Modal.Header>
+//       <Modal.Content>
+//         <Form>
+//           <Form.Input fluid label="Pet ID" readOnly value={pet.id} />
+//         </Form>
+//       </Modal.Content>
+//       <Modal.Actions>
+//         <Button basic color="grey" onClick={() => setOpen(false)}>
+//           Cancel
+//         </Button>
+//         <TxButton
+//           label="Remove Price"
+//           type="SIGNED-TX"
+//           setStatus={setStatus}
+//           onClick={confirmAndClose}
+//           attrs={{
+//             palletRpc: 'polkapetModule',
+//             callable: 'removePrice',
+//             inputParams: [pet.id],
+//             paramFields: [true],
+//           }}
+//         />
+//       </Modal.Actions>
+//     </Modal>
+//   )
+// }
 
 // --- About Kitty Card ---
 
-const KittyCard = props => {
-  const { kitty, setStatus } = props
-  const {id = null, dna = null, owner = null, gender = null, price = null } = kitty
+const PetCard = props => {
+  const { polkapet, setStatus } = props
+  const {id = null, dna = null, owner = null, gender = null, price = null } = polkapet
   const displayDna = dna && dna.toJSON()
   const { currentAccount } = useSubstrateState()
-  const isSelf = currentAccount.address === kitty.owner
+  const isSelf = currentAccount.address === polkapet.owner
 
   return (
     <Card>
@@ -254,13 +254,13 @@ const KittyCard = props => {
           Mine
         </Label>
       )}
-      <KittyAvatar dna={dna.toU8a()} />
+      <PolkapetAvatar dna={dna.toU8a()} />
       <Card.Content>
         <Card.Meta style={{ fontSize: '.9em', overflowWrap: 'break-word' }}>
           DNA: {displayDna}
         </Card.Meta>
         <Card.Description>
-          <p style={{ overflowWrap: 'break-word' }}>kitti_id: {id}</p>
+          <p style={{ overflowWrap: 'break-word' }}>Pet_id: {id}</p>
           <p style={{ overflowWrap: 'break-word' }}>Gender: {gender}</p>
           <p style={{ overflowWrap: 'break-word' }}>Owner: {owner}</p>
           <p style={{ overflowWrap: 'break-word' }}>
@@ -271,13 +271,13 @@ const KittyCard = props => {
       <Card.Content extra style={{ textAlign: 'center' }}>
         {owner === currentAccount.address ? (
           <>
-            <SetPrice kitty={kitty} setStatus={setStatus} />
-            <RemovePrice kitty={kitty} setStatus={setStatus} />
-            <TransferModal kitty={kitty} setStatus={setStatus} />
+            <SetPrice polkapet={polkapet} setStatus={setStatus} />
+            {/* <RemovePrice pet={pet} setStatus={setStatus} /> */}
+            <TransferModal polkapet={polkapet} setStatus={setStatus} />
           </>
         ) : (
           <>
-            <BuyKitty kitty={kitty} setStatus={setStatus} />
+            <BuyPolkapet polkapet={polkapet} setStatus={setStatus} />
           </>
         )}
       </Card.Content>
@@ -285,10 +285,10 @@ const KittyCard = props => {
   )
 }
 
-const KittyCards = props => {
-  const { kitties, setStatus } = props
+const PolkapetCards = props => {
+  const { polkapets, setStatus } = props
 
-  if (kitties.length === 0) {
+  if (polkapets.length === 0) {
     return (
       <Message info>
         <Message.Header>
@@ -303,13 +303,13 @@ const KittyCards = props => {
 
   return (
     <Grid columns={3}>
-      {kitties.map((kitty, i) => (
-        <Grid.Column key={`kitty-${i}`}>
-          <KittyCard kitty={kitty} setStatus={setStatus} />
+      {polkapets.map((polkapet, i) => (
+        <Grid.Column key={`polkapet-${i}`}>
+          <PetCard polkapet={polkapet} setStatus={setStatus} />
         </Grid.Column>
       ))}
     </Grid>
   )
 }
 
-export default KittyCards
+export default PolkapetCards

@@ -11,6 +11,7 @@ import {
 } from 'semantic-ui-react'
 import {  useSubstrateState } from '../substrate-lib'
 import AccountSelector from '../AccountSelector'
+import { useLocation } from 'react-router-dom';
 
 function Main() {
   const { apiState, apiError, keyringState } = useSubstrateState()
@@ -47,6 +48,9 @@ function Main() {
 
   const contextRef = createRef()
 
+
+ 
+
   return (
     <div >
               <div id="header">
@@ -74,6 +78,20 @@ function Main() {
 }
 
 export default function Header() {
+  const location = useLocation();
+ const loadcanvas = document.getElementById('canvas');
+if (location.pathname =="/game") {
+ 
+
+
+    loadcanvas.style.display = "block";
+
+}
+else {
+
+  loadcanvas.style.display = "none";
+
+}
   return (
    
       <Main />

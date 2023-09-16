@@ -4,7 +4,7 @@ import Hero from "../components/Hero";
 import "../styles/Home.css";
 import CardList from "../components/CardList";
 import { hotDropsData } from "../constants/MockupData";
-import Pokapets from "../Pokapets";
+import Polkapets from "../Polkapets";
 import {  useSubstrateState } from '../substrate-lib'
 import {
   Dimmer,
@@ -18,10 +18,8 @@ import {
 
 
 const Home = () => {
-  const loadWasmButton = document.getElementById('loadWasmButton');
-const loadcanvas = document.getElementById('canvas');
-loadWasmButton.style.display = "none";
-loadcanvas.style.display = "none";
+ 
+
   const { apiState, apiError, keyringState } = useSubstrateState()
   
 
@@ -71,7 +69,7 @@ loadcanvas.style.display = "none";
       <div id="list-container">
         <CardList list={hotDropsData} />
       </div>
-      <Pokapets />
+      <Polkapets />
     </div>
   );
 };

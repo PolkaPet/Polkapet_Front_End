@@ -11,11 +11,15 @@ import { SubstrateContextProvider} from './substrate-lib'
 import MintNFT from './pages/MintNFT'
 import Game from "./pages/Game";
 
+
 //dapp
 
 import NFTDetail from "./pages/NFTDetail";
 
+
 ReactDOM.render(
+
+  
   <BrowserRouter>
  
       <Routes>

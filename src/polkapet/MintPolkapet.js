@@ -7,40 +7,40 @@ import { TxButton } from '../substrate-lib/components'
 
 
 
-const parseKitty = ({ dna, price, gender, owner }) => ({
+const parsePolkapet = ({ dna, price, gender, owner }) => ({
   dna,
   price: price.toJSON(),
   gender: gender.toJSON(),
   owner: owner.toJSON(),
 })
 
-// Construct a Kitty ID from storage key
-const convertToKittyHash = entry =>
+// Construct a polkapet ID from storage key
+const convertToPolkapetHash = entry =>
   `0x${entry[0].toJSON().slice(-64)}`;
 
 
 
-export default function Pokapets(props) {
+export default function Polkapets(props) {
   const { api, keyring } = useSubstrateState()
-  const [kitties, setKitties] = useState([])
+  const [polkapets, setPolkapets] = useState([])
   const [status, setStatus] = useState('')
-
 
 
   const subscribeCount = () => {
     let unsub = null
 
     const asyncFetch = async () => {
-      unsub = await api.query.kittiesModule.kittyCnt(async count => {
+      
+      unsub = await api.query.polkapetModule.countForPolkapets(async count => {
         // Fetch all kitty keys
-        const entries = await api.query.kittiesModule.kitties.entries()
-        const kittiesMap = entries.map(entry => {
+        const entries = await api.query.polkapetModule.polkapets.entries()
+        const polkapetsMap = entries.map(entry => {
           return {
-            id: convertToKittyHash(entry),
-            ...parseKitty(entry[1].unwrap()),
+            id: convertToPolkapetHash(entry),
+            ...parsePolkapet(entry[1].unwrap()),
           }
         })
-        setKitties(kittiesMap)
+        setPolkapets(polkapetsMap)
       })
     }
 
@@ -51,7 +51,7 @@ export default function Pokapets(props) {
     }
   }
 
-  useEffect(subscribeCount, [api, keyring, kitties])
+  useEffect(subscribeCount, [api, keyring, polkapets])
 
   return (
     <Grid.Column width={16}>
@@ -59,12 +59,12 @@ export default function Pokapets(props) {
       <Form style={{ margin: '1em 0' }}>
         <Form.Field style={{ textAlign: 'center' }}>
           <TxButton
-            label="Create Kitty"
+            label="Create Polkapet"
             type="SIGNED-TX"
             setStatus={setStatus}
             attrs={{
-              palletRpc: 'kittiesModule',
-              callable: 'createKitty',
+              palletRpc: 'polkapetModule',
+              callable: 'createPolkapet',
               inputParams: [],
               paramFields: [],
             }}
