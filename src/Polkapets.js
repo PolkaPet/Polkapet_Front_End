@@ -8,6 +8,7 @@ import PolkapetCards from './polkapet/PolkapetCards'
 
 
 
+
 const parsePolkapet = ({ dna, price, gender, owner,petNumber, death, respawn, power, ovalPosition}) => ({
   dna,
   price: price.toJSON(),

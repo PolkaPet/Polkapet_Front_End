@@ -56,6 +56,7 @@ const Home = () => {
       <OvalBostNumber />
       <Events />
 
+      <OvalBostNumber />
       <Polkapets />
     </div>
   )
