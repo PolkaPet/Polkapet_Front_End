@@ -1,24 +1,14 @@
 import React, { createRef } from 'react'
-import Hero from "../components/Hero";
-import "../styles/Home.css";
-import CardList from "../components/CardList";
-import { hotDropsData } from "../constants/MockupData";
-import Polkapets from "../Polkapets";
-import {  useSubstrateState } from '../substrate-lib'
-import {
-  Dimmer,
-  Loader,
-  Grid,
-  Message,
-} from 'semantic-ui-react'
-
-
-
-
+import Hero from '../components/Hero'
+import '../styles/Home.css'
+import CardList from '../components/CardList'
+import { hotDropsData } from '../constants/MockupData'
+import Polkapets from '../Polkapets'
+import { useSubstrateState } from '../substrate-lib'
+import { Dimmer, Loader, Grid, Message } from 'semantic-ui-react'
+import OvalBostNumber from '../OvalBostNumber'
 
 const Home = () => {
- 
-
   const { apiState, apiError, keyringState } = useSubstrateState()
 
   const loader = text => (
@@ -60,6 +50,7 @@ const Home = () => {
       <div id="list-container">
         <CardList list={hotDropsData} />
       </div>
+      <OvalBostNumber />
       <Polkapets />
     </div>
   )

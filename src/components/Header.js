@@ -43,7 +43,7 @@ function Main() {
   const contextRef = createRef()
 
 
- 
+
 
   return (
     <div>
@@ -73,8 +73,8 @@ function Main() {
 export default function Header() {
   const location = useLocation();
  const loadcanvas = document.getElementById('canvas');
-if (location.pathname =="/game") {
- 
+if (location.pathname ==="/game") {
+
 
 
     loadcanvas.style.display = "block";
@@ -86,7 +86,7 @@ else {
 
 }
   return (
-   
+
       <Main />
 
   )

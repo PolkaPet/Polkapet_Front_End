@@ -21,16 +21,12 @@ const parsePolkapet = ({ dna, price, gender, owner,petNumber, death, respawn, po
 })
 
 // Construct a polkapet ID from storage key
-const convertToPolkapetHash = entry =>
-  `0x${entry[0].toJSON().slice(-32)}`;
+const convertToPolkapetHash = entry => `0x${entry[0].toJSON().slice(-32)}`
 
-
-  
 export default function Polkapets(props) {
   const { api, keyring } = useSubstrateState()
   const [polkapets, setPolkapets] = useState([])
   const [status, setStatus] = useState('')
-
 
   const subscribeCount = () => {
     let unsub = null
@@ -59,18 +55,11 @@ export default function Polkapets(props) {
 
   useEffect(subscribeCount, [api, keyring, polkapets])
 
- 
-    return (
-      <Grid.Column width={16}>
-        <h1 style={{color:"white"}}>Polkapets</h1>
-        <PolkapetCards polkapets={polkapets}  setStatus={setStatus}/>
-        <div style={{ overflowWrap: 'break-word' , color:'white'}}>{status}</div>
-  
-      </Grid.Column>
-    )
-  
+  return (
+    <Grid.Column width={16}>
+      <h1 style={{ color: 'white' }}>Polkapets</h1>
+      <PolkapetCards polkapets={polkapets} setStatus={setStatus} />
+      <div style={{ overflowWrap: 'break-word', color: 'white' }}>{status}</div>
+    </Grid.Column>
+  )
 }
-
-
-
-
