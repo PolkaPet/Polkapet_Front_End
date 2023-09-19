@@ -29,7 +29,7 @@ export default function Polkapets(props) {
     let unsub = null
 
     const asyncFetch = async () => {
-      
+
       unsub = await api.query.polkapetModule.lastPetNumber(async count => {
         // Fetch all kitty keys
         const entries = await api.query.polkapetModule.polkapets.entries()

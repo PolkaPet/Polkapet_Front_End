@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Grid } from 'semantic-ui-react'
 
 import { useSubstrateState } from './substrate-lib'
-import { convertCamelCase, getOvalBostNumber } from './components/utils'
+import { convertCamelCase, getOvalBostNumber } from './utils'
 
 
 

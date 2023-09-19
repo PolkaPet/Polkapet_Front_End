@@ -35,10 +35,23 @@ const dnaToAttributes = dna => {
   }
 }
 
-const PolkapetAvatar = props => {
-  const outerStyle = { height: '160px', position: 'relative', width: '50%' };
-  const innerStyle = { height: '150px', position: 'absolute', top: '3%', left: '50%' };
-  const { dna } = props;
+const PolkapetAvatar = ({
+  dna,
+  heightOuterStyle = 160,
+  widthOuterStyle = '50%',
+  heightInnerStyle = 150,
+}) => {
+  const outerStyle = {
+    height: heightOuterStyle,
+    position: 'relative',
+    width: widthOuterStyle,
+  }
+  const innerStyle = {
+    height: heightInnerStyle,
+    position: 'absolute',
+    top: '3%',
+    left: '50%',
+  }
 
   if (!dna) return null
 
@@ -54,4 +67,4 @@ const PolkapetAvatar = props => {
   )
 }
 
-export default PolkapetAvatar;
+export default PolkapetAvatar

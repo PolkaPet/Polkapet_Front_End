@@ -185,8 +185,6 @@ const BuyPolkapet = props => {
   )
 }
 
-
-
 // const RemovePrice = props => {
 //   const { pet, setStatus } = props
 //   const [open, setOpen] = React.useState(false)
@@ -301,7 +299,9 @@ const PetCard = props => {
           Mine
         </Label>
       )}
+
       <PolkapetAvatar dna={dna.toU8a()} />
+
       <Card.Content>
         <Card.Meta style={{ fontSize: '.9em', overflowWrap: 'break-word' }}>
           DNA: {displayDna}

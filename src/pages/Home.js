@@ -7,6 +7,7 @@ import Polkapets from '../Polkapets'
 import { useSubstrateState } from '../substrate-lib'
 import { Dimmer, Loader, Grid, Message } from 'semantic-ui-react'
 import OvalBostNumber from '../OvalBostNumber'
+import Events from '../Events'
 
 const Home = () => {
   const { apiState, apiError, keyringState } = useSubstrateState()
@@ -51,6 +52,8 @@ const Home = () => {
         <CardList list={hotDropsData} />
       </div>
       <OvalBostNumber />
+      <Events />
+
       <Polkapets />
     </div>
   )

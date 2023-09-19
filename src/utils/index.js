@@ -4,6 +4,12 @@ export async function getOvalBostNumber(api) {
   return data.toHuman()
 }
 
+export async function getPolkapetsById(api, id) {
+  const data = await api.query.polkapetModule.polkapetsById(id)
+  console.log('data', data)
+  return data.toHuman()
+}
+
 export function convertCamelCase(inputString) {
   return inputString
     .replace(/([a-z])([A-Z])/g, '$1 $2')
