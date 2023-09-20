@@ -237,18 +237,65 @@ const BuyPolkapet = props => {
 //     </Modal>
 //   )
 // }
+const EmpowerPet = props => {
+  const { polkapet, setStatus } = props
+  const [open, setOpen] = React.useState(false)
 
-// --- About Kitty Card ---
+  const confirmAndClose = unsub => {
+    setOpen(false)
+    if (unsub && typeof unsub === 'function') unsub()
+  }
+
+
+
+  return (
+    <Modal
+      onClose={() => setOpen(false)}
+      onOpen={() => setOpen(true)}
+      open={open}
+      trigger={
+        <Button basic color="green">
+          Empower
+        </Button>
+      }
+    >
+      <Modal.Header>Empower</Modal.Header>
+      <Modal.Content>
+        <Form>
+          <Form.Input fluid label="Pet ID" readOnly value={polkapet.id} />
+        </Form>
+      </Modal.Content>
+      <Modal.Actions>
+        <Button basic color="grey" onClick={() => setOpen(false)}>
+          Cancel
+        </Button>
+        <TxButton
+          label="Empower Pet"
+          type="SIGNED-TX"
+          setStatus={setStatus}
+          onClick={confirmAndClose}
+          attrs={{
+            palletRpc: 'polkapetModule',
+            callable: 'empower',
+            inputParams: [polkapet.id],
+            paramFields: [true],
+          }}
+        />
+      </Modal.Actions>
+    </Modal>
+  )
+}
+// --- About Pet Card ---
 
 const PetCard = props => {
   const { polkapet, setStatus } = props
-  const {id = null, dna = null, owner = null, gender = null, price = null } = polkapet
+  const {id = null, dna = null, owner = null, gender = null, price = null,  death, respawn, power, ovalPosition} = polkapet
   const displayDna = dna && dna.toJSON()
   const { currentAccount } = useSubstrateState()
   const isSelf = currentAccount.address === polkapet.owner
 
   return (
-    <Card>
+    <Card style={{width:"350px", height:"400px"}}>
       {isSelf && (
         <Label as="a" floating color="teal">
           Mine
@@ -262,7 +309,8 @@ const PetCard = props => {
         <Card.Description>
           <p style={{ overflowWrap: 'break-word' }}>Pet_id: {id}</p>
           <p style={{ overflowWrap: 'break-word' }}>Gender: {gender}</p>
-          <p style={{ overflowWrap: 'break-word' }}>Owner: {owner}</p>
+          <p style={{ overflowWrap: 'break-word' }}>{"Death: "  + death  +" - " +"Respawn: " +respawn}</p>
+          <p style={{ overflowWrap: 'break-word' }}>{"Oval Position: " +ovalPosition +" - " +"Power: "  + power }</p>
           <p style={{ overflowWrap: 'break-word' }}>
             Price: {price || 'Not For Sale'}
           </p>
@@ -272,6 +320,7 @@ const PetCard = props => {
         {owner === currentAccount.address ? (
           <>
             <SetPrice polkapet={polkapet} setStatus={setStatus} />
+            <EmpowerPet polkapet={polkapet} setStatus={setStatus} />
             {/* <RemovePrice pet={pet} setStatus={setStatus} /> */}
             <TransferModal polkapet={polkapet} setStatus={setStatus} />
           </>

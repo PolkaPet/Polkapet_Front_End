@@ -8,11 +8,16 @@ import PolkapetCards from './polkapet/PolkapetCards'
 
 
 
-const parsePolkapet = ({ dna, price, gender, owner }) => ({
+const parsePolkapet = ({ dna, price, gender, owner,petNumber, death, respawn, power, ovalPosition}) => ({
   dna,
   price: price.toJSON(),
   gender: gender.toJSON(),
   owner: owner.toJSON(),
+  petNumber: petNumber.toJSON(),
+  death: death.toString(),
+  respawn:respawn.toJSON(),
+  power: power.toJSON(),
+  ovalPosition: ovalPosition.toJSON(),
 })
 
 // Construct a polkapet ID from storage key
@@ -31,10 +36,11 @@ export default function Polkapets(props) {
     let unsub = null
 
     const asyncFetch = async () => {
-      unsub = await api.query.polkapetModule.countForPolkapets(async count => {
+      unsub = await api.query.polkapetModule.lastPetNumber(async count => {
         // Fetch all polkapet keys
         const entries = await api.query.polkapetModule.polkapets.entries()
         const polkapetsMap = entries.map(entry => {
+          console.log(entry[1].unwrap())
           return {
             id: convertToPolkapetHash(entry),
             ...parsePolkapet(entry[1].unwrap()),
