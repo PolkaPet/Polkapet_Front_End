@@ -34,18 +34,14 @@ function Main(props) {
           const evName = eventName(evHuman)
           const evParams = eventParams(evHuman)
           const evNamePhase = `${evName}::(phase=${phase.toString()})`
-          console.log('evNamePhase', evNamePhase)
-          if (FILTERED_EVENTS.includes(evNamePhase)) return
-          console.log('content?.polkapet', JSON.parse(evParams))
-          console.log('content?.polkapet', typeof evParams)
-          console.log('content?.polkapet', evParams?.polkapet)
 
-          console.log('content?.polkapetxxx', JSON.parse(evParams)?.polkapet)
+          if (FILTERED_EVENTS.includes(evNamePhase)) return
+
           const pet = await getPolkapetsById(
             api,
             JSON.parse(evParams)?.polkapet
           )
-          console.log('pet', pet)
+
           setEventFeed(e => [
             {
               key: keyNum,

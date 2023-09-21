@@ -5,7 +5,7 @@ export async function getOvalBostNumber(api) {
 }
 
 export async function getPolkapetsById(api, id) {
-  const data = await api.query.polkapetModule.polkapetsById(id)
+  const data = id && (await api.query.polkapetModule.polkapetsById(id))
   console.log('data', data)
   return data.toHuman()
 }

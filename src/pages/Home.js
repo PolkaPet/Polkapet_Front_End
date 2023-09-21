@@ -8,6 +8,7 @@ import { useSubstrateState } from '../substrate-lib'
 import { Dimmer, Loader, Grid, Message } from 'semantic-ui-react'
 import OvalBostNumber from '../OvalBostNumber'
 import Events from '../Events'
+import RacingChart from '../RacingChart'
 
 const Home = () => {
   const { apiState, apiError, keyringState } = useSubstrateState()
@@ -51,6 +52,7 @@ const Home = () => {
       <div id="list-container">
         <CardList list={hotDropsData} />
       </div>
+      <RacingChart />
       <OvalBostNumber />
       <Events />
 

@@ -53,7 +53,7 @@ export default function Polkapets(props) {
     }
   }
 
-  useEffect(subscribeCount, [api, keyring, polkapets])
+  useEffect(subscribeCount, [api, keyring])
 
   return (
     <Grid.Column width={16}>

@@ -1,25 +1,25 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { Grid } from 'semantic-ui-react'
 
 import { useSubstrateState } from './substrate-lib'
 import { convertCamelCase, getOvalBostNumber } from './utils'
-
-
+import useInterval from 'use-interval'
 
 export default function OvalBostNumber(props) {
   const { api } = useSubstrateState()
 
   const [ovalBostNumber, setOvalBostNumber] = useState(null)
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const num = await getOvalBostNumber(api)
-
-      setOvalBostNumber(num)
-    }
-
-    api && fetchData()
+  const fetchData = useCallback(async () => {
+    const num = await getOvalBostNumber(api)
+    setOvalBostNumber(num)
   }, [api])
+
+  useEffect(() => {
+    api && fetchData()
+  }, [api, fetchData])
+
+  useInterval(() => fetchData(), 1000)
 
   return (
     <Grid.Column style={{ color: 'white' }} width={16}>
@@ -28,7 +28,7 @@ export default function OvalBostNumber(props) {
         {ovalBostNumber &&
           Object.entries(ovalBostNumber).map(([k, v]) => {
             return (
-              <p>
+              <p key={k}>
                 {convertCamelCase(k)} : {v}
               </p>
             )
