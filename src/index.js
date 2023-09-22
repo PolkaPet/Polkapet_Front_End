@@ -9,6 +9,7 @@ import Create from './pages/Create'
 import Explore from './pages/Explore'
 import { SubstrateContextProvider } from './substrate-lib'
 import MintNFT from './pages/MintNFT'
+import MiniGame from './pages/MiniGame'
 import Game from './pages/Game'
 
 
@@ -79,6 +80,15 @@ ReactDOM.render(
           <SubstrateContextProvider>
             {' '}
             <MintNFT />{' '}
+          </SubstrateContextProvider>
+        }
+      />
+      <Route
+        path="/createminigame"
+        element={
+          <SubstrateContextProvider>
+            {' '}
+            <MiniGame />{' '}
           </SubstrateContextProvider>
         }
       />

@@ -55,6 +55,7 @@ function Main() {
         <div id="link-containers">
           <Link to="/">Home</Link>
           <Link to="/mintnft">MintNFT</Link>
+          <Link to="/createminigame">Mini Game</Link>
           <Link to="/game">Game</Link>
           <Link to="/community">Community</Link>
           <Link to="/qa">Q&A</Link>
