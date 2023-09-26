@@ -12,15 +12,12 @@ import MintNFT from './pages/MintNFT'
 import MiniGame from './pages/MiniGame'
 import Game from './pages/Game'
 
-
 //dapp
 
 import NFTDetail from './pages/NFTDetail'
-
+import WorldEnv from './pages/WorldEnv'
 
 ReactDOM.render(
-
-  
   <BrowserRouter>
     <Routes>
       {/* <Route path="/" element={<SubstrateContextProvide config={{}}><Home /></SubstrateContextProvide>} />
@@ -33,8 +30,7 @@ ReactDOM.render(
         path="/"
         element={
           <SubstrateContextProvider>
-            {' '}
-            <Home />{' '}
+            <Home />
           </SubstrateContextProvider>
         }
       />
@@ -42,8 +38,7 @@ ReactDOM.render(
         path="/"
         element={
           <SubstrateContextProvider>
-            {' '}
-            <Create />{' '}
+            <Create />
           </SubstrateContextProvider>
         }
       />
@@ -51,8 +46,7 @@ ReactDOM.render(
         path="/"
         element={
           <SubstrateContextProvider>
-            {' '}
-            <Explore />{' '}
+            <Explore />
           </SubstrateContextProvider>
         }
       />
@@ -60,8 +54,7 @@ ReactDOM.render(
         path="/"
         element={
           <SubstrateContextProvider>
-            {' '}
-            <NFTDetail />{' '}
+            <NFTDetail />
           </SubstrateContextProvider>
         }
       />
@@ -69,8 +62,7 @@ ReactDOM.render(
         path="/game"
         element={
           <SubstrateContextProvider>
-            {' '}
-            <Game />{' '}
+            <Game />
           </SubstrateContextProvider>
         }
       />
@@ -78,8 +70,16 @@ ReactDOM.render(
         path="/mintnft"
         element={
           <SubstrateContextProvider>
-            {' '}
-            <MintNFT />{' '}
+            <MintNFT />
+          </SubstrateContextProvider>
+        }
+      />
+      
+      <Route
+        path="/world-env"
+        element={
+          <SubstrateContextProvider>
+            <WorldEnv />
           </SubstrateContextProvider>
         }
       />
@@ -87,8 +87,7 @@ ReactDOM.render(
         path="/createminigame"
         element={
           <SubstrateContextProvider>
-            {' '}
-            <MiniGame />{' '}
+            <MiniGame />
           </SubstrateContextProvider>
         }
       />
@@ -96,8 +95,7 @@ ReactDOM.render(
         path="/blockchaininfo"
         element={
           <SubstrateContextProvider>
-            {' '}
-            <App />{' '}
+            <App />
           </SubstrateContextProvider>
         }
       />

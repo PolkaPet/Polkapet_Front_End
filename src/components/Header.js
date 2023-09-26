@@ -6,7 +6,7 @@ import 'semantic-ui-css/semantic.min.css'
 import { Dimmer, Loader, Grid, Message } from 'semantic-ui-react'
 import { useSubstrateState } from '../substrate-lib'
 import AccountSelector from '../AccountSelector'
-import { useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom'
 
 function Main() {
   const { apiState, apiError, keyringState } = useSubstrateState()
@@ -42,9 +42,6 @@ function Main() {
 
   const contextRef = createRef()
 
-
-
-
   return (
     <div>
       <div id="header">
@@ -57,10 +54,11 @@ function Main() {
           <Link to="/mintnft">MintNFT</Link>
           <Link to="/createminigame">Mini Game</Link>
           <Link to="/game">Game</Link>
-          <Link to="/community">Community</Link>
-          <Link to="/qa">Q&A</Link>
-          <Link to="/white-paper">White Paper</Link>
-          <Link to="/blockchaininfo">Blockchain Info</Link>
+          <Link to="/world-env">World Env</Link>
+          {/* <Link to="/community">Community</Link> */}
+          {/* <Link to="/qa">Q&A</Link> */}
+          {/* <Link to="/white-paper">White Paper</Link>
+          <Link to="/blockchaininfo">Blockchain Info</Link> */}
         </div>
         {/* <div context={contextRef}><AccountSelector /> </div> */}
 
@@ -71,23 +69,12 @@ function Main() {
 }
 
 export default function Header() {
-  const location = useLocation();
- const loadcanvas = document.getElementById('canvas');
-if (location.pathname ==="/game") {
-
-
-
-    loadcanvas.style.display = "block";
-
-}
-else {
-
-  loadcanvas.style.display = "none";
-
-}
-  return (
-
-      <Main />
-
-  )
+  const location = useLocation()
+  const loadcanvas = document.getElementById('canvas')
+  if (location.pathname === '/game') {
+    loadcanvas.style.display = 'block'
+  } else {
+    loadcanvas.style.display = 'none'
+  }
+  return <Main />
 }

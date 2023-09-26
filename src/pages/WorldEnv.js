@@ -1,17 +1,13 @@
-/* eslint-disable no-unused-vars */
 import React, { createRef } from 'react'
-import Hero from '../components/Hero'
 import '../styles/Home.css'
-import CardList from '../components/CardList'
-import { hotDropsData } from '../constants/MockupData'
-import Polkapets from '../Polkapets'
 import { useSubstrateState } from '../substrate-lib'
 import { Dimmer, Loader, Grid, Message } from 'semantic-ui-react'
-import OvalBostNumber from '../OvalBostNumber'
-import Events from '../Events'
-import RacingChart from '../RacingChart'
 
-const Home = () => {
+import Header from '../components/Header'
+import Events from '../Events'
+import OvalBostNumber from '../OvalBostNumber'
+
+const WorldEnv = () => {
   const { apiState, apiError, keyringState } = useSubstrateState()
 
   const loader = text => (
@@ -47,17 +43,19 @@ const Home = () => {
 
   return (
     <div id="home" ref={contextRef}>
-      <Hero list={hotDropsData} />
-
-      {/* <p id="card-list-header-text"> Hot Drops </p>
-      <div id="list-container">
-        <CardList list={hotDropsData} />
-      </div> */}
-      <RacingChart />
-
-      <Polkapets />
+      <Header />
+      <div style={{ color: '#fff', marginTop: '90px' }}>
+        <Grid columns={2} stackable>
+          <Grid.Column>
+            <OvalBostNumber />
+          </Grid.Column>
+          <Grid.Column>
+            <Events />
+          </Grid.Column>
+        </Grid>
+      </div>
     </div>
   )
 }
 
-export default Home
+export default WorldEnv

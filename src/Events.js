@@ -15,7 +15,7 @@ const FILTERED_EVENTS = [
 const eventName = ev => `${ev.section}:${ev.method}`
 const eventParams = ev => JSON.stringify(ev.data)
 
-function Main(props) {
+function Main() {
   const { api } = useSubstrateState()
   const [eventFeed, setEventFeed] = useState([])
 
@@ -34,23 +34,14 @@ function Main(props) {
           const evName = eventName(evHuman)
           const evParams = eventParams(evHuman)
           const evNamePhase = `${evName}::(phase=${phase.toString()})`
-          console.log('evNamePhase', evNamePhase)
+
           if (FILTERED_EVENTS.includes(evNamePhase)) return
-
+          if (evName === 'polkapetModule:UpdatePetDeathStatus') return
           const pet = await getPolkapetsById(
             api,
             JSON.parse(evParams)?.polkapet
           )
-          console.log('content?.polkapet', JSON.parse(evParams))
-          console.log('content?.polkapet', typeof evParams)
-          console.log('content?.polkapet', evParams?.polkapet)
 
-          console.log('content?.polkapetxxx', JSON.parse(evParams)?.polkapet)
-          const pet = await getPolkapetsById(
-            api,
-            JSON.parse(evParams)?.polkapet
-          )
-          console.log('pet', pet)
           setEventFeed(e => [
             {
               key: keyNum,
@@ -66,34 +57,12 @@ function Main(props) {
         })
       })
     }
-
+    console.log('eventFeed', eventFeed)
     allEvents()
     return () => unsub && unsub()
   }, [api, api.query.system])
 
-  const { feedMaxHeight = 250 } = props
-
-  return (
-    <Grid.Column
-      width={8}
-      style={{
-        background: '#ffe',
-      }}
-    >
-      <h1 style={{ float: 'left' }}>Events</h1>
-      <Button
-        basic
-        circular
-        size="mini"
-        color="grey"
-        floated="right"
-        icon="erase"
-        onClick={_ => setEventFeed([])}
-      />
-
-      <CardContentBlock events={eventFeed} />
-    </Grid.Column>
-  )
+  return <CardContentBlock events={eventFeed} />
 }
 
 export default function Events(props) {
@@ -104,12 +73,16 @@ export default function Events(props) {
 }
 
 const CardContentBlock = ({ events }) => (
-  <Card width="100%">
+  <Card width="100%" style={{ color: 'grey', overflow: 'hidden' }}>
+    <h1>Pet Kill Activity</h1>
     <Card.Content>
-      <Card.Header>Recent Activity</Card.Header>
-    </Card.Content>
-    <Card.Content>
-      <Feed>
+      <Feed
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'start',
+        }}
+      >
         {events.map(event => (
           <Feed.Event key={event.dna}>
             <PolkapetAvatar
@@ -119,17 +92,18 @@ const CardContentBlock = ({ events }) => (
               heightInnerStyle={60}
             />
             <div
-              style={{ display: 'flex', width: '100%', paddingLeft: '70px' }}
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                width: '100%',
+                paddingLeft: '70px',
+                justifyContent: 'start',
+                alignItems: 'start',
+              }}
             >
-              <Feed.Content>
-                <Feed.Summary>
-                  Pet killed. Id: {event?.petId}
-                  <br />
-                  Gender: {event?.gender}
-                  <br />
-                  Oval position: {event?.ovalPosition}{' '}
-                </Feed.Summary>
-              </Feed.Content>
+              <div>Pet killed. Id: {event?.petId || event?.petNumber}</div>
+              <div>Gender: {event?.gender}</div>
+              <div> Oval position: {event?.ovalPosition} </div>
             </div>
           </Feed.Event>
         ))}
