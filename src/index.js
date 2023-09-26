@@ -1,12 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import './index.css'
-import App from './App'
-import reportWebVitals from './reportWebVitals'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Home from './pages/Home'
-import Create from './pages/Create'
-import Explore from './pages/Explore'
 import { SubstrateContextProvider } from './substrate-lib'
 import MintNFT from './pages/MintNFT'
 import MiniGame from './pages/MiniGame'
@@ -14,8 +10,8 @@ import Game from './pages/Game'
 
 //dapp
 
-import NFTDetail from './pages/NFTDetail'
 import WorldEnv from './pages/WorldEnv'
+import MiniGameDetail from './pages/MiniGameDetail'
 
 ReactDOM.render(
   <BrowserRouter>
@@ -34,30 +30,7 @@ ReactDOM.render(
           </SubstrateContextProvider>
         }
       />
-      <Route
-        path="/"
-        element={
-          <SubstrateContextProvider>
-            <Create />
-          </SubstrateContextProvider>
-        }
-      />
-      <Route
-        path="/"
-        element={
-          <SubstrateContextProvider>
-            <Explore />
-          </SubstrateContextProvider>
-        }
-      />
-      <Route
-        path="/"
-        element={
-          <SubstrateContextProvider>
-            <NFTDetail />
-          </SubstrateContextProvider>
-        }
-      />
+
       <Route
         path="/game"
         element={
@@ -74,7 +47,7 @@ ReactDOM.render(
           </SubstrateContextProvider>
         }
       />
-      
+
       <Route
         path="/world-env"
         element={
@@ -84,7 +57,7 @@ ReactDOM.render(
         }
       />
       <Route
-        path="/createminigame"
+        path="/minigame/create"
         element={
           <SubstrateContextProvider>
             <MiniGame />
@@ -92,13 +65,14 @@ ReactDOM.render(
         }
       />
       <Route
-        path="/blockchaininfo"
+        path="/minigame/:gameId"
         element={
           <SubstrateContextProvider>
-            <App />
+            <MiniGameDetail />
           </SubstrateContextProvider>
         }
       />
+
       {/* <Route path="/create" element={<Create />} />
         <Route path="/explore" element={<App />} />
         <Route path="/detail"element={<Explore />} />
@@ -108,8 +82,3 @@ ReactDOM.render(
   </BrowserRouter>,
   document.getElementById('root')
 )
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals()

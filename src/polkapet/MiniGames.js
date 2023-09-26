@@ -1,25 +1,28 @@
 import React, { useEffect, useState } from 'react'
 import { Grid } from 'semantic-ui-react'
 
-import { useSubstrateState } from './substrate-lib'
-import MiniGameCards from './polkapet/MiniGameCards'
+import { useSubstrateState } from '../substrate-lib'
+import MiniGameCards from './MiniGameCards'
 
-
-
-
-const parseMiniGame = ({ gameId, owner, description, reward, maxPlayer, blockDuration,finishBlock, status }) => ({
-gameId: gameId.toJSON(),
-owner: owner.toJSON(),
-description: description.toJSON(),
-reward: reward.toJSON(),
-maxPlayer: maxPlayer.toJSON(),
-blockDuration: blockDuration.toJSON(),
-finishBlock: finishBlock.toJSON(),
-status: status.toJSON(),
+const parseMiniGame = ({
+  gameId,
+  owner,
+  description,
+  reward,
+  maxPlayer,
+  blockDuration,
+  finishBlock,
+  status,
+}) => ({
+  gameId: gameId.toJSON(),
+  owner: owner.toJSON(),
+  description: description.toHuman(),
+  reward: reward.toHuman(),
+  maxPlayer: maxPlayer.toJSON(),
+  blockDuration: blockDuration.toJSON(),
+  finishBlock: finishBlock.toJSON(),
+  status: status.toJSON(),
 })
-
-
-  
 
 export default function MiniGames(props) {
   const { api, keyring } = useSubstrateState()
@@ -30,7 +33,6 @@ export default function MiniGames(props) {
     let unsub = null
 
     const asyncFetch = async () => {
-      
       unsub = await api.query.polkapetModule.lastMinigameId(async count => {
         // Fetch all kitty keys
         const entries = await api.query.polkapetModule.minigameById.entries()
@@ -52,18 +54,12 @@ export default function MiniGames(props) {
   }
 
   useEffect(subscribeCount, [api, keyring, miniGames])
- 
-    return (
-      <Grid.Column width={16}>
-        <h1 style={{color:"white"}}>MiniGame</h1>
-        <MiniGameCards miniGames={miniGames}  setStatus={setStatus}/>
-        <div style={{ overflowWrap: 'break-word' , color:'white'}}>{status}</div>
-  
-      </Grid.Column>
-    )
-  
+
+  return (
+    <Grid.Column width={16}>
+      <h1 style={{ color: 'white' }}>MiniGame</h1>
+      <MiniGameCards miniGames={miniGames} setStatus={setStatus} />
+      <div style={{ overflowWrap: 'break-word', color: 'white' }}>{status}</div>
+    </Grid.Column>
+  )
 }
-
-
-
-

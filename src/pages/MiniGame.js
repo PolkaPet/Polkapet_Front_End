@@ -1,17 +1,12 @@
 import React, { createRef } from 'react'
-import "../styles/Home.css";
+import '../styles/Home.css'
 
-import MiniGames from '../MiniGames';
-import CreateMinigame from '../polkapet/CreateMinigame';
-import {  useSubstrateState } from '../substrate-lib'
-import {
-  Dimmer,
-  Loader,
-  Grid,
-  Message,
-} from 'semantic-ui-react'
+import MiniGames from '../polkapet/MiniGames'
+import CreateMinigame from '../polkapet/CreateMinigame'
+import { useSubstrateState } from '../substrate-lib'
+import { Dimmer, Loader, Grid, Message } from 'semantic-ui-react'
 
-import Header from '../components/Header';
+import Header from '../components/Header'
 
 const Home = () => {
   const { apiState, apiError, keyringState } = useSubstrateState()
@@ -48,19 +43,15 @@ const Home = () => {
   const contextRef = createRef()
 
   return (
-    <div id="home"  ref={contextRef}>
-    
-        <Header />
-        <div style={{marginTop:"90px"}}>
-        <  CreateMinigame />
-        </div>
-    
+    <div id="home" ref={contextRef}>
+      <Header />
+      <div style={{ marginTop: '90px' }}>
+        <CreateMinigame />
+      </div>
+
       <MiniGames />
-      
     </div>
-  );
-};
-
-
+  )
+}
 
 export default Home
