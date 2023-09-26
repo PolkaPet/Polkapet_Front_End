@@ -36,24 +36,25 @@ function Main() {
           const evNamePhase = `${evName}::(phase=${phase.toString()})`
 
           if (FILTERED_EVENTS.includes(evNamePhase)) return
-          if (evName === 'polkapetModule:UpdatePetDeathStatus') return
-          const pet = await getPolkapetsById(
-            api,
-            JSON.parse(evParams)?.polkapet
-          )
+          if (evName === 'polkapetModule:UpdatePetDeathStatus') {
+            const pet = await getPolkapetsById(
+              api,
+              JSON.parse(evParams)?.polkapet
+            )
 
-          setEventFeed(e => [
-            {
-              key: keyNum,
-              icon: 'bell',
-              summary: evName,
-              content: evParams,
-              ...pet,
-            },
-            ...e,
-          ])
+            setEventFeed(e => [
+              {
+                key: keyNum,
+                icon: 'bell',
+                summary: evName,
+                content: evParams,
+                ...pet,
+              },
+              ...e,
+            ])
 
-          keyNum += 1
+            keyNum += 1
+          }
         })
       })
     }
