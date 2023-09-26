@@ -15,7 +15,7 @@ import Game from './pages/Game'
 
 //dapp
 
-import NFTDetail from './pages/NFTDetail'
+import PolkapetCardsDetail from './polkapet/PolkapetCardsDetail'
 
 
 ReactDOM.render(
@@ -57,11 +57,11 @@ ReactDOM.render(
         }
       />
       <Route
-        path="/"
+        path="/detail"
         element={
           <SubstrateContextProvider>
             {' '}
-            <NFTDetail />{' '}
+            <PolkapetCardsDetail />{' '}
           </SubstrateContextProvider>
         }
       />
