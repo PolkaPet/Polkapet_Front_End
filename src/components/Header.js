@@ -56,8 +56,8 @@ function Main() {
           <Link to="/">Home</Link>
           <Link to="/mintnft">MintNFT</Link>
           <Link to="/createminigame">Mini Game</Link>
-          <Link to="/game">Game</Link>
-          <Link to="/community">Community</Link>
+          {/* <Link to="/game">Game</Link> */}
+          {/* <Link to="/community">Community</Link> */}
           <Link to="/qa">Q&A</Link>
           <Link to="/white-paper">White Paper</Link>
           <Link to="/blockchaininfo">Blockchain Info</Link>
