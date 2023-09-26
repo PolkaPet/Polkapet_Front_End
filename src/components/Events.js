@@ -2,9 +2,9 @@
 import React, { useEffect, useState } from 'react'
 import { Feed, Grid, Button, Card } from 'semantic-ui-react'
 
-import { useSubstrateState } from './substrate-lib'
-import { getPolkapetsById } from './utils'
-import PolkapetAvatar from './polkapet/PolkapetAvatar'
+import { useSubstrateState } from '../substrate-lib'
+import { getPolkapetsById } from '../utils'
+import PolkapetAvatar from '../polkapet/PolkapetAvatar'
 import { hexToU8a, u8aToHex } from '@polkadot/util'
 
 // Events to be filtered from feed
@@ -58,7 +58,7 @@ function Main() {
         })
       })
     }
-    console.log('eventFeed', eventFeed)
+    console.log('eventFeed...')
     allEvents()
     return () => unsub && unsub()
   }, [api, api.query.system])

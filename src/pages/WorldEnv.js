@@ -4,8 +4,8 @@ import { useSubstrateState } from '../substrate-lib'
 import { Dimmer, Loader, Grid, Message } from 'semantic-ui-react'
 
 import Header from '../components/Header'
-import Events from '../Events'
-import OvalBostNumber from '../OvalBostNumber'
+import Events from '../components/Events'
+import OvalBostNumber from '../components/OvalBostNumber'
 
 const WorldEnv = () => {
   const { apiState, apiError, keyringState } = useSubstrateState()

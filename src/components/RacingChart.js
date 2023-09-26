@@ -1,7 +1,7 @@
 import { React, useState, useEffect, useCallback } from 'react'
 import ChartRace from 'react-chart-race'
-import { useSubstrateState } from './substrate-lib'
-import { getOvalBostNumber } from './utils'
+import { useSubstrateState } from '../substrate-lib'
+import { getOvalBostNumber } from '../utils'
 import useInterval from 'use-interval'
 
 const color = ['#50c4fe', '#3fc42d', '#c33178', '#423bce', '#c8303b', '#2c2c2c']

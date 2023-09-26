@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { Grid } from 'semantic-ui-react'
 
-import { useSubstrateState } from './substrate-lib'
-import { convertCamelCase, getOvalBostNumber } from './utils'
+import { useSubstrateState } from '../substrate-lib'
+import { convertCamelCase, getOvalBostNumber } from '../utils'
 import useInterval from 'use-interval'
 
 export default function OvalBostNumber(props) {

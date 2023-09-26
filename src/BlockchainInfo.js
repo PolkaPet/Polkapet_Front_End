@@ -5,14 +5,13 @@ import { DeveloperConsole } from './substrate-lib/components'
 
 import Balances from './Balances'
 import BlockNumber from './BlockNumber'
-import Events from './Events'
 import Interactor from './Interactor'
 import Metadata from './Metadata'
 import NodeInfo from './NodeInfo'
 import TemplateModule from './TemplateModule'
 import Transfer from './Transfer'
 import Upgrade from './Upgrade'
-import Polkapets from './Polkapets';
+import Polkapets from './Polkapets'
 import MiniGames from './MiniGames'
 import './styles/blockchaininfo.css'
 
@@ -36,7 +35,6 @@ function Main() {
           </Grid.Row>
           <Grid.Row>
             <Interactor />
-            <Events />
           </Grid.Row>
           <Grid.Row>
             <TemplateModule />
