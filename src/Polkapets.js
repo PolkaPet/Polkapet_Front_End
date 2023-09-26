@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Grid } from 'semantic-ui-react'
+import './styles/Polkapet.css'
 
 import { useSubstrateState } from './substrate-lib'
 import PolkapetCards from './polkapet/PolkapetCards'
@@ -61,12 +62,14 @@ export default function Polkapets(props) {
 
  
     return (
+      <div id="polkapet">
       <Grid.Column width={16}>
         <h1 style={{color:"white"}}>Polkapets</h1>
         <PolkapetCards polkapets={polkapets}  setStatus={setStatus}/>
         <div style={{ overflowWrap: 'break-word' , color:'white'}}>{status}</div>
   
       </Grid.Column>
+      </div>
     )
   
 }

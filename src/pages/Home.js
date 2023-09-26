@@ -1,7 +1,7 @@
 import React, { createRef } from 'react'
 import Hero from "../components/Hero";
 import "../styles/Home.css";
-import CardList from "../components/CardList";
+// import CardList from "../components/CardList";
 import { hotDropsData } from "../constants/MockupData";
 import Polkapets from "../Polkapets";
 import {  useSubstrateState } from '../substrate-lib'
@@ -56,10 +56,10 @@ const Home = () => {
     <div id="home" ref={contextRef}>
       <Hero list={hotDropsData} />
 
-      <p id="card-list-header-text"> Hot Drops </p>
+      {/* <p id="card-list-header-text"> Hot Drops </p>
       <div id="list-container">
         <CardList list={hotDropsData} />
-      </div>
+      </div> */}
       <Polkapets />
     </div>
   )

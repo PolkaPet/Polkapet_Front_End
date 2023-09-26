@@ -2,15 +2,12 @@ import React from 'react'
 import '../styles/Hero.css'
 import { useNavigate } from 'react-router-dom'
 import Header from './Header'
+import YoutubeEmbed from "./YoutubeEmbed";
 
 const Hero = () => {
   let navigate = useNavigate()
-
-  const goExplore = () => {
-    navigate('/explore')
-  }
   const goCreate = () => {
-    navigate('/create')
+    navigate('/mintnft')
   }
 
   return (
@@ -19,14 +16,10 @@ const Hero = () => {
 
       <Header />
 
-      <h1 id="header-text-first"> NFT </h1>
-      <h1 id="header-text-second"> Darkroom Marketplace</h1>
-      <h5 id="header-subtext">Craft, hunt and trade NFT's in the dark</h5>
-
+      <h1 id="header-text-first"> Polkapet </h1>
+      <h5 id="header-subtext">Welcome to the Limitless Creature World</h5>
+      <YoutubeEmbed embedId="-a8TKbGHCj8" />
       <div id="hero-buttons">
-        <button id="explore" onClick={goExplore}>
-          Explore
-        </button>
         <button id="create" onClick={goCreate}>
           Create
         </button>
