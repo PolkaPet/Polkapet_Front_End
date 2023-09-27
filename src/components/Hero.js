@@ -18,7 +18,7 @@ const Hero = () => {
 
       <h1 id="header-text-first"> Polkapet </h1>
       <h5 id="header-subtext">Welcome to the Limitless Creature World</h5>
-      <YoutubeEmbed embedId="-a8TKbGHCj8" />
+      <YoutubeEmbed embedId="FEjNzmv781s" />
       <div id="hero-buttons">
         <button id="create" onClick={goCreate}>
           Create
