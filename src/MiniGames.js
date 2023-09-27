@@ -10,7 +10,7 @@ import MiniGameCards from './polkapet/MiniGameCards'
 const parseMiniGame = ({ gameId, owner, description, reward, maxPlayer, blockDuration,finishBlock, status }) => ({
 gameId: gameId.toJSON(),
 owner: owner.toJSON(),
-description: description.toJSON(),
+description: description.toString(),
 reward: reward.toJSON(),
 maxPlayer: maxPlayer.toJSON(),
 blockDuration: blockDuration.toJSON(),

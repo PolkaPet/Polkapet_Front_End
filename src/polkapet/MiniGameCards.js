@@ -12,6 +12,7 @@ import {
 //import MinigameAvatar from './MinigameAvatar'
 import { useSubstrateState } from '../substrate-lib'
 import { TxButton } from '../substrate-lib/components'
+import subwalelet from '../../public/assets/logoPartner/partner_1.jpeg'
 
 // --- Transfer Modal ---
 
@@ -133,12 +134,13 @@ const MiniGameCard = props => {
   const isSelf = currentAccount.address === owner
 
   return (
-    <Card style={{width:"350px", height:"400px"}}>
+    <Card style={{width:"350px", height:"500px"}}>
       {isSelf && (
         <Label as="a" floating color="teal">
           Mine
         </Label>
       )}
+        <img src={subwalelet} width="100%" height="200" />
       <Card.Content>
         <Card.Meta style={{ fontSize: '.9em', overflowWrap: 'break-word' }}>
         gameId: {gameId}
@@ -169,9 +171,7 @@ const MiniGameCards = props => {
       <Message info>
         <Message.Header>
           No Minigame found here... Create one now!&nbsp;
-          <span role="img" aria-label="point-down">
-            👇
-          </span>
+       
         </Message.Header>
       </Message>
     )

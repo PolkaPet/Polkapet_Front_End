@@ -12,7 +12,7 @@ import PolkapetAvatar from './PolkapetAvatar'
 import { useSubstrateState } from '../substrate-lib'
 
 import { useNavigate } from 'react-router-dom'
-
+import "../styles/Home.css";
 // --- Transfer Modal ---
 
 
@@ -20,8 +20,8 @@ import { useNavigate } from 'react-router-dom'
 
 const PetCard = props => {
   const { polkapet } = props
-  const {id = null, dna = null, gender = null, price = null,  death, respawn, power, ovalPosition} = polkapet
-  const displayDna = dna && dna.toJSON()
+  const {id = null, dna = null, gender = null, price = null,  death, power } = polkapet
+
   const { currentAccount } = useSubstrateState()
   const isSelf = currentAccount.address === polkapet.owner
   let navigate = useNavigate()
@@ -35,20 +35,18 @@ const PetCard = props => {
       )}
       <PolkapetAvatar dna={dna.toU8a()} />
       <Card.Content>
-        <Card.Meta style={{ fontSize: '.9em', overflowWrap: 'break-word' }}>
-          DNA: {displayDna}
-        </Card.Meta>
+    
         <Card.Description>
-          <p style={{ overflowWrap: 'break-word' }}>Pet_id: {id}</p>
+          <p style={{ overflowWrap: 'break-word' }}>Pet Id:{id}</p>
           <p style={{ overflowWrap: 'break-word' }}>Gender: {gender}</p>
-          <p style={{ overflowWrap: 'break-word' }}>{"Death: "  + death  +" - " +"Respawn: " +respawn}</p>
-          <p style={{ overflowWrap: 'break-word' }}>{"Oval Position: " +ovalPosition +" - " +"Power: "  + power }</p>
+          <p style={{ overflowWrap: 'break-word' }}>{"Death: "  + death}</p>
+          <p style={{ overflowWrap: 'break-word' }}>{"Power: "  + power }</p>
           <p style={{ overflowWrap: 'break-word' }}>
-            Price: {price || 'Not For Sale'}
+          Price: {price? price +" LCW" :'Not For Sale'}
           </p>
         </Card.Description>
-        <button onClick={() => navigate('/detail', { state: { polkapet} })}>
-          View
+        <button  id="viewmore"  onClick={() => navigate('/detail', { state: { polkapet} })}>
+          View more
         </button>
       </Card.Content>
 
@@ -64,10 +62,8 @@ const PolkapetCards = props => {
     return (
       <Message info>
         <Message.Header>
-          No Kitty found here... Create one now!&nbsp;
-          <span role="img" aria-label="point-down">
-            👇
-          </span>
+          No Polkapet found here... Create one now!&nbsp;
+         
         </Message.Header>
       </Message>
     )

@@ -13,6 +13,7 @@ import { TxButton } from '../substrate-lib/components'
 import { useLocation } from 'react-router'
 import Header from '../components/Header'
 
+
 // --- Transfer Modal ---
 
 const TransferModal = props => {
@@ -306,28 +307,36 @@ const PolkapetCardsDetail = () => {
     <div>
          <div style={{ overflowWrap: 'break-word' , color:'white'}}>{status}</div>
     
-    <Card style={{width:"500px", height:"700px", top: "100px", left: "35%"}}>
+    <Card style={{width:"500px", height:"650px", top: "100px", left: "35%"}}>
       {isSelf && (
         <Label as="a" floating color="teal">
           Mine
         </Label>
       )}
+      <div style={{marginLeft: "50px"}}>
       <PolkapetAvatar dna={polkapet.dna} />
+      </div>
+      
       <Card.Content>
-        <Card.Meta style={{ fontSize: '.9em', overflowWrap: 'break-word' }}>
-          DNA: {polkapet.dna}
-        </Card.Meta>
+     
         <Card.Description>
-          <p style={{ overflowWrap: 'break-word' }}>Pet_id: {polkapet.id}</p>
-          {/* <p style={{ overflowWrap: 'break-word' }}>Gender: {gender}</p>
-          <p style={{ overflowWrap: 'break-word' }}>{"Death: "  + death  +" - " +"Respawn: " +respawn}</p>
-          <p style={{ overflowWrap: 'break-word' }}>{"Oval Position: " +ovalPosition +" - " +"Power: "  + power }</p> */}
-          <p style={{ overflowWrap: 'break-word' }}>
-            Price: {polkapet.price || 'Not For Sale'}
-          </p>
+          <p style={{ overflowWrap: 'break-word' , fontSize: "18px"}}>Pet Id: {polkapet.id}</p>
+          <p style={{ overflowWrap: 'break-word' , fontSize: "18px"}}>Gender: {polkapet.gender}</p>
+          <p style={{ overflowWrap: 'break-word' , fontSize: "18px"}}>{"Death:    "  + polkapet.death  +" - " +"Respawn:    " +polkapet.respawn}</p>
+          <p style={{ overflowWrap: 'break-word' ,fontSize: "18px"}}>{"Oval Position:   " + polkapet.ovalPosition +" - " +"Power: "  + polkapet.power }</p>
+         
+         
+
         </Card.Description>
+        <div style={{fontSize: "18px", marginTop: "15px"}}>Description:</div>
+
+        <div style={{fontSize: "16px", marginTop: "15px"}}>"Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",</div>
+      
       </Card.Content>
       <Card.Content extra style={{ textAlign: 'center' }}>
+      <p style={{ overflowWrap: 'break-word' ,fontSize: "18px","color": "black"}}>
+            Price: {polkapet.price? polkapet.price +" LCW" :'Not For Sale'}
+          </p>
         {polkapet.owner === currentAccount.address ? (
           <>
             <SetPrice polkapet={polkapet} setStatus={setStatus} />

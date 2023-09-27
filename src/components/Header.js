@@ -49,7 +49,7 @@ function Main() {
     <div>
       <div id="header">
         <Link to="/" id="logo">
-          Pokapet
+        Limitless Creature World
         </Link>
 
         <div id="link-containers">
