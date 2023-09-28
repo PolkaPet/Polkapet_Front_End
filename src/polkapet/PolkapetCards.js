@@ -25,6 +25,7 @@ const PetCard = props => {
   const isSelf = currentAccount.address === polkapet.owner;
   let navigate = useNavigate();
 
+    console.log("PolkapetCard: type :",typeof(death), "value : ",death);
   return (
     <Card style={{ width: '350px', height: '400px' }}>
       {isSelf && (
@@ -33,13 +34,13 @@ const PetCard = props => {
         </Label>
       )}
 
-      <PolkapetAvatar dna={dna.toU8a()} />
+      <PolkapetAvatar dna={dna.toU8a()} deadStatus={death} />
 
       <Card.Content>
         <Card.Description>
           <p style={{ overflowWrap: 'break-word' }}>Pet Id:{id}</p>
           <p style={{ overflowWrap: 'break-word' }}>Gender: {gender}</p>
-          <p style={{ overflowWrap: 'break-word' }}>{'Death: ' + death}</p>
+          {/* <p style={{ overflowWrap: 'break-word' }}>{'Death: ' + death}</p> */}
           <p style={{ overflowWrap: 'break-word' }}>{'Power: ' + power}</p>
           <p style={{ overflowWrap: 'break-word' }}>
             Price: {price ? price + ' LCW' : 'Not For Sale'}

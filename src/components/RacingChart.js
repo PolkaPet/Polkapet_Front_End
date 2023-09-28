@@ -52,6 +52,7 @@ function RacingChart({ gameId, players }) {
                 <div>Id: {petNumber}</div>{' '}
                 <PolkapetAvatar
                   dna={hexToU8a(petInfo?.dna)}
+                  deadStatus={petInfo?.death}
                   heightOuterStyle={48}
                   widthOuterStyle={48}
                   heightInnerStyle={48}
@@ -130,6 +131,7 @@ function RacingChart({ gameId, players }) {
                 <div> - Id: {item?.petNumber}</div>{' '}
                 <PolkapetAvatar
                   dna={hexToU8a(item?.dna)}
+                  deadStatus={item?.death}
                   heightOuterStyle={48}
                   widthOuterStyle={48}
                   heightInnerStyle={48}

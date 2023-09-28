@@ -309,7 +309,7 @@ const PolkapetCardsDetail = () => {
               </Label>
             )}
             <div style={{ marginLeft: '50px' }}>
-              <PolkapetAvatar dna={polkapet.dna} />
+              <PolkapetAvatar dna={polkapet.dna} deadStatus={polkapet.death} />
             </div>
 
             <Card.Content>
