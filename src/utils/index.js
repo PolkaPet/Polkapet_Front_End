@@ -1,3 +1,5 @@
+import { BN } from '@polkadot/util';
+ 
 export async function getOvalBostNumber(api) {
   const data = api && (await api.query.polkapetModule?.ovalBostNumber());
 
@@ -51,4 +53,14 @@ export function convertCamelCase(inputString) {
   return inputString
     .replace(/([a-z])([A-Z])/g, '$1 $2')
     .replace(/\b\w/g, f => f.toUpperCase());
+}
+
+export function convertBNtoNumber(inputString) {
+  if (typeof inputString !== 'string') return 0;
+
+  const inputFormatted = inputString?.replaceAll(',', '');
+
+  const numberInMil = new BN(inputFormatted).div(new BN(10 ** 6)).toString();
+
+  return numberInMil / 10 ** 12;
 }

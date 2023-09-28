@@ -21,6 +21,7 @@ import {
 import Header from '../components/Header';
 import { useParams } from 'react-router-dom';
 import {
+  convertBNtoNumber,
   getGameDetailById,
   getPlayersByGameId,
   getPolkapetsOwnedByAddress,
@@ -98,7 +99,7 @@ const MiniGameDetail = () => {
           <p>gameId: {gameData?.gameId}</p>
           <p>owner: {gameData?.owner}</p>
           <p>description: {gameData?.description}</p>
-          <p>reward: {gameData?.reward}</p>
+          <p>reward: {convertBNtoNumber(gameData?.reward)}</p>
           <p>maxPlayer: {gameData?.maxPlayer}</p>
           <p>blockDuration: {gameData?.blockDuration}</p>
           <p>finishBlock: {gameData?.finishBlock}</p>

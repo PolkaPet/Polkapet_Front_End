@@ -1,69 +1,22 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Button, Modal, Form } from 'semantic-ui-react';
 
-import { useSubstrateState } from '../substrate-lib';
 import { TxButton } from '../substrate-lib/components';
-import { BN, BN_ONE, BN_QUINTILL } from '@polkadot/util';
-
-const parseMiniGame = ({
-  gameId,
-  owner,
-  description,
-  reward,
-  maxPlayer,
-  blockDuration,
-  finishBlock,
-  status,
-}) => ({
-  gameId: gameId.toJSON(),
-  owner: owner.toJSON(),
-  description: description.toString(),
-  reward: reward.toJSON(),
-  maxPlayer: maxPlayer.toJSON(),
-  blockDuration: blockDuration.toJSON(),
-  finishBlock: finishBlock.toJSON(),
-  status: status.toJSON(),
-});
+import { BN, BN_BILLION } from '@polkadot/util';
 
 export default function CreateMinigame(props) {
-  const { api, keyring } = useSubstrateState();
-  const [miniGames, setMiniGames] = useState([]);
   const [status, setStatus] = useState('');
   const [description, setDescription] = useState(0);
   const [reward, setReward] = useState(0);
   const [maxPlayer, setMaxPlayer] = useState(0);
   const [blockDuration, setBlockDuration] = useState(0);
 
-  const subscribeCount = () => {
-    let unsub = null;
-
-    const asyncFetch = async () => {
-      unsub = await api.query.polkapetModule.lastMinigameId(async count => {
-        // Fetch all kitty keys
-        const entries = await api.query.polkapetModule.minigameById.entries();
-        const miniGamesMap = entries.map(entry => {
-          return {
-            id: entry[0],
-            ...parseMiniGame(entry[1].unwrap()),
-          };
-        });
-        setMiniGames(miniGamesMap);
-      });
-    };
-
-    asyncFetch();
-
-    return () => {
-      unsub && unsub();
-    };
-  };
-
-  useEffect(subscribeCount, [api, keyring, miniGames]);
-
   const rewardBN = useMemo(
-    () => new BN(reward * BN_ONE).mul(BN_QUINTILL).toString(),
+    () => new BN(reward * BN_BILLION).mul(BN_BILLION).toString(),
     [reward]
   );
+
+  console.log('rewardBN', rewardBN);
 
   return (
     <>

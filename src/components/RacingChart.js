@@ -6,6 +6,7 @@ import { getPolkapetsById, getResultByGameId } from '../utils';
 import useInterval from 'use-interval';
 import PolkapetAvatar from '../polkapet/PolkapetAvatar';
 import { hexToU8a } from '@polkadot/util';
+import { Image } from 'semantic-ui-react';
 
 const color = [
   '#50c4fe',
@@ -25,25 +26,26 @@ function RacingChart({ gameId }) {
     let num = await getResultByGameId(api, gameId);
     console.log('num A', num);
 
-    Promise.all(
-      num?.map(async ({ petNumber, point }, idx) => {
-        const petInfo = await getPolkapetsById(api, petNumber);
-        console.log('petInfo A', petInfo);
-        return {
-          id: idx + 1,
-          title: (
-            <PolkapetAvatar
-              dna={hexToU8a(petInfo?.dna)}
-              heightOuterStyle={64}
-              widthOuterStyle={'auto'}
-              heightInnerStyle={60}
-            />
-          ),
-          value: point,
-          color: color[idx],
-        };
-      })
-    ).then(arr => setPoint(arr));
+    num &&
+      Promise.all(
+        num?.map(async ({ petNumber, point }, idx) => {
+          const petInfo = await getPolkapetsById(api, petNumber);
+          console.log('petInfo A', petInfo);
+          return {
+            id: idx + 1,
+            title: (
+              <PolkapetAvatar
+                dna={hexToU8a(petInfo?.dna)}
+                heightOuterStyle={64}
+                widthOuterStyle={'auto'}
+                heightInnerStyle={60}
+              />
+            ),
+            value: point,
+            color: color[idx],
+          };
+        })
+      ).then(arr => setPoint(arr));
 
     // setPoint([...num]);
     console.log('num', num);
@@ -58,7 +60,7 @@ function RacingChart({ gameId }) {
 
   return (
     <div>
-      {point && (
+      {point ? (
         <ChartRace
           data={point}
           backgroundColor="#000"
@@ -71,6 +73,12 @@ function RacingChart({ gameId }) {
             font: 'normal 400 11px Arial',
             color: 'rgba(255,255,255, 0.42)',
           }}
+        />
+      ) : (
+        <Image
+          fluid
+          size="large"
+          src="https://react.semantic-ui.com/images/wireframe/image.png"
         />
       )}
 
