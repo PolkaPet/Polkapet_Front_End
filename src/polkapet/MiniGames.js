@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Grid } from 'semantic-ui-react';
 
-import { useSubstrateState } from './substrate-lib';
-import MiniGameCards from './polkapet/MiniGameCards';
+import { useSubstrateState } from '../substrate-lib';
+import MiniGameCards from './MiniGameCards';
 
 const parseMiniGame = ({
   gameId,

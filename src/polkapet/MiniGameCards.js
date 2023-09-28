@@ -1,5 +1,13 @@
 import React from 'react';
-import { Button, Card, Grid, Message, Label } from 'semantic-ui-react';
+import {
+  Button,
+  Card,
+  Grid,
+  Message,
+  Label,
+  Modal,
+  Form,
+} from 'semantic-ui-react';
 
 //import MinigameAvatar from './MinigameAvatar'
 import { useSubstrateState } from '../substrate-lib';
@@ -68,6 +76,7 @@ import subwalelet from '../../public/assets/logoPartner/partner_1.jpeg';
 //   )
 // }
 
+// eslint-disable-next-line no-unused-vars
 const EmpowerPet = props => {
   const { miniGame, setStatus } = props;
   const [open, setOpen] = React.useState(false);
@@ -134,7 +143,7 @@ const MiniGameCard = props => {
           Mine
         </Label>
       )}
-      <img src={subwalelet} width="100%" height="200" />
+      <img alt="subwalelet" src={subwalelet} width="100%" height="200" />
       <Card.Content>
         <Card.Meta style={{ fontSize: '.9em', overflowWrap: 'break-word' }}>
           gameId: {gameId}
