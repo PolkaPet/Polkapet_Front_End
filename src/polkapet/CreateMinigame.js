@@ -1,63 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Button, Modal, Form } from 'semantic-ui-react';
 
-import { useSubstrateState } from '../substrate-lib';
 import { TxButton } from '../substrate-lib/components';
-
-const parseMiniGame = ({
-  gameId,
-  owner,
-  description,
-  reward,
-  maxPlayer,
-  blockDuration,
-  finishBlock,
-  status,
-}) => ({
-  gameId: gameId.toJSON(),
-  owner: owner.toJSON(),
-  description: description.toString(),
-  reward: reward.toJSON(),
-  maxPlayer: maxPlayer.toJSON(),
-  blockDuration: blockDuration.toJSON(),
-  finishBlock: finishBlock.toJSON(),
-  status: status.toJSON(),
-});
+import { BN, BN_BILLION } from '@polkadot/util';
 
 export default function CreateMinigame(props) {
-  const { api, keyring } = useSubstrateState();
-  const [miniGames, setminiGames] = useState([]);
   const [status, setStatus] = useState('');
-  const [description, setdescription] = useState(0);
-  const [reward, setreward] = useState(0);
-  const [maxPlayer, setmaxPlayer] = useState(0);
-  const [blockDuration, setblockDuration] = useState(0);
+  const [description, setDescription] = useState(0);
+  const [reward, setReward] = useState(0);
+  const [maxPlayer, setMaxPlayer] = useState(0);
+  const [blockDuration, setBlockDuration] = useState(0);
 
-  const subscribeCount = () => {
-    let unsub = null;
+  const rewardBN = useMemo(
+    () => new BN(reward * BN_BILLION).mul(BN_BILLION).toString(),
+    [reward]
+  );
 
-    const asyncFetch = async () => {
-      unsub = await api.query.polkapetModule.lastMinigameId(async count => {
-        // Fetch all kitty keys
-        const entries = await api.query.polkapetModule.minigameById.entries();
-        const miniGamesMap = entries.map(entry => {
-          return {
-            id: entry[0],
-            ...parseMiniGame(entry[1].unwrap()),
-          };
-        });
-        setminiGames(miniGamesMap);
-      });
-    };
-
-    asyncFetch();
-
-    return () => {
-      unsub && unsub();
-    };
-  };
-
-  useEffect(subscribeCount, [api, keyring, miniGames]);
+  console.log('rewardBN', rewardBN);
 
   return (
     <>
@@ -76,28 +35,28 @@ export default function CreateMinigame(props) {
               label="description"
               placeholder="Enter description"
               type="text"
-              onChange={(_, { value }) => setdescription(value)}
+              onChange={(_, { value }) => setDescription(value)}
             />
             <Form.Input
               fluid
               label="reward"
               placeholder="Enter reward"
               type="number"
-              onChange={(_, { value }) => setreward(value)}
+              onChange={(_, { value }) => setReward(value)}
             />
             <Form.Input
               fluid
               label="maxPlayer"
               placeholder="Enter maxPlayer"
               type="number"
-              onChange={(_, { value }) => setmaxPlayer(value)}
+              onChange={(_, { value }) => setMaxPlayer(value)}
             />
             <Form.Input
               fluid
               label="blockDuration"
               placeholder="Enter blockDuration"
               type="number"
-              onChange={(_, { value }) => setblockDuration(value)}
+              onChange={(_, { value }) => setBlockDuration(value)}
             />
           </Form>
         </Modal.Content>
@@ -112,7 +71,7 @@ export default function CreateMinigame(props) {
             attrs={{
               palletRpc: 'polkapetModule',
               callable: 'createMinigame',
-              inputParams: [description, reward, maxPlayer, blockDuration],
+              inputParams: [description, rewardBN, maxPlayer, blockDuration],
               paramFields: [true, true, true, true],
             }}
           />

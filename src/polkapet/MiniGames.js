@@ -53,7 +53,7 @@ export default function MiniGames(props) {
     };
   };
 
-  useEffect(subscribeCount, [api, keyring, miniGames]);
+  useEffect(subscribeCount, [api, keyring]);
 
   return (
     <Grid.Column width={16}>

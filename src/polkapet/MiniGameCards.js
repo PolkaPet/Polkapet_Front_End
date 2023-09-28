@@ -14,6 +14,7 @@ import { useSubstrateState } from '../substrate-lib';
 import { TxButton } from '../substrate-lib/components';
 import { useNavigate } from 'react-router-dom';
 import subwalelet from '../../public/assets/logoPartner/partner_1.jpeg';
+import { convertBNtoNumber } from '../utils';
 
 // --- Transfer Modal ---
 
@@ -154,7 +155,9 @@ const MiniGameCard = props => {
           <p style={{ overflowWrap: 'break-word' }}>
             description: {description}
           </p>
-          <p style={{ overflowWrap: 'break-word' }}>reward: {reward}</p>
+          <p style={{ overflowWrap: 'break-word' }}>
+            reward: {convertBNtoNumber(reward)}
+          </p>
         </Card.Description>
       </Card.Content>
       <Card.Content extra style={{ textAlign: 'center' }}>

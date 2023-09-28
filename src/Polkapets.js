@@ -43,7 +43,7 @@ export default function Polkapets(props) {
         // Fetch all polkapet keys
         const entries = await api.query.polkapetModule.polkapets.entries();
         const polkapetsMap = entries.map(entry => {
-          console.log(entry[1].unwrap());
+
           return {
             id: convertToPolkapetHash(entry),
             ...parsePolkapet(entry[1].unwrap()),
@@ -60,7 +60,7 @@ export default function Polkapets(props) {
     };
   };
 
-  useEffect(subscribeCount, [api, keyring, polkapets]);
+  useEffect(subscribeCount, [api, keyring]);
 
   return (
     <Grid.Column width={16}>
