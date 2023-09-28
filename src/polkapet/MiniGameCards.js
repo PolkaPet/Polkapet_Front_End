@@ -1,18 +1,19 @@
-import React from 'react'
+import React from 'react';
 import {
   Button,
   Card,
   Grid,
   Message,
+  Label,
   Modal,
   Form,
-  Label,
-} from 'semantic-ui-react'
+} from 'semantic-ui-react';
 
 //import MinigameAvatar from './MinigameAvatar'
-import { useSubstrateState } from '../substrate-lib'
-import { TxButton } from '../substrate-lib/components'
-import subwalelet from '../../public/assets/logoPartner/partner_1.jpeg'
+import { useSubstrateState } from '../substrate-lib';
+import { TxButton } from '../substrate-lib/components';
+import { useNavigate } from 'react-router-dom';
+import subwalelet from '../../public/assets/logoPartner/partner_1.jpeg';
 
 // --- Transfer Modal ---
 
@@ -75,17 +76,15 @@ import subwalelet from '../../public/assets/logoPartner/partner_1.jpeg'
 //   )
 // }
 
-
+// eslint-disable-next-line no-unused-vars
 const EmpowerPet = props => {
-  const { miniGame, setStatus } = props
-  const [open, setOpen] = React.useState(false)
+  const { miniGame, setStatus } = props;
+  const [open, setOpen] = React.useState(false);
 
   const confirmAndClose = unsub => {
-    setOpen(false)
-    if (unsub && typeof unsub === 'function') unsub()
-  }
-
-
+    setOpen(false);
+    if (unsub && typeof unsub === 'function') unsub();
+  };
 
   return (
     <Modal
@@ -122,59 +121,62 @@ const EmpowerPet = props => {
         />
       </Modal.Actions>
     </Modal>
-  )
-}
+  );
+};
 // --- About Pet Card ---
 
 const MiniGameCard = props => {
-  const { miniGame, setStatus } = props
-  const {gameId, owner, status, description, reward} = miniGame
-//  const {gameId, owner, description, reward, maxPlayer, blockDuration,finishBlock, status} = miniGame
-  const { currentAccount } = useSubstrateState()
-  const isSelf = currentAccount.address === owner
+  const { miniGame } = props;
+  const { gameId, owner, status, description, reward } = miniGame;
+  //  const {gameId, owner, description, reward, maxPlayer, blockDuration,finishBlock, status} = miniGame
+  const { currentAccount } = useSubstrateState();
+  const isSelf = currentAccount.address === owner;
+  let navigate = useNavigate();
 
+  function handleClick(gameId) {
+    navigate(`/minigame/${gameId}`);
+  }
   return (
-    <Card style={{width:"350px", height:"500px"}}>
+    <Card style={{ width: '350px', height: '500px' }}>
       {isSelf && (
         <Label as="a" floating color="teal">
           Mine
         </Label>
       )}
-        <img src={subwalelet} width="100%" height="200" />
+      <img alt="subwalelet" src={subwalelet} width="100%" height="200" />
       <Card.Content>
         <Card.Meta style={{ fontSize: '.9em', overflowWrap: 'break-word' }}>
-        gameId: {gameId}
+          gameId: {gameId}
         </Card.Meta>
         <Card.Description>
           <p style={{ overflowWrap: 'break-word' }}>gameId: {gameId}</p>
           <p style={{ overflowWrap: 'break-word' }}>status: {status}</p>
-          <p style={{ overflowWrap: 'break-word' }}>description: {description}</p>
+          <p style={{ overflowWrap: 'break-word' }}>
+            description: {description}
+          </p>
           <p style={{ overflowWrap: 'break-word' }}>reward: {reward}</p>
         </Card.Description>
       </Card.Content>
       <Card.Content extra style={{ textAlign: 'center' }}>
- 
-
-            <EmpowerPet miniGame={miniGame} setStatus={setStatus} />
-         
-     
+        <Button basic color="green" onClick={() => handleClick(gameId)}>
+          View Game
+        </Button>{' '}
       </Card.Content>
     </Card>
-  )
-}
+  );
+};
 
 const MiniGameCards = props => {
-  const { miniGames, setStatus } = props
+  const { miniGames, setStatus } = props;
 
   if (miniGames.length === 0) {
     return (
       <Message info>
         <Message.Header>
           No Minigame found here... Create one now!&nbsp;
-       
         </Message.Header>
       </Message>
-    )
+    );
   }
 
   return (
@@ -185,8 +187,7 @@ const MiniGameCards = props => {
         </Grid.Column>
       ))}
     </Grid>
-  )
-}
+  );
+};
 
-export default MiniGameCards
-
+export default MiniGameCards;

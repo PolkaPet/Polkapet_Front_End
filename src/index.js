@@ -1,26 +1,20 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import './index.css'
-import App from './App'
-import reportWebVitals from './reportWebVitals'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import Home from './pages/Home'
-import Create from './pages/Create'
-import Explore from './pages/Explore'
-import { SubstrateContextProvider } from './substrate-lib'
-import MintNFT from './pages/MintNFT'
-import MiniGame from './pages/MiniGame'
-import Game from './pages/Game'
-
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './index.css';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Home from './pages/Home';
+import { SubstrateContextProvider } from './substrate-lib';
+import MintNFT from './pages/MintNFT';
+import MiniGame from './pages/MiniGame';
+import Game from './pages/Game';
 
 //dapp
 
-import PolkapetCardsDetail from './polkapet/PolkapetCardsDetail'
-
+import WorldEnv from './pages/WorldEnv';
+import MiniGameDetail from './pages/MiniGameDetail';
+import PolkapetCardsDetail from './polkapet/PolkapetCardsDetail';
 
 ReactDOM.render(
-
-  
   <BrowserRouter>
     <Routes>
       {/* <Route path="/" element={<SubstrateContextProvide config={{}}><Home /></SubstrateContextProvide>} />
@@ -33,26 +27,7 @@ ReactDOM.render(
         path="/"
         element={
           <SubstrateContextProvider>
-            {' '}
-            <Home />{' '}
-          </SubstrateContextProvider>
-        }
-      />
-      <Route
-        path="/"
-        element={
-          <SubstrateContextProvider>
-            {' '}
-            <Create />{' '}
-          </SubstrateContextProvider>
-        }
-      />
-      <Route
-        path="/"
-        element={
-          <SubstrateContextProvider>
-            {' '}
-            <Explore />{' '}
+            <Home />
           </SubstrateContextProvider>
         }
       />
@@ -69,8 +44,7 @@ ReactDOM.render(
         path="/game"
         element={
           <SubstrateContextProvider>
-            {' '}
-            <Game />{' '}
+            <Game />
           </SubstrateContextProvider>
         }
       />
@@ -78,29 +52,36 @@ ReactDOM.render(
         path="/mintnft"
         element={
           <SubstrateContextProvider>
-            {' '}
-            <MintNFT />{' '}
+            <MintNFT />
+          </SubstrateContextProvider>
+        }
+      />
+
+      <Route
+        path="/world-env"
+        element={
+          <SubstrateContextProvider>
+            <WorldEnv />
           </SubstrateContextProvider>
         }
       />
       <Route
-        path="/createminigame"
+        path="/minigame/create"
         element={
           <SubstrateContextProvider>
-            {' '}
-            <MiniGame />{' '}
+            <MiniGame />
           </SubstrateContextProvider>
         }
       />
       <Route
-        path="/blockchaininfo"
+        path="/minigame/:gameId"
         element={
           <SubstrateContextProvider>
-            {' '}
-            <App />{' '}
+            <MiniGameDetail />
           </SubstrateContextProvider>
         }
       />
+
       {/* <Route path="/create" element={<Create />} />
         <Route path="/explore" element={<App />} />
         <Route path="/detail"element={<Explore />} />
@@ -109,9 +90,4 @@ ReactDOM.render(
     </Routes>
   </BrowserRouter>,
   document.getElementById('root')
-)
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals()
+);

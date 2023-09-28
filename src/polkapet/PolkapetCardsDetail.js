@@ -1,35 +1,28 @@
-import React, { useState } from 'react'
-import {
-  Button,
-  Card,
-  Modal,
-  Form,
-  Label,
-} from 'semantic-ui-react'
+import React, { useState } from 'react';
+import { Button, Card, Modal, Form, Label } from 'semantic-ui-react';
 
-import PolkapetAvatar from './PolkapetAvatar'
-import { useSubstrateState } from '../substrate-lib'
-import { TxButton } from '../substrate-lib/components'
-import { useLocation } from 'react-router'
-import Header from '../components/Header'
-
+import PolkapetAvatar from './PolkapetAvatar';
+import { useSubstrateState } from '../substrate-lib';
+import { TxButton } from '../substrate-lib/components';
+import { useLocation } from 'react-router';
+import Header from '../components/Header';
 
 // --- Transfer Modal ---
 
 const TransferModal = props => {
-  const { polkapet, setStatus } = props
-  const [open, setOpen] = React.useState(false)
-  const [formValue, setFormValue] = React.useState({})
+  const { polkapet, setStatus } = props;
+  const [open, setOpen] = React.useState(false);
+  const [formValue, setFormValue] = React.useState({});
 
   const formChange = key => (ev, el) => {
-    setFormValue({ ...formValue, [key]: el.value })
-  }
+    setFormValue({ ...formValue, [key]: el.value });
+  };
 
   const confirmAndClose = unsub => {
-    console.log(formValue.target)
-    setOpen(false)
-    if (unsub && typeof unsub === 'function') unsub()
-  }
+    console.log(formValue.target);
+    setOpen(false);
+    if (unsub && typeof unsub === 'function') unsub();
+  };
 
   return (
     <Modal
@@ -72,20 +65,20 @@ const TransferModal = props => {
         />
       </Modal.Actions>
     </Modal>
-  )
-}
+  );
+};
 
 // --- Set Price ---
 
 const SetPrice = props => {
-  const { polkapet, setStatus } = props
-  const [open, setOpen] = React.useState(false)
-  const [formValue, setFormValue] = useState(0)
+  const { polkapet, setStatus } = props;
+  const [open, setOpen] = React.useState(false);
+  const [formValue, setFormValue] = useState(0);
 
   const confirmAndClose = unsub => {
-    setOpen(false)
-    if (unsub && typeof unsub === 'function') unsub()
-  }
+    setOpen(false);
+    if (unsub && typeof unsub === 'function') unsub();
+  };
 
   return (
     <Modal
@@ -129,22 +122,22 @@ const SetPrice = props => {
         />
       </Modal.Actions>
     </Modal>
-  )
-}
+  );
+};
 
 // --- Buy Pet ---
 
 const BuyPolkapet = props => {
-  const { polkapet, setStatus } = props
-  const [open, setOpen] = React.useState(false)
+  const { polkapet, setStatus } = props;
+  const [open, setOpen] = React.useState(false);
 
   const confirmAndClose = unsub => {
-    setOpen(false)
-    if (unsub && typeof unsub === 'function') unsub()
-  }
+    setOpen(false);
+    if (unsub && typeof unsub === 'function') unsub();
+  };
 
   if (!polkapet.price) {
-    return <></>
+    return <></>;
   }
 
   return (
@@ -183,10 +176,8 @@ const BuyPolkapet = props => {
         />
       </Modal.Actions>
     </Modal>
-  )
-}
-
-
+  );
+};
 
 // const RemovePrice = props => {
 //   const { pet, setStatus } = props
@@ -239,15 +230,13 @@ const BuyPolkapet = props => {
 //   )
 // }
 const EmpowerPet = props => {
-  const { polkapet, setStatus } = props
-  const [open, setOpen] = React.useState(false)
+  const { polkapet, setStatus } = props;
+  const [open, setOpen] = React.useState(false);
 
   const confirmAndClose = unsub => {
-    setOpen(false)
-    if (unsub && typeof unsub === 'function') unsub()
-  }
-
-
+    setOpen(false);
+    if (unsub && typeof unsub === 'function') unsub();
+  };
 
   return (
     <Modal
@@ -284,78 +273,113 @@ const EmpowerPet = props => {
         />
       </Modal.Actions>
     </Modal>
-  )
-}
+  );
+};
 // --- About Pet Card ---
 
 const PolkapetCardsDetail = () => {
   const location = useLocation();
 
-  const { polkapet} = location.state || {};
-  const [status, setStatus] = useState('')
-  
-  
+  const { polkapet } = location.state || {};
+  const [status, setStatus] = useState('');
 
-  const { currentAccount } = useSubstrateState()
-  const isSelf = currentAccount.address === polkapet.owner
+  const { currentAccount } = useSubstrateState();
+  const isSelf = currentAccount.address === polkapet.owner;
 
   return (
     <div>
-    <Header />
-    <div id="nft-detail-card-wrapper">
+      <Header />
+      <div id="nft-detail-card-wrapper">
+        <div>
+          <div style={{ overflowWrap: 'break-word', color: 'white' }}>
+            {status}
+          </div>
 
-    <div>
-         <div style={{ overflowWrap: 'break-word' , color:'white'}}>{status}</div>
-    
-    <Card style={{width:"500px", height:"650px", top: "100px", left: "35%"}}>
-      {isSelf && (
-        <Label as="a" floating color="teal">
-          Mine
-        </Label>
-      )}
-      <div style={{marginLeft: "50px"}}>
-      <PolkapetAvatar dna={polkapet.dna} />
+          <Card
+            style={{
+              width: '500px',
+              height: '650px',
+              top: '100px',
+              left: '35%',
+            }}
+          >
+            {isSelf && (
+              <Label as="a" floating color="teal">
+                Mine
+              </Label>
+            )}
+            <div style={{ marginLeft: '50px' }}>
+              <PolkapetAvatar dna={polkapet.dna} />
+            </div>
+
+            <Card.Content>
+              <Card.Description>
+                <p style={{ overflowWrap: 'break-word', fontSize: '18px' }}>
+                  Pet Id: {polkapet.id}
+                </p>
+                <p style={{ overflowWrap: 'break-word', fontSize: '18px' }}>
+                  Gender: {polkapet.gender}
+                </p>
+                <p style={{ overflowWrap: 'break-word', fontSize: '18px' }}>
+                  {'Death:    ' +
+                    polkapet.death +
+                    ' - ' +
+                    'Respawn:    ' +
+                    polkapet.respawn}
+                </p>
+                <p style={{ overflowWrap: 'break-word', fontSize: '18px' }}>
+                  {'Oval Position:   ' +
+                    polkapet.ovalPosition +
+                    ' - ' +
+                    'Power: ' +
+                    polkapet.power}
+                </p>
+              </Card.Description>
+              <div style={{ fontSize: '18px', marginTop: '15px' }}>
+                Description:
+              </div>
+
+              <div style={{ fontSize: '16px', marginTop: '15px' }}>
+                "Lorem Ipsum has been the industry's standard dummy text ever
+                since the 1500s, when an unknown printer took a galley of type
+                and scrambled it to make a type specimen book. It has survived
+                not only five centuries, but also the leap into electronic
+                typesetting, remaining essentially unchanged. It was popularised
+                in the 1960s with the release of Letraset sheets containing
+                Lorem Ipsum passages, and more recently with desktop publishing
+                software like Aldus PageMaker including versions of Lorem
+                Ipsum.",
+              </div>
+            </Card.Content>
+            <Card.Content extra style={{ textAlign: 'center' }}>
+              <p
+                style={{
+                  overflowWrap: 'break-word',
+                  fontSize: '18px',
+                  color: 'black',
+                }}
+              >
+                Price:{' '}
+                {polkapet.price ? polkapet.price + ' LCW' : 'Not For Sale'}
+              </p>
+              {polkapet.owner === currentAccount.address ? (
+                <>
+                  <SetPrice polkapet={polkapet} setStatus={setStatus} />
+                  <EmpowerPet polkapet={polkapet} setStatus={setStatus} />
+                  {/* <RemovePrice pet={pet} setStatus={setStatus} /> */}
+                  <TransferModal polkapet={polkapet} setStatus={setStatus} />
+                </>
+              ) : (
+                <>
+                  <BuyPolkapet polkapet={polkapet} setStatus={setStatus} />
+                </>
+              )}
+            </Card.Content>
+          </Card>
+        </div>
       </div>
-      
-      <Card.Content>
-     
-        <Card.Description>
-          <p style={{ overflowWrap: 'break-word' , fontSize: "18px"}}>Pet Id: {polkapet.id}</p>
-          <p style={{ overflowWrap: 'break-word' , fontSize: "18px"}}>Gender: {polkapet.gender}</p>
-          <p style={{ overflowWrap: 'break-word' , fontSize: "18px"}}>{"Death:    "  + polkapet.death  +" - " +"Respawn:    " +polkapet.respawn}</p>
-          <p style={{ overflowWrap: 'break-word' ,fontSize: "18px"}}>{"Oval Position:   " + polkapet.ovalPosition +" - " +"Power: "  + polkapet.power }</p>
-         
-         
-
-        </Card.Description>
-        <div style={{fontSize: "18px", marginTop: "15px"}}>Description:</div>
-
-        <div style={{fontSize: "16px", marginTop: "15px"}}>"Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",</div>
-      
-      </Card.Content>
-      <Card.Content extra style={{ textAlign: 'center' }}>
-      <p style={{ overflowWrap: 'break-word' ,fontSize: "18px","color": "black"}}>
-            Price: {polkapet.price? polkapet.price +" LCW" :'Not For Sale'}
-          </p>
-        {polkapet.owner === currentAccount.address ? (
-          <>
-            <SetPrice polkapet={polkapet} setStatus={setStatus} />
-            <EmpowerPet polkapet={polkapet} setStatus={setStatus} />
-            {/* <RemovePrice pet={pet} setStatus={setStatus} /> */}
-            <TransferModal polkapet={polkapet} setStatus={setStatus} />
-          </>
-        ) : (
-          <>
-            <BuyPolkapet polkapet={polkapet} setStatus={setStatus} />
-          </>
-        )}
-      </Card.Content>
-    </Card>
     </div>
-    </div>
-    </div>
-  )
-}
+  );
+};
 
-
-export default PolkapetCardsDetail
+export default PolkapetCardsDetail;

@@ -1,14 +1,15 @@
-import React from 'react'
-import '../styles/Hero.css'
-import { useNavigate } from 'react-router-dom'
-import Header from './Header'
-import YoutubeEmbed from "./YoutubeEmbed";
+/* eslint-disable no-unused-vars */
+import React from 'react';
+import '../styles/Hero.css';
+import { useNavigate } from 'react-router-dom';
+import Header from './Header';
+import YoutubeEmbed from './YoutubeEmbed';
 
 const Hero = () => {
-  let navigate = useNavigate()
+  let navigate = useNavigate();
   const goCreate = () => {
-    navigate('/mintnft')
-  }
+    navigate('/mintnft');
+  };
 
   return (
     <div id="hero">
@@ -25,7 +26,7 @@ const Hero = () => {
         </button>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Hero
+export default Hero;

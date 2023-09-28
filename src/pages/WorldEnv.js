@@ -1,14 +1,13 @@
 import React, { createRef } from 'react'
 import '../styles/Home.css'
-
-import MiniGames from '../polkapet/MiniGames'
-import CreateMinigame from '../polkapet/CreateMinigame'
 import { useSubstrateState } from '../substrate-lib'
 import { Dimmer, Loader, Grid, Message } from 'semantic-ui-react'
 
 import Header from '../components/Header'
+import Events from '../components/Events'
+import OvalBostNumber from '../components/OvalBostNumber'
 
-const Home = () => {
+const WorldEnv = () => {
   const { apiState, apiError, keyringState } = useSubstrateState()
 
   const loader = text => (
@@ -45,13 +44,18 @@ const Home = () => {
   return (
     <div id="home" ref={contextRef}>
       <Header />
-      <div style={{ marginTop: '90px' }}>
-        <CreateMinigame />
+      <div style={{ color: '#fff', marginTop: '90px' }}>
+        <Grid columns={2} stackable>
+          <Grid.Column>
+            <OvalBostNumber />
+          </Grid.Column>
+          <Grid.Column>
+            <Events />
+          </Grid.Column>
+        </Grid>
       </div>
-
-      <MiniGames />
     </div>
   )
 }
 
-export default Home
+export default WorldEnv
