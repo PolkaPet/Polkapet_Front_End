@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react'
-import { Grid } from 'semantic-ui-react'
+import React, { useEffect, useState } from 'react';
+import { Grid } from 'semantic-ui-react';
 
-import { useSubstrateState } from '../substrate-lib'
-import MiniGameCards from './MiniGameCards'
+import { useSubstrateState } from './substrate-lib';
+import MiniGameCards from './polkapet/MiniGameCards';
 
 const parseMiniGame = ({
   gameId,
@@ -22,38 +22,38 @@ const parseMiniGame = ({
   blockDuration: blockDuration.toJSON(),
   finishBlock: finishBlock.toJSON(),
   status: status.toJSON(),
-})
+});
 
 export default function MiniGames(props) {
-  const { api, keyring } = useSubstrateState()
-  const [miniGames, setminiGames] = useState([])
-  const [status, setStatus] = useState('')
+  const { api, keyring } = useSubstrateState();
+  const [miniGames, setminiGames] = useState([]);
+  const [status, setStatus] = useState('');
 
   const subscribeCount = () => {
-    let unsub = null
+    let unsub = null;
 
     const asyncFetch = async () => {
       unsub = await api.query.polkapetModule.lastMinigameId(async count => {
         // Fetch all kitty keys
-        const entries = await api.query.polkapetModule.minigameById.entries()
+        const entries = await api.query.polkapetModule.minigameById.entries();
         const miniGamesMap = entries.map(entry => {
           return {
             id: entry[0],
             ...parseMiniGame(entry[1].unwrap()),
-          }
-        })
-        setminiGames(miniGamesMap)
-      })
-    }
+          };
+        });
+        setminiGames(miniGamesMap);
+      });
+    };
 
-    asyncFetch()
+    asyncFetch();
 
     return () => {
-      unsub && unsub()
-    }
-  }
+      unsub && unsub();
+    };
+  };
 
-  useEffect(subscribeCount, [api, keyring, miniGames])
+  useEffect(subscribeCount, [api, keyring, miniGames]);
 
   return (
     <Grid.Column width={16}>
@@ -61,5 +61,5 @@ export default function MiniGames(props) {
       <MiniGameCards miniGames={miniGames} setStatus={setStatus} />
       <div style={{ overflowWrap: 'break-word', color: 'white' }}>{status}</div>
     </Grid.Column>
-  )
+  );
 }

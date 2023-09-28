@@ -1,17 +1,18 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import './index.css'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import Home from './pages/Home'
-import { SubstrateContextProvider } from './substrate-lib'
-import MintNFT from './pages/MintNFT'
-import MiniGame from './pages/MiniGame'
-import Game from './pages/Game'
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './index.css';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Home from './pages/Home';
+import { SubstrateContextProvider } from './substrate-lib';
+import MintNFT from './pages/MintNFT';
+import MiniGame from './pages/MiniGame';
+import Game from './pages/Game';
 
 //dapp
 
-import WorldEnv from './pages/WorldEnv'
-import MiniGameDetail from './pages/MiniGameDetail'
+import WorldEnv from './pages/WorldEnv';
+import MiniGameDetail from './pages/MiniGameDetail';
+import PolkapetCardsDetail from './polkapet/PolkapetCardsDetail';
 
 ReactDOM.render(
   <BrowserRouter>
@@ -30,7 +31,15 @@ ReactDOM.render(
           </SubstrateContextProvider>
         }
       />
-
+      <Route
+        path="/detail"
+        element={
+          <SubstrateContextProvider>
+            {' '}
+            <PolkapetCardsDetail />{' '}
+          </SubstrateContextProvider>
+        }
+      />
       <Route
         path="/game"
         element={
@@ -81,4 +90,4 @@ ReactDOM.render(
     </Routes>
   </BrowserRouter>,
   document.getElementById('root')
-)
+);

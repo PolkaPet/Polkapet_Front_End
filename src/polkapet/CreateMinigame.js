@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react'
-import { Button, Modal, Form } from 'semantic-ui-react'
+import React, { useEffect, useState } from 'react';
+import { Button, Modal, Form } from 'semantic-ui-react';
 
-import { useSubstrateState } from '../substrate-lib'
-import { TxButton } from '../substrate-lib/components'
+import { useSubstrateState } from '../substrate-lib';
+import { TxButton } from '../substrate-lib/components';
 
 const parseMiniGame = ({
   gameId,
@@ -16,48 +16,48 @@ const parseMiniGame = ({
 }) => ({
   gameId: gameId.toJSON(),
   owner: owner.toJSON(),
-  description: description.toJSON(),
+  description: description.toString(),
   reward: reward.toJSON(),
   maxPlayer: maxPlayer.toJSON(),
   blockDuration: blockDuration.toJSON(),
   finishBlock: finishBlock.toJSON(),
   status: status.toJSON(),
-})
+});
 
 export default function CreateMinigame(props) {
-  const { api, keyring } = useSubstrateState()
-  const [miniGames, setminiGames] = useState([])
-  const [status, setStatus] = useState('')
-  const [description, setdescription] = useState(0)
-  const [reward, setreward] = useState(0)
-  const [maxPlayer, setmaxPlayer] = useState(0)
-  const [blockDuration, setblockDuration] = useState(0)
+  const { api, keyring } = useSubstrateState();
+  const [miniGames, setminiGames] = useState([]);
+  const [status, setStatus] = useState('');
+  const [description, setdescription] = useState(0);
+  const [reward, setreward] = useState(0);
+  const [maxPlayer, setmaxPlayer] = useState(0);
+  const [blockDuration, setblockDuration] = useState(0);
 
   const subscribeCount = () => {
-    let unsub = null
+    let unsub = null;
 
     const asyncFetch = async () => {
       unsub = await api.query.polkapetModule.lastMinigameId(async count => {
         // Fetch all kitty keys
-        const entries = await api.query.polkapetModule.minigameById.entries()
+        const entries = await api.query.polkapetModule.minigameById.entries();
         const miniGamesMap = entries.map(entry => {
           return {
             id: entry[0],
             ...parseMiniGame(entry[1].unwrap()),
-          }
-        })
-        setminiGames(miniGamesMap)
-      })
-    }
+          };
+        });
+        setminiGames(miniGamesMap);
+      });
+    };
 
-    asyncFetch()
+    asyncFetch();
 
     return () => {
-      unsub && unsub()
-    }
-  }
+      unsub && unsub();
+    };
+  };
 
-  useEffect(subscribeCount, [api, keyring, miniGames])
+  useEffect(subscribeCount, [api, keyring, miniGames]);
 
   return (
     <>
@@ -119,5 +119,5 @@ export default function CreateMinigame(props) {
         </Modal.Actions>
       </Modal>
     </>
-  )
+  );
 }
