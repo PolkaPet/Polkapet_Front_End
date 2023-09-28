@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Button, Modal, Form } from 'semantic-ui-react';
 
 import { useSubstrateState } from '../substrate-lib';
 import { TxButton } from '../substrate-lib/components';
+import { BN, BN_ONE, BN_QUINTILL } from '@polkadot/util';
 
 const parseMiniGame = ({
   gameId,
@@ -26,12 +27,12 @@ const parseMiniGame = ({
 
 export default function CreateMinigame(props) {
   const { api, keyring } = useSubstrateState();
-  const [miniGames, setminiGames] = useState([]);
+  const [miniGames, setMiniGames] = useState([]);
   const [status, setStatus] = useState('');
-  const [description, setdescription] = useState(0);
-  const [reward, setreward] = useState(0);
-  const [maxPlayer, setmaxPlayer] = useState(0);
-  const [blockDuration, setblockDuration] = useState(0);
+  const [description, setDescription] = useState(0);
+  const [reward, setReward] = useState(0);
+  const [maxPlayer, setMaxPlayer] = useState(0);
+  const [blockDuration, setBlockDuration] = useState(0);
 
   const subscribeCount = () => {
     let unsub = null;
@@ -46,7 +47,7 @@ export default function CreateMinigame(props) {
             ...parseMiniGame(entry[1].unwrap()),
           };
         });
-        setminiGames(miniGamesMap);
+        setMiniGames(miniGamesMap);
       });
     };
 
@@ -58,6 +59,11 @@ export default function CreateMinigame(props) {
   };
 
   useEffect(subscribeCount, [api, keyring, miniGames]);
+
+  const rewardBN = useMemo(
+    () => new BN(reward * BN_ONE).mul(BN_QUINTILL).toString(),
+    [reward]
+  );
 
   return (
     <>
@@ -76,28 +82,28 @@ export default function CreateMinigame(props) {
               label="description"
               placeholder="Enter description"
               type="text"
-              onChange={(_, { value }) => setdescription(value)}
+              onChange={(_, { value }) => setDescription(value)}
             />
             <Form.Input
               fluid
               label="reward"
               placeholder="Enter reward"
               type="number"
-              onChange={(_, { value }) => setreward(value)}
+              onChange={(_, { value }) => setReward(value)}
             />
             <Form.Input
               fluid
               label="maxPlayer"
               placeholder="Enter maxPlayer"
               type="number"
-              onChange={(_, { value }) => setmaxPlayer(value)}
+              onChange={(_, { value }) => setMaxPlayer(value)}
             />
             <Form.Input
               fluid
               label="blockDuration"
               placeholder="Enter blockDuration"
               type="number"
-              onChange={(_, { value }) => setblockDuration(value)}
+              onChange={(_, { value }) => setBlockDuration(value)}
             />
           </Form>
         </Modal.Content>
@@ -112,7 +118,7 @@ export default function CreateMinigame(props) {
             attrs={{
               palletRpc: 'polkapetModule',
               callable: 'createMinigame',
-              inputParams: [description, reward, maxPlayer, blockDuration],
+              inputParams: [description, rewardBN, maxPlayer, blockDuration],
               paramFields: [true, true, true, true],
             }}
           />
