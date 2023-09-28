@@ -1,6 +1,12 @@
-/* eslint-disable no-unused-vars */
-import React, { createRef, useEffect, useMemo, useState } from 'react';
+import React, {
+  createRef,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 import '../styles/Home.css';
+import useInterval from 'use-interval';
 
 import { useSubstrateState } from '../substrate-lib';
 import {
@@ -8,13 +14,10 @@ import {
   Loader,
   Grid,
   Message,
-  Image,
-  List,
   Feed,
   Modal,
   Button,
   Form,
-  Dropdown,
   Select,
 } from 'semantic-ui-react';
 
@@ -40,8 +43,8 @@ const MiniGameDetail = () => {
   const [gameData, setGameData] = useState(null);
   const [playersData, setPlayersData] = useState(null);
 
-  useEffect(() => {
-    const fetchGameData = async api => {
+  const fetchGameData = useCallback(
+    async api => {
       if (!api) return;
 
       const data = await getGameDetailById(api, gameId);
@@ -49,9 +52,15 @@ const MiniGameDetail = () => {
 
       const playerData = await getPlayersByGameId(api, gameId);
       setPlayersData(playerData);
-    };
+    },
+    [gameId]
+  );
+
+  useEffect(() => {
     api && fetchGameData(api);
-  }, [gameId, api]);
+  }, [gameId, api, fetchGameData]);
+
+  useInterval(() => fetchGameData(), 1000);
 
   const isOwner = useMemo(
     () => currentAccount?.address === gameData?.owner,
@@ -107,20 +116,26 @@ const MiniGameDetail = () => {
         </div>
         <Grid columns={2} stackable>
           <Grid.Column>
-            <RacingChart gameId={gameId} />
+            <RacingChart gameId={gameId} players={playersData} />
           </Grid.Column>
           <Grid.Column>
             <ListOfPlayer players={playersData} />
           </Grid.Column>
         </Grid>
 
-        <div style={{ marginTop: '90px' }}>
-          {isOwner ? (
-            <StartGameButton gameId={gameId} />
-          ) : (
-            <JoinGameButton gameId={gameId} />
-          )}
-        </div>
+        {gameData?.status === 'Finish' ? (
+          <h1>Game ended</h1>
+        ) : gameData?.status === 'OnGoing' ? (
+          <h1>Game On Going...</h1>
+        ) : (
+          <div style={{ marginTop: '90px' }}>
+            {isOwner ? (
+              <StartGameButton gameId={gameId} />
+            ) : (
+              <JoinGameButton gameId={gameId} />
+            )}
+          </div>
+        )}
       </div>
     </div>
   );
@@ -242,7 +257,7 @@ function JoinGameButton({ gameId }) {
             attrs={{
               palletRpc: 'polkapetModule',
               callable: 'joinMinigame',
-              inputParams: [gameId, 2],
+              inputParams: [gameId, 23],
               paramFields: [true, true],
             }}
           />
