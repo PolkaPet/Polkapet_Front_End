@@ -23,7 +23,7 @@ export default function OvalBostNumber(props) {
 
   return (
     <Grid.Column style={{ color: 'white' }} width={16}>
-      <h1>Oval Boost Number</h1>
+      <img alt="logo_mean" src={`${process.env.PUBLIC_URL}/assets/KittyAvatar/logo_mean.png`} width={400}  />
       <div>
         {ovalBostNumber &&
           Object.entries(ovalBostNumber).map(([k, v]) => {
