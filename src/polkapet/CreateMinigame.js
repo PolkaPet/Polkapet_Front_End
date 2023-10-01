@@ -2,7 +2,7 @@ import React, { useMemo, useState } from 'react';
 import { Button, Modal, Form } from 'semantic-ui-react';
 
 import { TxButton } from '../substrate-lib/components';
-import { BN, BN_BILLION } from '@polkadot/util';
+import { BN, BN_MILLION } from '@polkadot/util';
 
 export default function CreateMinigame(props) {
   const [status, setStatus] = useState('');
@@ -12,7 +12,7 @@ export default function CreateMinigame(props) {
   const [blockDuration, setBlockDuration] = useState(0);
 
   const rewardBN = useMemo(
-    () => new BN(reward * BN_BILLION).mul(BN_BILLION).toString(),
+    () => new BN(reward * BN_MILLION).mul(BN_MILLION).toString(),
     [reward]
   );
   

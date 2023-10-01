@@ -60,7 +60,7 @@ export function convertBNtoNumber(inputString) {
 
   const inputFormatted = inputString?.replaceAll(',', '');
 
-  const numberInMil = new BN(inputFormatted).div(new BN(10 ** 6)).toString();
+  const number = new BN(inputFormatted).toString();
 
-  return numberInMil / 10 ** 12;
+  return number / 10 ** 12;
 }
