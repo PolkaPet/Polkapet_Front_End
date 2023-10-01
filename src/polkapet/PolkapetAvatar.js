@@ -38,20 +38,22 @@ const dnaToAttributes = dna => {
 const PolkapetAvatar = ({
   dna,
   deadStatus,
-  heightOuterStyle = 160,
-  widthOuterStyle = '50%',
+  heightOuterStyle = 150,
+  widthOuterStyle = 150,
   heightInnerStyle = 150,
 }) => {
+
   const outerStyle = {
     height: heightOuterStyle,
     position: 'relative',
     width: widthOuterStyle,
+    margin: '10px auto',
   };
   const innerStyle = {
     height: heightInnerStyle,
     position: 'absolute',
-    top: '3%',
-    left: '50%',
+    top: '2%',
+    left: '0%',
   };
 
   if (!dna) return null;

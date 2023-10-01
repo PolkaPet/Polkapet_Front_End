@@ -32,11 +32,10 @@ ReactDOM.render(
         }
       />
       <Route
-        path="/detail"
+        path="/detail/:petId"
         element={
           <SubstrateContextProvider>
-            {' '}
-            <PolkapetCardsDetail />{' '}
+            <PolkapetCardsDetail />
           </SubstrateContextProvider>
         }
       />

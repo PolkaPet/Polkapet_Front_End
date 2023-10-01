@@ -1,8 +1,8 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Button, Modal, Form } from 'semantic-ui-react';
 
 import { TxButton } from '../substrate-lib/components';
-import { BN, BN_BILLION } from '@polkadot/util';
+import { BN, BN_MILLION } from '@polkadot/util';
 
 export default function CreateMinigame(props) {
   const [status, setStatus] = useState('');
@@ -10,15 +10,30 @@ export default function CreateMinigame(props) {
   const [reward, setReward] = useState(0);
   const [maxPlayer, setMaxPlayer] = useState(0);
   const [blockDuration, setBlockDuration] = useState(0);
+  const [open, setOpen] = React.useState(false);
 
   const rewardBN = useMemo(
-    () => new BN(reward * BN_BILLION).mul(BN_BILLION).toString(),
+    () => new BN(reward * BN_MILLION).mul(BN_MILLION).toString(),
     [reward]
   );
-  
+  const confirmAndClose = unsub => {
+    setOpen(false);
+    if (unsub && typeof unsub === 'function') unsub();
+  };
+
+  useEffect(() => {
+    if (status === 'Tx InBlock') {
+      setOpen(false);
+    }
+  }, [status]);
+
   return (
     <>
       <Modal
+        size="mini"
+        onClose={() => setOpen(false)}
+        onOpen={() => setOpen(true)}
+        open={open}
         trigger={
           <Button basic color="blue">
             Create
@@ -66,6 +81,7 @@ export default function CreateMinigame(props) {
             label="Create"
             type="SIGNED-TX"
             setStatus={setStatus}
+            onClick={confirmAndClose}
             attrs={{
               palletRpc: 'polkapetModule',
               callable: 'createMinigame',

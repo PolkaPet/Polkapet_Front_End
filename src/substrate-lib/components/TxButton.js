@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from 'react'
-import PropTypes from 'prop-types'
-import { Button } from 'semantic-ui-react'
-import { web3FromSource } from '@polkadot/extension-dapp'
+import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
+import { Button } from 'semantic-ui-react';
+import { web3FromSource } from '@polkadot/extension-dapp';
 
-import { useSubstrateState } from '../'
-import utils from '../utils'
-import { bnFromHex } from '@polkadot/util'
+import { useSubstrateState } from '../';
+import utils from '../utils';
+import { bnFromHex } from '@polkadot/util';
+import { shortenAddress } from '../../utils';
 
 function TxButton({
   attrs = null,
@@ -18,189 +19,188 @@ function TxButton({
   txOnClickHandler = null,
 }) {
   // Hooks
-  const { api, currentAccount } = useSubstrateState()
-  const [unsub, setUnsub] = useState(null)
-  const [sudoKey, setSudoKey] = useState(null)
+  const { api, currentAccount } = useSubstrateState();
+  const [unsub, setUnsub] = useState(null);
+  const [sudoKey, setSudoKey] = useState(null);
 
-  const { palletRpc, callable, inputParams, paramFields } = attrs
+  const { palletRpc, callable, inputParams, paramFields } = attrs;
 
-  const isQuery = () => type === 'QUERY'
-  const isSudo = () => type === 'SUDO-TX'
-  const isUncheckedSudo = () => type === 'UNCHECKED-SUDO-TX'
-  const isUnsigned = () => type === 'UNSIGNED-TX'
-  const isSigned = () => type === 'SIGNED-TX'
-  const isRpc = () => type === 'RPC'
-  const isConstant = () => type === 'CONSTANT'
+  const isQuery = () => type === 'QUERY';
+  const isSudo = () => type === 'SUDO-TX';
+  const isUncheckedSudo = () => type === 'UNCHECKED-SUDO-TX';
+  const isUnsigned = () => type === 'UNSIGNED-TX';
+  const isSigned = () => type === 'SIGNED-TX';
+  const isRpc = () => type === 'RPC';
+  const isConstant = () => type === 'CONSTANT';
 
   const loadSudoKey = () => {
-    ;(async function () {
+    (async function () {
       if (!api || !api.query.sudo) {
-        return
+        return;
       }
-      const sudoKey = await api.query.sudo.key()
-      sudoKey.isEmpty ? setSudoKey(null) : setSudoKey(sudoKey.toString())
-    })()
-  }
+      const sudoKey = await api.query.sudo.key();
+      sudoKey.isEmpty ? setSudoKey(null) : setSudoKey(sudoKey.toString());
+    })();
+  };
 
-  useEffect(loadSudoKey, [api])
+  useEffect(loadSudoKey, [api]);
 
   const getFromAcct = async () => {
     const {
       address,
       meta: { source, isInjected },
-    } = currentAccount
+    } = currentAccount;
 
     if (!isInjected) {
-      return [currentAccount]
+      return [currentAccount];
     }
 
     // currentAccount is injected from polkadot-JS extension, need to return the addr and signer object.
     // ref: https://polkadot.js.org/docs/extension/cookbook#sign-and-send-a-transaction
-    const injector = await web3FromSource(source)
-    return [address, { signer: injector.signer }]
-  }
+    const injector = await web3FromSource(source);
+    return [address, { signer: injector.signer }];
+  };
 
   const txResHandler = ({ events = [], status, txHash }) => {
     status.isFinalized
-      ? setStatus(`😉 Finalized. Block hash: ${status.asFinalized.toString()}`)
-      : setStatus(`Current transaction status: ${status.type}`)
+      ? setStatus(
+          `Tx Finalized`
+        )
+      : setStatus(`Tx ${status.type}`);
 
     // Loop through Vec<EventRecord> to display all events
     events.forEach(({ _, event: { data, method, section } }) => {
       if (section + ':' + method === 'system:ExtrinsicFailed') {
         // extract the data for this event
-        const [dispatchError, dispatchInfo] = data
-        console.log(`dispatchinfo: ${dispatchInfo}`)
-        let errorInfo
+        const [dispatchError, dispatchInfo] = data;
+        console.log(`dispatchinfo: ${dispatchInfo}`);
+        let errorInfo;
 
         // decode the error
         if (dispatchError.isModule) {
           // for module errors, we have the section indexed, lookup
           // (For specific known errors, we can also do a check against the
           // api.errors.<module>.<ErrorName>.is(dispatchError.asModule) guard)
-          const mod = dispatchError.asModule
+          const mod = dispatchError.asModule;
           const error = api.registry.findMetaError(
             new Uint8Array([
               mod.index.toNumber(),
               bnFromHex(mod.error.toHex().slice(0, 4)).toNumber(),
             ])
-          )
+          );
           let message = `${error.section}.${error.name}${
             Array.isArray(error.docs)
               ? `(${error.docs.join('')})`
               : error.docs || ''
-          }`
+          }`;
 
-          errorInfo = `${message}`
-          console.log(`Error-info::${JSON.stringify(error)}`)
+          errorInfo = `${message}`;
+          console.log(`Error-info::${JSON.stringify(error)}`);
         } else {
           // Other, CannotLookup, BadOrigin, no extra info
-          errorInfo = dispatchError.toString()
+          errorInfo = dispatchError.toString();
         }
-        setStatus(`😞 Transaction Failed! ${section}.${method}::${errorInfo}`)
+        setStatus(`Tx Failed! ${section}.${method}::${errorInfo}`);
       } else if (section + ':' + method === 'system:ExtrinsicSuccess') {
-        setStatus(
-          `❤️️ Transaction successful! tx hash: ${txHash} , Block hash: ${status.asFinalized.toString()}`
-        )
+        setStatus(`Tx Finalized! tx hash: ${shortenAddress(txHash)}`);
       }
-    })
-  }
+    });
+  };
 
-  const txErrHandler = err =>
-    setStatus(`😞 Transaction Failed: ${err.toString()}`)
+  const txErrHandler = err => setStatus(`😞 Tx Failed: ${err.toString()}`);
 
   const sudoTx = async () => {
-    const fromAcct = await getFromAcct()
-    const transformed = transformParams(paramFields, inputParams)
+    const fromAcct = await getFromAcct();
+    const transformed = transformParams(paramFields, inputParams);
     // transformed can be empty parameters
     const txExecute = transformed
       ? api.tx.sudo.sudo(api.tx[palletRpc][callable](...transformed))
-      : api.tx.sudo.sudo(api.tx[palletRpc][callable]())
+      : api.tx.sudo.sudo(api.tx[palletRpc][callable]());
 
     const unsub = txExecute
       .signAndSend(...fromAcct, txResHandler)
-      .catch(txErrHandler)
+      .catch(txErrHandler);
 
-    setUnsub(() => unsub)
-  }
+    setUnsub(() => unsub);
+  };
 
   const uncheckedSudoTx = async () => {
-    const fromAcct = await getFromAcct()
+    const fromAcct = await getFromAcct();
     const txExecute = api.tx.sudo.sudoUncheckedWeight(
       api.tx[palletRpc][callable](...inputParams),
       0
-    )
+    );
 
     const unsub = txExecute
       .signAndSend(...fromAcct, txResHandler)
-      .catch(txErrHandler)
+      .catch(txErrHandler);
 
-    setUnsub(() => unsub)
-  }
+    setUnsub(() => unsub);
+  };
 
   const signedTx = async () => {
-    const fromAcct = await getFromAcct()
-    const transformed = transformParams(paramFields, inputParams)
+    const fromAcct = await getFromAcct();
+    const transformed = transformParams(paramFields, inputParams);
     // transformed can be empty parameters
 
     const txExecute = transformed
       ? api.tx[palletRpc][callable](...transformed)
-      : api.tx[palletRpc][callable]()
+      : api.tx[palletRpc][callable]();
 
     const unsub = await txExecute
       .signAndSend(...fromAcct, txResHandler)
-      .catch(txErrHandler)
+      .catch(txErrHandler);
 
-    setUnsub(() => unsub)
-  }
+    setUnsub(() => unsub);
+  };
 
   const unsignedTx = async () => {
-    const transformed = transformParams(paramFields, inputParams)
+    const transformed = transformParams(paramFields, inputParams);
     // transformed can be empty parameters
     const txExecute = transformed
       ? api.tx[palletRpc][callable](...transformed)
-      : api.tx[palletRpc][callable]()
+      : api.tx[palletRpc][callable]();
 
-    const unsub = await txExecute.send(txResHandler).catch(txErrHandler)
-    setUnsub(() => unsub)
-  }
+    const unsub = await txExecute.send(txResHandler).catch(txErrHandler);
+    setUnsub(() => unsub);
+  };
 
   const queryResHandler = result =>
-    result.isNone ? setStatus('None') : setStatus(result.toString())
+    result.isNone ? setStatus('None') : setStatus(result.toString());
 
   const query = async () => {
-    const transformed = transformParams(paramFields, inputParams)
+    const transformed = transformParams(paramFields, inputParams);
     const unsub = await api.query[palletRpc][callable](
       ...transformed,
       queryResHandler
-    )
+    );
 
-    setUnsub(() => unsub)
-  }
+    setUnsub(() => unsub);
+  };
 
   const rpc = async () => {
     const transformed = transformParams(paramFields, inputParams, {
       emptyAsNull: false,
-    })
+    });
     const unsub = await api.rpc[palletRpc][callable](
       ...transformed,
       queryResHandler
-    )
-    setUnsub(() => unsub)
-  }
+    );
+    setUnsub(() => unsub);
+  };
 
   const constant = () => {
-    const result = api.consts[palletRpc][callable]
-    result.isNone ? setStatus('None') : setStatus(result.toString())
-  }
+    const result = api.consts[palletRpc][callable];
+    result.isNone ? setStatus('None') : setStatus(result.toString());
+  };
 
   const transaction = async () => {
     if (typeof unsub === 'function') {
-      unsub()
-      setUnsub(null)
+      unsub();
+      setUnsub(null);
     }
 
-    setStatus('Sending...')
+    setStatus('Sending...');
 
     const asyncFunc =
       (isSudo() && sudoTx) ||
@@ -209,14 +209,14 @@ function TxButton({
       (isUnsigned() && unsignedTx) ||
       (isQuery() && query) ||
       (isRpc() && rpc) ||
-      (isConstant() && constant)
+      (isConstant() && constant);
 
-    await asyncFunc()
+    await asyncFunc();
 
     return txOnClickHandler && typeof txOnClickHandler === 'function'
       ? txOnClickHandler(unsub)
-      : null
-  }
+      : null;
+  };
 
   const transformParams = (
     paramFields,
@@ -232,34 +232,34 @@ function TxButton({
         inputParam !== null &&
         typeof inputParam.value === 'string'
       ) {
-        return inputParam.value.trim()
+        return inputParam.value.trim();
       } else if (typeof inputParam === 'string') {
-        return inputParam.trim()
+        return inputParam.trim();
       }
-      return inputParam
-    })
+      return inputParam;
+    });
     const params = paramFields.map((field, ind) => ({
       ...field,
       value: paramVal[ind] || null,
-    }))
+    }));
 
     return params.reduce((memo, { type = 'string', value }) => {
       if (value == null || value === '')
-        return opts.emptyAsNull ? [...memo, null] : memo
+        return opts.emptyAsNull ? [...memo, null] : memo;
 
-      let converted = value
+      let converted = value;
 
       // Deal with a vector
       if (type.indexOf('Vec<') >= 0) {
-        converted = converted.split(',').map(e => e.trim())
+        converted = converted.split(',').map(e => e.trim());
         converted = converted.map(single =>
           isNumType(type)
             ? single.indexOf('.') >= 0
               ? Number.parseFloat(single)
               : Number.parseInt(single)
             : single
-        )
-        return [...memo, converted]
+        );
+        return [...memo, converted];
       }
 
       // Deal with a single value
@@ -267,40 +267,40 @@ function TxButton({
         converted =
           converted.indexOf('.') >= 0
             ? Number.parseFloat(converted)
-            : Number.parseInt(converted)
+            : Number.parseInt(converted);
       }
-      return [...memo, converted]
-    }, [])
-  }
+      return [...memo, converted];
+    }, []);
+  };
 
   const isNumType = type =>
-    utils.paramConversion.num.some(el => type.indexOf(el) >= 0)
+    utils.paramConversion.num.some(el => type.indexOf(el) >= 0);
 
   const allParamsFilled = () => {
     if (paramFields.length === 0) {
-      return true
+      return true;
     }
 
     return paramFields.every((paramField, ind) => {
-      const param = inputParams[ind]
+      const param = inputParams[ind];
       if (paramField.optional) {
-        return true
+        return true;
       }
       if (param == null) {
-        return false
+        return false;
       }
 
-      const value = typeof param === 'object' ? param.value : param
-      return value !== null && value !== ''
-    })
-  }
+      const value = typeof param === 'object' ? param.value : param;
+      return value !== null && value !== '';
+    });
+  };
 
   const isSudoer = acctPair => {
     if (!sudoKey || !acctPair) {
-      return false
+      return false;
     }
-    return acctPair.address === sudoKey
-  }
+    return acctPair.address === sudoKey;
+  };
 
   return (
     <Button
@@ -321,7 +321,7 @@ function TxButton({
     >
       {label}
     </Button>
-  )
+  );
 }
 
 // prop type checking
@@ -342,7 +342,7 @@ TxButton.propTypes = {
     inputParams: PropTypes.array,
     paramFields: PropTypes.array,
   }).isRequired,
-}
+};
 
 function TxGroupButton(props) {
   return (
@@ -353,7 +353,7 @@ function TxGroupButton(props) {
       <Button.Or />
       <TxButton label="SUDO" type="SUDO-TX" color="red" {...props} />
     </Button.Group>
-  )
+  );
 }
 
-export { TxButton, TxGroupButton }
+export { TxButton, TxGroupButton };

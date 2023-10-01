@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Grid } from 'semantic-ui-react';
+import React, { useEffect, useMemo, useState } from 'react';
+import { Container, Grid } from 'semantic-ui-react';
 import './styles/Polkapet.css';
 
 import { useSubstrateState } from './substrate-lib';
@@ -29,8 +29,8 @@ const parsePolkapet = ({
   ovalPosition: ovalPosition.toJSON(),
 });
 
-export default function Polkapets(props) {
-  const { api, keyring } = useSubstrateState();
+export default function Polkapets({ mode }) {
+  const { api, keyring, currentAccount } = useSubstrateState();
   const [polkapets, setPolkapets] = useState([]);
   const [status, setStatus] = useState('');
 
@@ -56,13 +56,29 @@ export default function Polkapets(props) {
     };
   };
 
+  const myPets = useMemo(
+    () =>
+      polkapets.filter(item => {
+        if (mode === 'MY_PET') {
+          return currentAccount?.address === item?.owner;
+        } else {
+          return item;
+        }
+      }),
+    [currentAccount?.address, mode, polkapets]
+  );
+
   useEffect(subscribeCount, [api, keyring]);
 
   return (
-    <Grid.Column width={16}>
-      <h1 style={{ color: 'white' }}>Polkapets</h1>
-      <PolkapetCards polkapets={polkapets} setStatus={setStatus} />
-      <div style={{ overflowWrap: 'break-word', color: 'white' }}>{status}</div>
-    </Grid.Column>
+    <Container>
+      <Grid.Column width={16}>
+        <h1 style={{ color: 'white', margin: '30px auto' }}>Polkapets</h1>
+        <PolkapetCards polkapets={myPets} setStatus={setStatus} />
+        <div style={{ overflowWrap: 'break-word', color: 'white' }}>
+          {status}
+        </div>
+      </Grid.Column>
+    </Container>
   );
 }

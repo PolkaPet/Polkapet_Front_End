@@ -19,6 +19,8 @@ import {
   Button,
   Form,
   Select,
+  Container,
+  Image,
 } from 'semantic-ui-react';
 
 import Header from '../components/Header';
@@ -33,6 +35,7 @@ import PolkapetAvatar from '../polkapet/PolkapetAvatar';
 import { hexToU8a } from '@polkadot/util';
 import { TxButton } from '../substrate-lib/components';
 import RacingChart from '../components/RacingChart';
+import LoaderStatus from '../components/LoaderStatus';
 
 const MiniGameDetail = () => {
   const { api, apiState, apiError, keyringState, currentAccount } =
@@ -55,7 +58,7 @@ const MiniGameDetail = () => {
     const playerData = await getPlayersByGameId(api, gameId);
     setPlayersData(playerData);
 
-    api.query.system.number(blockNo => {
+    api.query?.system?.number(blockNo => {
       const countdown =
         gameData?.finishBlock?.replaceAll(',', '') - blockNo?.toString();
 
@@ -110,46 +113,62 @@ const MiniGameDetail = () => {
   return (
     <div id="home" ref={contextRef}>
       <Header />
+      <Container>
+        <div style={{ color: '#fff', marginTop: '90px', textAlign: 'center' }}>
+          <Grid columns={2} stackable>
+            <Grid.Column>
+              <h1> Game info</h1>
+              <div style={{ marginTop: '10px', textAlign: 'left' }}>
+                <p>Game Id: {gameData?.gameId}</p>
+                <p>Owner: {gameData?.owner}</p>
+                <p>Description: {gameData?.description}</p>
+                <p>Reward: {convertBNtoNumber(gameData?.reward)} $LCW</p>
+                <p>Max Player: {gameData?.maxPlayer}</p>
+                <p>Block Duration: {gameData?.blockDuration} block(s)</p>
+                <p>Finish at block No: {gameData?.finishBlock}</p>
+                <p>Game Status: {gameData?.status}</p>
+                <p>
+                  Block Countdown: {blockCountdown < 0 ? 0 : blockCountdown}{' '}
+                  block
+                  {blockCountdown > 1 ? 's' : null}
+                </p>
+              </div>
+            </Grid.Column>
+            <Grid.Column>
+              <h1> Sponsors</h1>
+              <div style={{ display: 'flex', justifyContent: 'center' }}>
+                <Image
+                  size="large"
+                  src="https://react.semantic-ui.com/images/wireframe/image.png"
+                />
+              </div>
+            </Grid.Column>
+          </Grid>
 
-      <div style={{ color: '#fff', marginTop: '90px', textAlign: 'left' }}>
-        <h1> Game info</h1>
-        <div>
-          <p>gameId: {gameData?.gameId}</p>
-          <p>owner: {gameData?.owner}</p>
-          <p>description: {gameData?.description}</p>
-          <p>reward: {convertBNtoNumber(gameData?.reward)}</p>
-          <p>maxPlayer: {gameData?.maxPlayer}</p>
-          <p>blockDuration: {gameData?.blockDuration}</p>
-          <p>finishBlock: {gameData?.finishBlock}</p>
-          <p>status: {gameData?.status}</p>
-          <p>
-            Block Countdown: {blockCountdown < 0 ? 0 : blockCountdown} block
-            {blockCountdown > 1 ? 's' : null}
-          </p>
+          {gameData?.status === 'Finish' ? (
+            <h1>Game ended</h1>
+          ) : gameData?.status === 'OnGoing' ? (
+            <h1>Game On Going...</h1>
+          ) : (
+            <div style={{ margin: '30px auto' }}>
+              {isOwner ? (
+                <StartGameButton gameId={gameId} />
+              ) : (
+                <JoinGameButton gameId={gameId} />
+              )}
+            </div>
+          )}
+
+          <Grid columns={2} stackable>
+            <Grid.Column>
+              <RacingChart gameId={gameId} players={playersData} />
+            </Grid.Column>
+            <Grid.Column>
+              <ListOfPlayer players={playersData} />
+            </Grid.Column>
+          </Grid>
         </div>
-        <Grid columns={2} stackable>
-          <Grid.Column>
-            <RacingChart gameId={gameId} players={playersData} />
-          </Grid.Column>
-          <Grid.Column>
-            <ListOfPlayer players={playersData} />
-          </Grid.Column>
-        </Grid>
-
-        {gameData?.status === 'Finish' ? (
-          <h1>Game ended</h1>
-        ) : gameData?.status === 'OnGoing' ? (
-          <h1>Game On Going...</h1>
-        ) : (
-          <div style={{ marginTop: '90px' }}>
-            {isOwner ? (
-              <StartGameButton gameId={gameId} />
-            ) : (
-              <JoinGameButton gameId={gameId} />
-            )}
-          </div>
-        )}
-      </div>
+      </Container>
     </div>
   );
 };
@@ -173,7 +192,7 @@ const ListOfPlayer = ({ players }) => {
           <Feed.Event key={event.dna}>
             <PolkapetAvatar
               dna={hexToU8a(event?.dna)}
-              deadStatus={event?.death.toString()}
+              deadStatus={event?.death}
               heightOuterStyle={64}
               widthOuterStyle={'auto'}
               heightInnerStyle={60}
@@ -184,7 +203,7 @@ const ListOfPlayer = ({ players }) => {
                 flexDirection: 'column',
                 width: '100%',
                 paddingLeft: '70px',
-                justifyContent: 'start',
+                justifyContent: 'center',
                 alignItems: 'start',
               }}
             >
@@ -226,6 +245,7 @@ function JoinGameButton({ gameId }) {
   const [status, setStatus] = useState('');
   const [petId, setPetId] = useState('');
   const [dnaList, setDnaList] = useState(null);
+  const [open, setOpen] = React.useState(false);
 
   useEffect(() => {
     const fetchGameData = async () => {
@@ -240,10 +260,19 @@ function JoinGameButton({ gameId }) {
     api && fetchGameData();
   }, [gameId, api, currentAccount?.address]);
 
+  useEffect(() => {
+    if (status === 'Tx InBlock') {
+      setOpen(false);
+    }
+  }, [status]);
+
   return (
     <>
       <Modal
         size="mini"
+        onClose={() => setOpen(false)}
+        onOpen={() => setOpen(true)}
+        open={open}
         trigger={
           <Button basic color="blue">
             Join game
@@ -263,9 +292,7 @@ function JoinGameButton({ gameId }) {
           </Form>
         </Modal.Content>
         <Modal.Actions>
-          <div style={{ overflowWrap: 'break-word', color: '#000' }}>
-            {status}
-          </div>
+          <LoaderStatus status={status} />
           <TxButton
             label="Join"
             type="SIGNED-TX"
