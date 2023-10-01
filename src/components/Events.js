@@ -88,6 +88,7 @@ const CardContentBlock = ({ events }) => (
           <Feed.Event key={event.dna}>
             <PolkapetAvatar
               dna={hexToU8a(event?.dna)}
+              deadStatus={event?.death.toString()}
               heightOuterStyle={64}
               widthOuterStyle={'auto'}
               heightInnerStyle={60}
@@ -102,9 +103,9 @@ const CardContentBlock = ({ events }) => (
                 alignItems: 'start',
               }}
             >
-              <div>Pet killed. Id: {event?.petId || event?.petNumber}</div>
+              <div>Pet killed. Id: {event?.petId}</div>
               <div>Gender: {event?.gender}</div>
-              <div> Oval position: {event?.ovalPosition} </div>
+              <div>Oval position: {event?.ovalPosition} </div>
             </div>
           </Feed.Event>
         ))}

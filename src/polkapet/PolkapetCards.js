@@ -6,6 +6,7 @@ import { useSubstrateState } from '../substrate-lib';
 
 import { useNavigate } from 'react-router-dom';
 import '../styles/Home.css';
+import { convertBNtoNumber } from '../utils';
 // --- Transfer Modal ---
 
 // --- About Pet Card ---
@@ -13,7 +14,7 @@ import '../styles/Home.css';
 const PetCard = props => {
   const { polkapet } = props;
   const {
-    id = null,
+    petId = null,
     dna = null,
     gender = null,
     price = null,
@@ -33,16 +34,16 @@ const PetCard = props => {
         </Label>
       )}
 
-      <PolkapetAvatar dna={dna.toU8a()} />
+      <PolkapetAvatar dna={dna.toU8a()} deadStatus={death} />
 
       <Card.Content>
         <Card.Description>
-          <p style={{ overflowWrap: 'break-word' }}>Pet Id:{id}</p>
+          <p style={{ overflowWrap: 'break-word' }}>Pet Id: {petId}</p>
           <p style={{ overflowWrap: 'break-word' }}>Gender: {gender}</p>
-          <p style={{ overflowWrap: 'break-word' }}>{'Death: ' + death}</p>
+          {/* <p style={{ overflowWrap: 'break-word' }}>{'Death: ' + death}</p> */}
           <p style={{ overflowWrap: 'break-word' }}>{'Power: ' + power}</p>
           <p style={{ overflowWrap: 'break-word' }}>
-            Price: {price ? price + ' LCW' : 'Not For Sale'}
+            Price: {price ? convertBNtoNumber(price) + ' LCW' : 'Not For Sale'}
           </p>
         </Card.Description>
         <button

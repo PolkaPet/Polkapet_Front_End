@@ -15,9 +15,7 @@ export default function CreateMinigame(props) {
     () => new BN(reward * BN_BILLION).mul(BN_BILLION).toString(),
     [reward]
   );
-
-  console.log('rewardBN', rewardBN);
-
+  
   return (
     <>
       <Modal

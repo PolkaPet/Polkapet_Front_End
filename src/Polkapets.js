@@ -10,25 +10,24 @@ const parsePolkapet = ({
   price,
   gender,
   owner,
-  petNumber,
+  petId,
   death,
   respawn,
   power,
   ovalPosition,
+  id,
 }) => ({
   dna,
-  price: price.toJSON(),
+  id: petId.toJSON(),
+  price: price.toHuman(),
   gender: gender.toJSON(),
   owner: owner.toJSON(),
-  petNumber: petNumber.toJSON(),
-  death: death.toString(),
+  petId: petId.toJSON(),
+  death: death.toPrimitive(),
   respawn: respawn.toJSON(),
   power: power.toJSON(),
   ovalPosition: ovalPosition.toJSON(),
 });
-
-// Construct a polkapet ID from storage key
-const convertToPolkapetHash = entry => `0x${entry[0].toJSON().slice(-32)}`;
 
 export default function Polkapets(props) {
   const { api, keyring } = useSubstrateState();
@@ -39,15 +38,12 @@ export default function Polkapets(props) {
     let unsub = null;
 
     const asyncFetch = async () => {
-      unsub = await api.query.polkapetModule.lastPetNumber(async count => {
+      unsub = await api.query.polkapetModule.lastPetId(async count => {
         // Fetch all polkapet keys
-        const entries = await api.query.polkapetModule.polkapets.entries();
-        const polkapetsMap = entries.map(entry => {
+        const entries = await api.query.polkapetModule.polkapetsById.entries();
 
-          return {
-            id: convertToPolkapetHash(entry),
-            ...parsePolkapet(entry[1].unwrap()),
-          };
+        const polkapetsMap = entries.map(entry => {
+          return { ...parsePolkapet(entry[1].unwrap()) };
         });
         setPolkapets(polkapetsMap);
       });

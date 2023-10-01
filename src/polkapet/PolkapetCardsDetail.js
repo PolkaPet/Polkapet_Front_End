@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Button, Card, Modal, Form, Label } from 'semantic-ui-react';
 
 import PolkapetAvatar from './PolkapetAvatar';
@@ -6,6 +6,8 @@ import { useSubstrateState } from '../substrate-lib';
 import { TxButton } from '../substrate-lib/components';
 import { useLocation } from 'react-router';
 import Header from '../components/Header';
+import { BN, BN_BILLION } from '@polkadot/util';
+import { convertBNtoNumber } from '../utils';
 
 // --- Transfer Modal ---
 
@@ -80,6 +82,11 @@ const SetPrice = props => {
     if (unsub && typeof unsub === 'function') unsub();
   };
 
+  const formValueBN = useMemo(
+    () => new BN(formValue * BN_BILLION).mul(BN_BILLION).toString(),
+    [formValue]
+  );
+
   return (
     <Modal
       onClose={() => setOpen(false)}
@@ -94,7 +101,7 @@ const SetPrice = props => {
       <Modal.Header>Set Pet Price</Modal.Header>
       <Modal.Content>
         <Form>
-          <Form.Input fluid label="Pet ID" readOnly value={polkapet.id} />
+          <Form.Input fluid label="Pet ID" readOnly value={polkapet.petId} />
           <Form.Input
             fluid
             label="Price"
@@ -108,6 +115,7 @@ const SetPrice = props => {
         <Button basic color="grey" onClick={() => setOpen(false)}>
           Cancel
         </Button>
+
         <TxButton
           label="Set Price"
           type="SIGNED-TX"
@@ -116,7 +124,7 @@ const SetPrice = props => {
           attrs={{
             palletRpc: 'polkapetModule',
             callable: 'setPrice',
-            inputParams: [polkapet.id, formValue],
+            inputParams: [polkapet.petId, formValueBN],
             paramFields: [true, true],
           }}
         />
@@ -309,7 +317,7 @@ const PolkapetCardsDetail = () => {
               </Label>
             )}
             <div style={{ marginLeft: '50px' }}>
-              <PolkapetAvatar dna={polkapet.dna} />
+              <PolkapetAvatar dna={polkapet.dna} deadStatus={polkapet.death} />
             </div>
 
             <Card.Content>
@@ -360,7 +368,9 @@ const PolkapetCardsDetail = () => {
                 }}
               >
                 Price:{' '}
-                {polkapet.price ? polkapet.price + ' LCW' : 'Not For Sale'}
+                {polkapet.price
+                  ? convertBNtoNumber(polkapet.price) + ' LCW'
+                  : 'Not For Sale'}
               </p>
               {polkapet.owner === currentAccount.address ? (
                 <>

@@ -34,11 +34,11 @@ function RacingChart({ gameId, players }) {
 
     num &&
       Promise.all(
-        num?.map(async ({ petNumber, point }, idx) => {
-          const petInfo = await getPolkapetsById(api, petNumber);
+        num?.map(async ({ petId, point }, idx) => {
+          const petInfo = await getPolkapetsById(api, petId);
 
           return {
-            petNumber: petInfo?.petNumber,
+            petId: petInfo?.petId,
             id: idx + 1,
             title: (
               <div
@@ -49,9 +49,10 @@ function RacingChart({ gameId, players }) {
                   color: '#fff',
                 }}
               >
-                <div>Id: {petNumber}</div>{' '}
+                <div>Id: {petId}</div>{' '}
                 <PolkapetAvatar
                   dna={hexToU8a(petInfo?.dna)}
+                  deadStatus={petInfo?.death}
                   heightOuterStyle={48}
                   widthOuterStyle={48}
                   heightInnerStyle={48}
@@ -76,7 +77,7 @@ function RacingChart({ gameId, players }) {
 
     p = p
       ?.map(item => {
-        const raceInfo = point?.find(i => i.petNumber === item.petNumber);
+        const raceInfo = point?.find(i => i.petId === item.petId);
         return { ...item, point: raceInfo?.value, id: raceInfo?.id };
       })
       .sort((a, b) => {
@@ -117,7 +118,7 @@ function RacingChart({ gameId, players }) {
       {userPlayers?.length !== 0 &&
         userPlayers?.map(item => {
           return (
-            <div key={item?.petNumber}>
+            <div key={item?.petId}>
               <div
                 style={{
                   display: 'flex',
@@ -127,9 +128,10 @@ function RacingChart({ gameId, players }) {
                 }}
               >
                 <div>Rank: {item?.id}</div> <div> - Point: {item?.point}</div>{' '}
-                <div> - Id: {item?.petNumber}</div>{' '}
+                <div> - Id: {item?.petId}</div>{' '}
                 <PolkapetAvatar
                   dna={hexToU8a(item?.dna)}
+                  deadStatus={item?.death}
                   heightOuterStyle={48}
                   widthOuterStyle={48}
                   heightInnerStyle={48}

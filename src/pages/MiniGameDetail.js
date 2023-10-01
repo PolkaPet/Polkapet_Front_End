@@ -42,23 +42,32 @@ const MiniGameDetail = () => {
 
   const [gameData, setGameData] = useState(null);
   const [playersData, setPlayersData] = useState(null);
+  const [blockCountdown, setBlockCountdown] = useState(0);
 
-  const fetchGameData = useCallback(
-    async api => {
-      if (!api) return;
+  const fetchGameData = useCallback(async () => {
+    if (!api) return;
 
-      const data = await getGameDetailById(api, gameId);
-      setGameData(data);
+    // returns Hash
 
-      const playerData = await getPlayersByGameId(api, gameId);
-      setPlayersData(playerData);
-    },
-    [gameId]
-  );
+    const data = await getGameDetailById(api, gameId);
+    setGameData(data);
+
+    const playerData = await getPlayersByGameId(api, gameId);
+    setPlayersData(playerData);
+
+    api.query.system.number(blockNo => {
+      const countdown =
+        gameData?.finishBlock?.replaceAll(',', '') - blockNo?.toString();
+
+      if (countdown >= 0) {
+        setBlockCountdown(countdown);
+      }
+    });
+  }, [api, gameData?.finishBlock, gameId]);
 
   useEffect(() => {
-    api && fetchGameData(api);
-  }, [gameId, api, fetchGameData]);
+    api && fetchGameData();
+  }, [gameId, api, fetchGameData, gameData?.finishBlock]);
 
   useInterval(() => fetchGameData(), 1000);
 
@@ -113,6 +122,10 @@ const MiniGameDetail = () => {
           <p>blockDuration: {gameData?.blockDuration}</p>
           <p>finishBlock: {gameData?.finishBlock}</p>
           <p>status: {gameData?.status}</p>
+          <p>
+            Block Countdown: {blockCountdown < 0 ? 0 : blockCountdown} block
+            {blockCountdown > 1 ? 's' : null}
+          </p>
         </div>
         <Grid columns={2} stackable>
           <Grid.Column>
@@ -160,6 +173,7 @@ const ListOfPlayer = ({ players }) => {
           <Feed.Event key={event.dna}>
             <PolkapetAvatar
               dna={hexToU8a(event?.dna)}
+              deadStatus={event?.death.toString()}
               heightOuterStyle={64}
               widthOuterStyle={'auto'}
               heightInnerStyle={60}
@@ -174,7 +188,7 @@ const ListOfPlayer = ({ players }) => {
                 alignItems: 'start',
               }}
             >
-              <div>Pet Id: {event?.petId || event?.petNumber}</div>
+              <div>Pet Id: {event?.petId}</div>
               <div>Gender: {event?.gender}</div>
               <div>Oval position: {event?.ovalPosition} </div>
             </div>
@@ -210,11 +224,11 @@ const StartGameButton = ({ gameId }) => {
 function JoinGameButton({ gameId }) {
   const { api, currentAccount } = useSubstrateState();
   const [status, setStatus] = useState('');
-
+  const [petId, setPetId] = useState('');
   const [dnaList, setDnaList] = useState(null);
 
   useEffect(() => {
-    const fetchGameData = async api => {
+    const fetchGameData = async () => {
       if (!api) return;
 
       let data = await getPolkapetsOwnedByAddress(api, currentAccount?.address);
@@ -223,12 +237,13 @@ function JoinGameButton({ gameId }) {
 
       setDnaList(data);
     };
-    api && fetchGameData(api);
+    api && fetchGameData();
   }, [gameId, api, currentAccount?.address]);
 
   return (
     <>
       <Modal
+        size="mini"
         trigger={
           <Button basic color="blue">
             Join game
@@ -242,7 +257,8 @@ function JoinGameButton({ gameId }) {
               control={Select}
               label="Pet List"
               options={dnaList}
-              placeholder="Gender"
+              placeholder="your pet id"
+              onChange={(_, { value }) => setPetId(value)}
             />
           </Form>
         </Modal.Content>
@@ -257,7 +273,7 @@ function JoinGameButton({ gameId }) {
             attrs={{
               palletRpc: 'polkapetModule',
               callable: 'joinMinigame',
-              inputParams: [gameId, 23],
+              inputParams: [gameId, petId],
               paramFields: [true, true],
             }}
           />

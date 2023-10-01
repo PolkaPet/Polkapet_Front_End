@@ -2,17 +2,17 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { Grid } from 'semantic-ui-react'
 
 import { useSubstrateState } from '../substrate-lib'
-import { convertCamelCase, getOvalBostNumber } from '../utils'
+import { convertCamelCase, getOvalBoostNumber } from '../utils'
 import useInterval from 'use-interval'
 
-export default function OvalBostNumber(props) {
+export default function OvalBoostNumber(props) {
   const { api } = useSubstrateState()
 
-  const [ovalBostNumber, setOvalBostNumber] = useState(null)
+  const [ovalBoostNumber, setOvalBoostNumber] = useState(null)
 
   const fetchData = useCallback(async () => {
-    const num = await getOvalBostNumber(api)
-    setOvalBostNumber(num)
+    const num = await getOvalBoostNumber(api)
+    setOvalBoostNumber(num)
   }, [api])
 
   useEffect(() => {
@@ -23,10 +23,10 @@ export default function OvalBostNumber(props) {
 
   return (
     <Grid.Column style={{ color: 'white' }} width={16}>
-      <h1>Oval Boost Number</h1>
+      <img alt="logo_mean" src={`${process.env.PUBLIC_URL}/assets/KittyAvatar/logo_mean.png`} width={400}  />
       <div>
-        {ovalBostNumber &&
-          Object.entries(ovalBostNumber).map(([k, v]) => {
+        {ovalBoostNumber &&
+          Object.entries(ovalBoostNumber).map(([k, v]) => {
             return (
               <p key={k}>
                 {convertCamelCase(k)} : {v}
