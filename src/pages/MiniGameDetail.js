@@ -173,7 +173,7 @@ const ListOfPlayer = ({ players }) => {
           <Feed.Event key={event.dna}>
             <PolkapetAvatar
               dna={hexToU8a(event?.dna)}
-              deadStatus={event?.death.toString()}
+              deadStatus={event?.death}
               heightOuterStyle={64}
               widthOuterStyle={'auto'}
               heightInnerStyle={60}
