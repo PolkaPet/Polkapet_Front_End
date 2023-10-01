@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { Grid } from 'semantic-ui-react';
+/* eslint-disable no-unused-vars */
+import React, { useEffect, useMemo, useState } from 'react';
+import { Checkbox, Container, Grid } from 'semantic-ui-react';
 
 import { useSubstrateState } from '../substrate-lib';
 import MiniGameCards from './MiniGameCards';
@@ -25,9 +26,10 @@ const parseMiniGame = ({
 });
 
 export default function MiniGames(props) {
-  const { api, keyring } = useSubstrateState();
+  const { api, keyring, currentAccount } = useSubstrateState();
   const [miniGames, setminiGames] = useState([]);
   const [status, setStatus] = useState('');
+  const [checked, setChecked] = useState(false);
 
   const subscribeCount = () => {
     let unsub = null;
@@ -55,11 +57,52 @@ export default function MiniGames(props) {
 
   useEffect(subscribeCount, [api, keyring]);
 
+
+  const myGames = useMemo(
+    () =>
+      miniGames.filter(item => {
+        if (checked === true) {
+          return currentAccount?.address === item?.owner;
+        } else {
+          return item;
+        }
+      }),
+    [checked, currentAccount?.address, miniGames]
+  );
+
   return (
-    <Grid.Column width={16}>
-      <h1 style={{ color: 'white' }}>MiniGame</h1>
-      <MiniGameCards miniGames={miniGames} setStatus={setStatus} />
-      <div style={{ overflowWrap: 'break-word', color: 'white' }}>{status}</div>
-    </Grid.Column>
+    <Container>
+      <Grid.Column width={16}>
+        <h1 style={{ color: 'white', margin: '30px auto' }}>MiniGame</h1>
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            color: '#fff',
+            justifyContent: 'end',
+            margin: '20px auto',
+          }}
+        >
+          <div
+            style={{
+              marginRight: '10px',
+            }}
+          >
+            Filter my Game
+          </div>
+          <Checkbox
+            checked={checked}
+            onClick={() => {
+              setChecked(!checked);
+            }}
+          />
+        </div>
+
+        <MiniGameCards miniGames={myGames} setStatus={setStatus} />
+        <div style={{ overflowWrap: 'break-word', color: 'white' }}>
+          {status}
+        </div>
+      </Grid.Column>
+    </Container>
   );
 }

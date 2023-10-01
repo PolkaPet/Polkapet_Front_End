@@ -1,4 +1,5 @@
 import { BN } from '@polkadot/util';
+import numeral from 'numeral';
 
 export async function getOvalBoostNumber(api) {
   const data = api && (await api.query.polkapetModule?.ovalBoostNumber());
@@ -64,3 +65,40 @@ export function convertBNtoNumber(inputString) {
 
   return number / 10 ** 12;
 }
+
+export const shortenAddress = (str, n = 6) => {
+  if (!str) return '';
+
+  const length = str?.length;
+
+  return length > n
+    ? str?.substr(0, n - 1) + ' ... ' + str?.substr(length - n, length - 1)
+    : str;
+};
+
+export const formatNumeber = (num = 0, dec = 2) => {
+  const number = parseInt(num * 10 ** dec) / 10 ** dec;
+  const numStr = number.toString();
+  const dotIdx = numStr.indexOf('.');
+
+  if (dotIdx === -1) {
+    return numeral(numStr).format('0,0');
+  }
+
+  const intPart = numeral(numStr.slice(0, dotIdx)).format('0,0');
+  const decPart = numStr.slice(dotIdx + 1, numStr.length);
+
+  return (
+    <span>
+      {intPart}
+      <>{`${dotIdx === -1 ? '' : `.${decPart}`}`}</>
+    </span>
+  );
+};
+
+export const strToNumber = (str = '') => {
+  if (typeof str !== 'string') return str;
+
+  const number = str?.replace(/,/g, '');
+  return parseFloat(number);
+};

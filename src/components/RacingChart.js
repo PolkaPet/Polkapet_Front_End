@@ -53,9 +53,9 @@ function RacingChart({ gameId, players }) {
                 <PolkapetAvatar
                   dna={hexToU8a(petInfo?.dna)}
                   deadStatus={petInfo?.death}
-                  heightOuterStyle={48}
-                  widthOuterStyle={48}
-                  heightInnerStyle={48}
+                  heightOuterStyle={32}
+                  widthOuterStyle={32}
+                  heightInnerStyle={32}
                 />
               </div>
             ),
@@ -109,7 +109,6 @@ function RacingChart({ gameId, players }) {
         />
       ) : (
         <Image
-          fluid
           size="large"
           src="https://react.semantic-ui.com/images/wireframe/image.png"
         />

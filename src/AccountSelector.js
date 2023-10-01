@@ -1,22 +1,23 @@
-import React, { useState, useEffect } from 'react'
-import { CopyToClipboard } from 'react-copy-to-clipboard'
+import React, { useState, useEffect } from 'react';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 
-import { Menu, Button, Dropdown, Icon, Label } from 'semantic-ui-react'
+import { Menu, Button, Dropdown, Icon, Label } from 'semantic-ui-react';
 
-import { useSubstrate, useSubstrateState } from './substrate-lib'
+import { useSubstrate, useSubstrateState } from './substrate-lib';
+import { formatNumeber } from './utils';
 
 const CHROME_EXT_URL =
-  'https://chrome.google.com/webstore/detail/polkadot%7Bjs%7D-extension/mopnmbcafieddcagagdcbnhejhlodfdd'
+  'https://chrome.google.com/webstore/detail/polkadot%7Bjs%7D-extension/mopnmbcafieddcagagdcbnhejhlodfdd';
 const FIREFOX_ADDON_URL =
-  'https://addons.mozilla.org/en-US/firefox/addon/polkadot-js-extension/'
+  'https://addons.mozilla.org/en-US/firefox/addon/polkadot-js-extension/';
 
-const acctAddr = acct => (acct ? acct.address : '')
+const acctAddr = acct => (acct ? acct.address : '');
 
 function Main(props) {
   const {
     setCurrentAccount,
     state: { keyring, currentAccount },
-  } = useSubstrate()
+  } = useSubstrate();
 
   // Get the list of accounts we possess the private key for
   const keyringOptions = keyring.getPairs().map(account => ({
@@ -24,22 +25,22 @@ function Main(props) {
     value: account.address,
     text: account.meta.name.toUpperCase(),
     icon: 'user',
-  }))
+  }));
 
   const initialAddress =
-    keyringOptions.length > 0 ? keyringOptions[0].value : ''
+    keyringOptions.length > 0 ? keyringOptions[0].value : '';
 
   // Set the initial address
   useEffect(() => {
     // `setCurrentAccount()` is called only when currentAccount is null (uninitialized)
     !currentAccount &&
       initialAddress.length > 0 &&
-      setCurrentAccount(keyring.getPair(initialAddress))
-  }, [currentAccount, setCurrentAccount, keyring, initialAddress])
+      setCurrentAccount(keyring.getPair(initialAddress));
+  }, [currentAccount, setCurrentAccount, keyring, initialAddress]);
 
   const onChange = addr => {
-    setCurrentAccount(keyring.getPair(addr))
-  }
+    setCurrentAccount(keyring.getPair(addr));
+  };
 
   return (
     <Menu.Menu position="right" style={{ alignItems: 'center' }}>
@@ -56,6 +57,7 @@ function Main(props) {
           )&nbsp;
         </span>
       ) : null}
+      <BalanceAnnotation />
       <CopyToClipboard text={acctAddr(currentAccount)}>
         <Button
           basic
@@ -72,44 +74,48 @@ function Main(props) {
         placeholder="Select an account"
         options={keyringOptions}
         onChange={(_, dropdown) => {
-          onChange(dropdown.value)
+          onChange(dropdown.value);
         }}
         value={acctAddr(currentAccount)}
       />
-      <BalanceAnnotation />
     </Menu.Menu>
-  )
+  );
 }
 
 function BalanceAnnotation(props) {
-  const { api, currentAccount } = useSubstrateState()
-  const [accountBalance, setAccountBalance] = useState(0)
+  const { api, currentAccount } = useSubstrateState();
+  const [accountBalance, setAccountBalance] = useState(0);
 
   // When account address changes, update subscriptions
   useEffect(() => {
-    let unsubscribe
+    let unsubscribe;
 
     // If the user has selected an address, create a new subscription
     currentAccount &&
       api.query.system
-        .account(acctAddr(currentAccount), balance =>
-          setAccountBalance(balance.data.free.toHuman())
-        )
-        .then(unsub => (unsubscribe = unsub))
-        .catch(console.error)
+        .account(acctAddr(currentAccount), balance => {
+          const acctBlance = balance.data.free.toHuman();
+          const acctBlanceFormatted = formatNumeber(
+            acctBlance?.replaceAll(',', '') / 10 ** 12
+          );
 
-    return () => unsubscribe && unsubscribe()
-  }, [api, currentAccount])
+          setAccountBalance(acctBlanceFormatted);
+        })
+        .then(unsub => (unsubscribe = unsub))
+        .catch(console.error);
+
+    return () => unsubscribe && unsubscribe();
+  }, [api, currentAccount]);
 
   return currentAccount ? (
-    <Label pointing="left">
+    <Label pointing="right">
       <Icon name="money" color="green" />
-      {accountBalance}
+      {accountBalance} $LCW
     </Label>
-  ) : null
+  ) : null;
 }
 
 export default function AccountSelector(props) {
-  const { api, keyring } = useSubstrateState()
-  return keyring.getPairs && api.query ? <Main {...props} /> : null
+  const { api, keyring } = useSubstrateState();
+  return keyring.getPairs && api.query ? <Main {...props} /> : null;
 }

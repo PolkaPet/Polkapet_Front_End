@@ -1,20 +1,20 @@
-import React, { createRef } from 'react'
-import '../styles/Home.css'
-import { useSubstrateState } from '../substrate-lib'
-import { Dimmer, Loader, Grid, Message } from 'semantic-ui-react'
+import React, { createRef } from 'react';
+import '../styles/Home.css';
+import { useSubstrateState } from '../substrate-lib';
+import { Dimmer, Loader, Grid, Message, Container } from 'semantic-ui-react';
 
-import Header from '../components/Header'
-import Events from '../components/Events'
-import OvalBoostNumber from '../components/OvalBoostNumber'
+import Header from '../components/Header';
+import Events from '../components/Events';
+import OvalBoostNumber from '../components/OvalBoostNumber';
 
 const WorldEnv = () => {
-  const { apiState, apiError, keyringState } = useSubstrateState()
+  const { apiState, apiError, keyringState } = useSubstrateState();
 
   const loader = text => (
     <Dimmer active>
       <Loader size="small">{text}</Loader>
     </Dimmer>
-  )
+  );
 
   const message = errObj => (
     <Grid centered columns={2} padded>
@@ -28,34 +28,47 @@ const WorldEnv = () => {
         />
       </Grid.Column>
     </Grid>
-  )
+  );
 
-  if (apiState === 'ERROR') return message(apiError)
-  else if (apiState !== 'READY') return loader('Connecting to Substrate')
+  if (apiState === 'ERROR') return message(apiError);
+  else if (apiState !== 'READY') return loader('Connecting to Substrate');
 
   if (keyringState !== 'READY') {
     return loader(
       "Loading accounts (please review any extension's authorization)"
-    )
+    );
   }
 
-  const contextRef = createRef()
+  const contextRef = createRef();
 
   return (
     <div id="home" ref={contextRef}>
       <Header />
-      <div style={{ color: '#fff', marginTop: '90px' }}>
-        <Grid columns={2} stackable>
-          <Grid.Column>
-            <OvalBoostNumber />
-          </Grid.Column>
-          <Grid.Column>
-            <Events />
-          </Grid.Column>
-        </Grid>
-      </div>
-    </div>
-  )
-}
 
-export default WorldEnv
+      <Container>
+        <div style={{ color: '#fff', marginTop: '90px' }}>
+          <Grid columns={2} stackable>
+            <Grid.Column>
+              <h1>World Environment</h1>
+              <OvalBoostNumber />
+            </Grid.Column>
+            <Grid.Column>
+              <h1>Pet Kill Activity</h1>
+              <div
+                style={{
+                  width: '100%',
+                  display: 'flex',
+                  justifyContent: 'center',
+                }}
+              >
+                <Events />
+              </div>
+            </Grid.Column>
+          </Grid>
+        </div>
+      </Container>
+    </div>
+  );
+};
+
+export default WorldEnv;

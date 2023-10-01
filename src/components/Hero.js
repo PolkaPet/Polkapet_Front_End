@@ -17,8 +17,15 @@ const Hero = () => {
 
       <Header />
 
-      <h1 id="header-text-first"> Polkapet </h1>
-      <h5 id="header-subtext">Welcome to the Limitless Creature World</h5>
+      <h1
+        id="header-text-first"
+        style={{ fontFamily: 'Unbounded, sans-serif' }}
+      >
+        Polkapet
+      </h1>
+      <h3 style={{ fontFamily: 'Unbounded, sans-serif' }} id="header-subtext">
+        Welcome to the Limitless Creature World
+      </h3>
       <YoutubeEmbed embedId="FEjNzmv781s" />
       <div id="hero-buttons">
         <button id="create" onClick={goCreate}>

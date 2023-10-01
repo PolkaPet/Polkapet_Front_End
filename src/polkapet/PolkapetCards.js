@@ -27,7 +27,7 @@ const PetCard = props => {
   let navigate = useNavigate();
 
   return (
-    <Card style={{ width: '350px', height: '400px' }}>
+    <Card style={{ width: '300px', height: '400px' }}>
       {isSelf && (
         <Label as="a" floating color="teal">
           Mine
@@ -48,7 +48,7 @@ const PetCard = props => {
         </Card.Description>
         <button
           id="viewmore"
-          onClick={() => navigate('/detail', { state: { polkapet } })}
+          onClick={() => navigate(`/detail/${petId}`)}
         >
           View more
         </button>
