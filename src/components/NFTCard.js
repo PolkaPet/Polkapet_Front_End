@@ -19,12 +19,7 @@ const NFTCard = ({
 }) => {
   const [isLike, setIsLike] = useState(false)
 
-  const isARSupport = useARStatus(nftSrc)
-
-  useEffect(() => {
-    console.log(isARSupport)
-  }, [])
-
+ 
   const like = () => setIsLike(!isLike)
 
   return (

@@ -57,39 +57,23 @@ const PolkapetAvatar = ({
   if (!dna) return null;
 
   const cat = dnaToAttributes(dna);
-  console.log(
-    'PolkapetAvatar: type :',
-    typeof deadStatus,
-    'value : ',
-    deadStatus
-  );
 
-  if (deadStatus === 'true') {
-    return (
-      <div style={outerStyle}>
-        <img alt="body" src={cat.body} style={innerStyle} />
-        <img alt="fur" src={cat.fur} style={innerStyle} />
-        <img alt="mouth" src={cat.mouth} style={innerStyle} />
-        <img alt="eyes" src={cat.eyes} style={innerStyle} />
-        <img alt="accessory" src={cat.accessory} style={innerStyle} />
+  return (
+    <div style={outerStyle}>
+      <img alt="body" src={cat.body} style={innerStyle} />
+      <img alt="fur" src={cat.fur} style={innerStyle} />
+      <img alt="mouth" src={cat.mouth} style={innerStyle} />
+      <img alt="eyes" src={cat.eyes} style={innerStyle} />
+      <img alt="accessory" src={cat.accessory} style={innerStyle} />
+      {deadStatus ? (
         <img
           alt="death"
           src={`${process.env.PUBLIC_URL}/assets/KittyAvatar/dead.png`}
           style={innerStyle}
         />
-      </div>
-    );
-  } else {
-    return (
-      <div style={outerStyle}>
-        <img alt="body" src={cat.body} style={innerStyle} />
-        <img alt="fur" src={cat.fur} style={innerStyle} />
-        <img alt="mouth" src={cat.mouth} style={innerStyle} />
-        <img alt="eyes" src={cat.eyes} style={innerStyle} />
-        <img alt="accessory" src={cat.accessory} style={innerStyle} />
-      </div>
-    );
-  }
+      ) : null}
+    </div>
+  );
 };
 
 export default PolkapetAvatar;

@@ -1,14 +1,14 @@
 import { BN } from '@polkadot/util';
- 
-export async function getOvalBostNumber(api) {
-  const data = api && (await api.query.polkapetModule?.ovalBostNumber());
+
+export async function getOvalBoostNumber(api) {
+  const data = api && (await api.query.polkapetModule?.ovalBoostNumber());
 
   return data?.toHuman();
 }
 
 export async function getPolkapetsById(api, id) {
   const data =
-    api && id && api && (await api.query.polkapetModule?.polkapetsByNumber(id));
+    api && id && api && (await api.query.polkapetModule?.polkapetsById(id));
 
   return data?.toHuman();
 }

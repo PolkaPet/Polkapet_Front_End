@@ -5,7 +5,7 @@ import { Dimmer, Loader, Grid, Message } from 'semantic-ui-react'
 
 import Header from '../components/Header'
 import Events from '../components/Events'
-import OvalBostNumber from '../components/OvalBostNumber'
+import OvalBoostNumber from '../components/OvalBoostNumber'
 
 const WorldEnv = () => {
   const { apiState, apiError, keyringState } = useSubstrateState()
@@ -47,7 +47,7 @@ const WorldEnv = () => {
       <div style={{ color: '#fff', marginTop: '90px' }}>
         <Grid columns={2} stackable>
           <Grid.Column>
-            <OvalBostNumber />
+            <OvalBoostNumber />
           </Grid.Column>
           <Grid.Column>
             <Events />
