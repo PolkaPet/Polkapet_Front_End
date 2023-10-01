@@ -6,7 +6,7 @@ import { useSubstrateState } from '../substrate-lib';
 import { TxButton } from '../substrate-lib/components';
 import { useLocation } from 'react-router';
 import Header from '../components/Header';
-import { BN, BN_BILLION } from '@polkadot/util';
+import { BN, BN_MILLION } from '@polkadot/util';
 import { convertBNtoNumber } from '../utils';
 
 // --- Transfer Modal ---
@@ -83,7 +83,7 @@ const SetPrice = props => {
   };
 
   const formValueBN = useMemo(
-    () => new BN(formValue * BN_BILLION).mul(BN_BILLION).toString(),
+    () => new BN(formValue * BN_MILLION).mul(BN_MILLION).toString(),
     [formValue]
   );
 

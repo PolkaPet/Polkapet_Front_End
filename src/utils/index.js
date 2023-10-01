@@ -60,7 +60,27 @@ export function convertBNtoNumber(inputString) {
 
   const inputFormatted = inputString?.replaceAll(',', '');
 
-  const number = new BN(inputFormatted).toString();
+  const numberInDecimal = new BN(inputFormatted).toString() / 10 ** 12;
 
-  return number / 10 ** 12;
+  return numberInDecimal;
+}
+
+export function generateRandomColors(count) {
+  const colors = [];
+
+  for (let i = 0; i < count; i++) {
+    const randomColor = getRandomHexColor();
+    colors.push(randomColor);
+  }
+
+  return colors;
+}
+
+function getRandomHexColor() {
+  const letters = '0123456789ABCDEF';
+  let color = '#';
+  for (let i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
 }

@@ -2,20 +2,13 @@
 import { React, useState, useEffect, useCallback, useMemo } from 'react';
 import ChartRace from 'react-chart-race';
 import { useSubstrateState } from '../substrate-lib';
-import { getPolkapetsById, getResultByGameId } from '../utils';
+import { getPolkapetsById, getResultByGameId,generateRandomColors } from '../utils';
 import useInterval from 'use-interval';
 import PolkapetAvatar from '../polkapet/PolkapetAvatar';
 import { hexToU8a } from '@polkadot/util';
 import { Image } from 'semantic-ui-react';
 
-const color = [
-  '#50c4fe',
-  '#3fc42d',
-  '#c33178',
-  '#423bce',
-  '#c8303b',
-  '#2c2c2c',
-];
+const color = generateRandomColors(100);
 
 function RacingChart({ gameId, players }) {
   const { api, currentAccount } = useSubstrateState();
@@ -53,9 +46,9 @@ function RacingChart({ gameId, players }) {
                 <PolkapetAvatar
                   dna={hexToU8a(petInfo?.dna)}
                   deadStatus={petInfo?.death}
-                  heightOuterStyle={48}
-                  widthOuterStyle={48}
-                  heightInnerStyle={48}
+                  heightOuterStyle={40}
+                  widthOuterStyle={40}
+                  heightInnerStyle={40}
                 />
               </div>
             ),
@@ -97,10 +90,10 @@ function RacingChart({ gameId, players }) {
       {point ? (
         <ChartRace
           data={point}
-          backgroundColor="#000"
+          backgroundColor="#3a403c"
           width={500}
           padding={12}
-          itemHeight={58}
+          itemHeight={40}
           gap={12}
           valueStyle={{
             font: 'normal 400 11px Arial',
