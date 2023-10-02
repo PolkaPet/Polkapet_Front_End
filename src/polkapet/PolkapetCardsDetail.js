@@ -385,39 +385,28 @@ const PolkapetCardsDetail = () => {
             <Card.Content>
               <Card.Description>
                 <p style={{ overflowWrap: 'break-word', fontSize: '18px' }}>
-                  Pet Id: {polkapet?.petId}
+                  Pet Id: <strong>{polkapet?.petId}</strong>
                 </p>
                 <p style={{ overflowWrap: 'break-word', fontSize: '18px' }}>
-                  Gender: {polkapet?.gender}
+                  Gender: <strong>{polkapet?.gender}</strong>
                 </p>
                 <p style={{ overflowWrap: 'break-word', fontSize: '18px' }}>
-                  Owner: {shortenAddress(polkapet?.owner)}
+                  Owner: <strong>{shortenAddress(polkapet?.owner)}</strong>
                 </p>
                 <p style={{ overflowWrap: 'break-word', fontSize: '18px' }}>
-                  DNA: {polkapet?.dna}
+                  DNA: <strong>{polkapet?.dna}</strong>
                 </p>
                 <p style={{ overflowWrap: 'break-word', fontSize: '18px' }}>
-                  {'Death:    ' +
-                    polkapet?.death +
-                    ' - ' +
-                    'Respawn:    ' +
-                    polkapet?.respawn}
+                  Death: <strong>{polkapet?.death?.toString()}</strong>
                 </p>
                 <p style={{ overflowWrap: 'break-word', fontSize: '18px' }}>
-                  {'Oval Position:   ' +
-                    polkapet?.ovalPosition +
-                    ' - ' +
-                    'Power: ' +
-                    polkapet?.power}
+                  Respawn: <strong>{polkapet?.respawn}</strong>
                 </p>
-                <p style={{ fontSize: '18px', marginTop: '15px' }}>
-                  Description:
+                <p style={{ overflowWrap: 'break-word', fontSize: '18px' }}>
+                  Power: <strong>{polkapet?.power}</strong>
                 </p>
-
-                <p style={{ fontSize: '16px', marginTop: '10px' }}>
-                  "It's has been the industry's standard dummy text ever since
-                  the 1500s, when an unknown printer took a galley of type and
-                  scrambled it to make a type specimen book.",
+                <p style={{ overflowWrap: 'break-word', fontSize: '18px' }}>
+                  Oval Position: <strong>{polkapet?.ovalPosition}</strong>
                 </p>
               </Card.Description>
             </Card.Content>
@@ -430,11 +419,15 @@ const PolkapetCardsDetail = () => {
                 }}
               >
                 Price:{' '}
-                {polkapet?.price
-                  ? convertBNtoNumber(polkapet?.price) + ' LCW'
-                  : 'Not For Sale'}
+                {polkapet?.price ? (
+                  convertBNtoNumber(polkapet?.price) + ' $LCW'
+                ) : (
+                  <strong>Not For Sale</strong>
+                )}
               </p>
+
               <LoaderStatus status={status} />
+
               {polkapet?.owner === currentAccount?.address ? (
                 <>
                   {!polkapet?.price ? (
@@ -450,13 +443,13 @@ const PolkapetCardsDetail = () => {
                       status={status}
                     />
                   )}
+                  <EmpowerPet
+                    polkapet={polkapet}
+                    setStatus={setStatus}
+                    status={status}
+                  />
                   {polkapet?.price ? null : (
                     <>
-                      <EmpowerPet
-                        polkapet={polkapet}
-                        setStatus={setStatus}
-                        status={status}
-                      />
                       <RespawnPet
                         polkapet={polkapet}
                         setStatus={setStatus}
@@ -471,9 +464,7 @@ const PolkapetCardsDetail = () => {
                   )}
                 </>
               ) : (
-                <>
-                  <BuyPolkapet polkapet={polkapet} setStatus={setStatus} />
-                </>
+                <BuyPolkapet polkapet={polkapet} setStatus={setStatus} />
               )}
             </Card.Content>
           </Card>

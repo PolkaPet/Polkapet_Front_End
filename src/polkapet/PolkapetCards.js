@@ -38,18 +38,28 @@ const PetCard = props => {
 
       <Card.Content>
         <Card.Description>
-          <p style={{ overflowWrap: 'break-word' }}>Pet Id: {petId}</p>
-          <p style={{ overflowWrap: 'break-word' }}>Gender: {gender}</p>
-          {/* <p style={{ overflowWrap: 'break-word' }}>{'Death: ' + death}</p> */}
-          <p style={{ overflowWrap: 'break-word' }}>{'Power: ' + power}</p>
           <p style={{ overflowWrap: 'break-word' }}>
-            Price: {price ? convertBNtoNumber(price) + ' LCW' : 'Not For Sale'}
+            Pet Id: <strong>{petId}</strong>
+          </p>
+          <p style={{ overflowWrap: 'break-word' }}>
+            Gender: <strong>{gender}</strong>
+          </p>
+          <p style={{ overflowWrap: 'break-word' }}>
+            Death: <strong>{death?.toString()}</strong>
+          </p>
+          <p style={{ overflowWrap: 'break-word' }}>
+            Power: <strong>{power}</strong>
+          </p>
+          <p style={{ overflowWrap: 'break-word' }}>
+            Price:{' '}
+            {price ? (
+              <strong>{convertBNtoNumber(price) + ' $LCW'}</strong>
+            ) : (
+              <strong>Not For Sale</strong>
+            )}
           </p>
         </Card.Description>
-        <button
-          id="viewmore"
-          onClick={() => navigate(`/detail/${petId}`)}
-        >
+        <button id="viewmore" onClick={() => navigate(`/detail/${petId}`)}>
           View more
         </button>
       </Card.Content>

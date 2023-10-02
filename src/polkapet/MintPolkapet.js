@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Form, Grid } from 'semantic-ui-react';
 
 import { TxButton } from '../substrate-lib/components';
+import LoaderStatus from '../components/LoaderStatus';
 
 export default function Polkapets(props) {
   const [status, setStatus] = useState('');
@@ -24,7 +25,7 @@ export default function Polkapets(props) {
           />
         </Form.Field>
       </Form>
-      <div style={{ overflowWrap: 'break-word', color: 'white' }}>{status}</div>
+      <LoaderStatus status={status} />
     </Grid.Column>
   );
 }

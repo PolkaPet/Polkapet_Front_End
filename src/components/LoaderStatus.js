@@ -3,11 +3,10 @@ import { Loader } from 'semantic-ui-react';
 
 export default function LoaderStatus({ status }) {
   return (
-    <div style={{ overflowWrap: 'break-word' }}>
+    <div style={{ overflowWrap: 'break-word', color: '#fff' }}>
       {!status || status?.includes('Finalized') ? null : (
-        <Loader size="mini" inline active />
+        <Loader size="mini" inline active style={{ marginRight: '10px' }} />
       )}
-      {console.log('status', status)}
       {status}
     </div>
   );
