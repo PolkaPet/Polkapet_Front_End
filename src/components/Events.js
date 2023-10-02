@@ -105,9 +105,15 @@ const CardContentBlock = ({ events }) => (
                 alignItems: 'start',
               }}
             >
-              <div>Pet killed. Id: {event?.petId}</div>
-              <div>Gender: {event?.gender}</div>
-              <div>Oval position: {event?.ovalPosition} </div>
+              <div>
+                Pet killed Id: <strong>{event?.petId}</strong>
+              </div>
+              <div>
+                Gender: <strong>{event?.gender}</strong>
+              </div>
+              <div>
+                Oval position: <strong>{event?.ovalPosition}</strong>
+              </div>
             </div>
           </Feed.Event>
         ))}
