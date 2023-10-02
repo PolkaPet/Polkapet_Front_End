@@ -443,18 +443,25 @@ const PolkapetCardsDetail = () => {
                       status={status}
                     />
                   )}
-                  <EmpowerPet
-                    polkapet={polkapet}
-                    setStatus={setStatus}
-                    status={status}
-                  />
+
+                  {!polkapet?.death ? (
+                    <EmpowerPet
+                      polkapet={polkapet}
+                      setStatus={setStatus}
+                      status={status}
+                    />
+                  ) : null}
+
                   {polkapet?.price ? null : (
                     <>
-                      <RespawnPet
-                        polkapet={polkapet}
-                        setStatus={setStatus}
-                        status={status}
-                      />
+                      {polkapet?.death ? (
+                        <RespawnPet
+                          polkapet={polkapet}
+                          setStatus={setStatus}
+                          status={status}
+                        />
+                      ) : null}
+
                       <TransferModal
                         polkapet={polkapet}
                         setStatus={setStatus}
