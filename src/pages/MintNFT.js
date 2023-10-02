@@ -1,4 +1,4 @@
-import React, { createRef } from 'react';
+import React, { createRef, useEffect } from 'react';
 import '../styles/Home.css';
 import Polkapets from '../Polkapets';
 import MintPolkapet from '../polkapet/MintPolkapet';
@@ -9,6 +9,10 @@ import Header from '../components/Header';
 
 const Home = () => {
   const { apiState, apiError, keyringState } = useSubstrateState();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const loader = text => (
     <Dimmer active>

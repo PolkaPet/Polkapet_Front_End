@@ -57,7 +57,6 @@ export default function MiniGames(props) {
 
   useEffect(subscribeCount, [api, keyring]);
 
-
   const myGames = useMemo(
     () =>
       miniGames.filter(item => {
@@ -73,7 +72,7 @@ export default function MiniGames(props) {
   return (
     <Container>
       <Grid.Column width={16}>
-        <h1 style={{ color: 'white', margin: '30px auto' }}>MiniGame</h1>
+        <h1 style={{ color: 'white', margin: '30px auto' }}>Mini Game</h1>
         <div
           style={{
             display: 'flex',

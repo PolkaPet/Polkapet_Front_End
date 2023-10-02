@@ -41,13 +41,13 @@ const PolkapetAvatar = ({
   heightOuterStyle = 150,
   widthOuterStyle = 150,
   heightInnerStyle = 150,
+  margin = '10px auto',
 }) => {
-
   const outerStyle = {
     height: heightOuterStyle,
     position: 'relative',
     width: widthOuterStyle,
-    margin: '10px auto',
+    margin: margin,
   };
   const innerStyle = {
     height: heightInnerStyle,

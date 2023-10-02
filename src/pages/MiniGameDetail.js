@@ -223,7 +223,7 @@ const StartGameButton = ({ gameId }) => {
 
   return (
     <>
-      <div style={{ overflowWrap: 'break-word', color: 'white' }}>{status}</div>
+      <LoaderStatus status={status}/>
 
       <TxButton
         label="Start Game"
@@ -261,7 +261,7 @@ function JoinGameButton({ gameId }) {
   }, [gameId, api, currentAccount?.address]);
 
   useEffect(() => {
-    if (status === 'Tx InBlock') {
+    if (status === 'Tx Finalized') {
       setOpen(false);
     }
   }, [status]);
@@ -292,7 +292,7 @@ function JoinGameButton({ gameId }) {
           </Form>
         </Modal.Content>
         <Modal.Actions>
-          <LoaderStatus status={status} />
+          <LoaderStatus status={status} color="#000" />
           <TxButton
             label="Join"
             type="SIGNED-TX"

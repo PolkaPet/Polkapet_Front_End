@@ -63,9 +63,7 @@ function TxButton({
 
   const txResHandler = ({ events = [], status, txHash }) => {
     status.isFinalized
-      ? setStatus(
-          `Tx Finalized`
-        )
+      ? setStatus(`Tx Finalized`)
       : setStatus(`Tx ${status.type}`);
 
     // Loop through Vec<EventRecord> to display all events
@@ -100,7 +98,76 @@ function TxButton({
           // Other, CannotLookup, BadOrigin, no extra info
           errorInfo = dispatchError.toString();
         }
-        setStatus(`Tx Failed! ${section}.${method}::${errorInfo}`);
+
+        if (errorInfo?.includes('AlreadyJoinGame')) {
+          errorInfo = 'This Pet Already Join Game';
+        }
+
+        if (errorInfo?.includes('TooManyOwned')) {
+          errorInfo = 'Too Many Owned';
+        }
+
+        if (errorInfo?.includes('TransferToSelf')) {
+          errorInfo = 'Transfer ToSelf';
+        }
+
+        if (errorInfo?.includes('DuplicatePolkapet')) {
+          errorInfo = 'Duplicate Polkapet';
+        }
+
+        if (errorInfo?.includes('NoPolkapet')) {
+          errorInfo = 'No Polkapet';
+        }
+
+        if (errorInfo?.includes('NotOwner')) {
+          errorInfo = 'Not Owner';
+        }
+
+        if (errorInfo?.includes('NotForSale')) {
+          errorInfo = 'Not For Sale';
+        }
+
+        if (errorInfo?.includes('BidPriceTooLow')) {
+          errorInfo = 'Bid Price Too Low';
+        }
+
+        if (errorInfo?.includes('CantBreed')) {
+          errorInfo = 'Cant Breed';
+        }
+
+        if (errorInfo?.includes('PetIdOverflow')) {
+          errorInfo = 'Pet Id Overflow';
+        }
+
+        if (errorInfo?.includes('OtherError')) {
+          errorInfo = 'Other Error';
+        }
+
+        if (errorInfo?.includes('MinigameIdOverflow')) {
+          errorInfo = 'Minigame Id Overflow';
+        }
+
+        if (errorInfo?.includes('BlockDurationInvalid')) {
+          errorInfo = 'Block Duration Invalid';
+        }
+
+        if (errorInfo?.includes('NoMinigame')) {
+          errorInfo = 'No Minigame';
+        }
+
+        if (errorInfo?.includes('GameStartedOrEnded')) {
+          errorInfo = 'Game Started Or Ended';
+        }
+
+        if (errorInfo?.includes('NoPlayer')) {
+          errorInfo = 'No Player';
+        }
+
+        if (errorInfo?.includes('ExceedingMaxPlayers')) {
+          errorInfo = 'Exceeding Max Players';
+        }
+
+        setStatus(`Tx Failed! ${errorInfo}`);
       } else if (section + ':' + method === 'system:ExtrinsicSuccess') {
         setStatus(`Tx Finalized! tx hash: ${shortenAddress(txHash)}`);
       }

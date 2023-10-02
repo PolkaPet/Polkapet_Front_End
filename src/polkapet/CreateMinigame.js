@@ -3,6 +3,7 @@ import { Button, Modal, Form } from 'semantic-ui-react';
 
 import { TxButton } from '../substrate-lib/components';
 import { BN, BN_MILLION } from '@polkadot/util';
+import LoaderStatus from '../components/LoaderStatus';
 
 export default function CreateMinigame(props) {
   const [status, setStatus] = useState('');
@@ -74,9 +75,8 @@ export default function CreateMinigame(props) {
           </Form>
         </Modal.Content>
         <Modal.Actions>
-          <div style={{ overflowWrap: 'break-word', color: '#000' }}>
-            {status}
-          </div>
+          <LoaderStatus status={status} />
+
           <TxButton
             label="Create"
             type="SIGNED-TX"

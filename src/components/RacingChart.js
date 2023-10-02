@@ -1,8 +1,11 @@
-/* eslint-disable no-unused-vars */
 import { React, useState, useEffect, useCallback, useMemo } from 'react';
 import ChartRace from 'react-chart-race';
 import { useSubstrateState } from '../substrate-lib';
-import { getPolkapetsById, getResultByGameId,generateRandomColors } from '../utils';
+import {
+  getPolkapetsById,
+  getResultByGameId,
+  generateRandomColors,
+} from '../utils';
 import useInterval from 'use-interval';
 import PolkapetAvatar from '../polkapet/PolkapetAvatar';
 import { hexToU8a } from '@polkadot/util';
@@ -42,13 +45,14 @@ function RacingChart({ gameId, players }) {
                   color: '#fff',
                 }}
               >
-                <div>Id: {petId}</div>{' '}
+                <div style={{ marginLeft: '25px' }}>Id: {petId}</div>{' '}
                 <PolkapetAvatar
                   dna={hexToU8a(petInfo?.dna)}
                   deadStatus={petInfo?.death}
-                  heightOuterStyle={32}
-                  widthOuterStyle={32}
-                  heightInnerStyle={32}
+                  heightOuterStyle={44}
+                  widthOuterStyle={44}
+                  heightInnerStyle={44}
+                  margin="1px auto"
                 />
               </div>
             ),
@@ -93,11 +97,16 @@ function RacingChart({ gameId, players }) {
           backgroundColor="#3a403c"
           width={500}
           padding={12}
-          itemHeight={40}
-          gap={12}
+          itemHeight={50}
+          gap={32}
           valueStyle={{
-            font: 'normal 400 11px Arial',
+            font: 'normal 600 11px Arial',
             color: 'rgba(255,255,255, 0.9)',
+            backgroundColor: 'rgba(25,25,25, 0.3)',
+            position: 'absolute',
+            top: '15px',
+            left: '5px',
+            padding:'2px 3px'
           }}
         />
       ) : (
