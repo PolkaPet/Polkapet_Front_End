@@ -36,7 +36,7 @@ export default function CreateMinigame(props) {
         onOpen={() => setOpen(true)}
         open={open}
         trigger={
-          <Button basic color="blue">
+          <Button basic color="green">
             Create
           </Button>
         }
