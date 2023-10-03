@@ -55,18 +55,13 @@ function Main() {
           <Link to="/minigame/create">Mini Game</Link>
           <Link to="/world-env">World Env</Link>
           <a
-            href="https://google.com"
+            href="https://lwc-polkapet.gitbook.io/white-paper/"
             rel="noopener noreferrer"
             target="_blank"
           >
             Whitepaper
           </a>
-          {/* <Link to="/community">Community</Link> */}
-          {/* <Link to="/qa">Q&A</Link> */}
-          {/* <Link to="/white-paper">White Paper</Link>
-          <Link to="/blockchaininfo">Blockchain Info</Link> */}
         </div>
-        {/* <div context={contextRef}><AccountSelector /> </div> */}
 
         <AccountSelector context={contextRef} />
       </div>
