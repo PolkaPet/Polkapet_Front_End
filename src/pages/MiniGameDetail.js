@@ -110,6 +110,10 @@ const MiniGameDetail = () => {
 
   const contextRef = createRef();
 
+  const imgUrl = `${process.env.PUBLIC_URL}/assets/logoPartner/partner_${
+    (gameId % 5) + 1
+  }.jpeg`;
+
   return (
     <div id="home" ref={contextRef}>
       <Header />
@@ -137,10 +141,7 @@ const MiniGameDetail = () => {
             <Grid.Column>
               <h1> Sponsors</h1>
               <div style={{ display: 'flex', justifyContent: 'center' }}>
-                <Image
-                  size="large"
-                  src="https://react.semantic-ui.com/images/wireframe/image.png"
-                />
+                <Image size="large" src={imgUrl} />
               </div>
             </Grid.Column>
           </Grid>
@@ -159,11 +160,11 @@ const MiniGameDetail = () => {
             </div>
           )}
 
-          <Grid columns={2} stackable>
-            <Grid.Column>
+          <Grid columns={12} stackable>
+            <Grid.Column width={8}>
               <RacingChart gameId={gameId} players={playersData} />
             </Grid.Column>
-            <Grid.Column>
+            <Grid.Column width={4}>
               <ListOfPlayer players={playersData} />
             </Grid.Column>
           </Grid>

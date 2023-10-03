@@ -1,9 +1,9 @@
-/* eslint-disable no-unused-vars */
 import React, { useEffect, useMemo, useState } from 'react';
 import { Checkbox, Container, Grid } from 'semantic-ui-react';
 
 import { useSubstrateState } from '../substrate-lib';
 import MiniGameCards from './MiniGameCards';
+import LoaderStatus from '../components/LoaderStatus';
 
 const parseMiniGame = ({
   gameId,
@@ -98,9 +98,8 @@ export default function MiniGames(props) {
         </div>
 
         <MiniGameCards miniGames={myGames} setStatus={setStatus} />
-        <div style={{ overflowWrap: 'break-word', color: 'white' }}>
-          {status}
-        </div>
+
+        <LoaderStatus status={status} color="white" />
       </Grid.Column>
     </Container>
   );

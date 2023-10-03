@@ -89,6 +89,10 @@ function RacingChart({ gameId, players }) {
 
   useInterval(() => fetchData(), 1000);
 
+  const imgUrl = `${process.env.PUBLIC_URL}/assets/logoPartner/partner_${
+    (gameId % 5) + 1
+  }.jpeg`;
+
   return (
     <div>
       {point ? (
@@ -106,14 +110,11 @@ function RacingChart({ gameId, players }) {
             position: 'absolute',
             top: '15px',
             left: '5px',
-            padding:'2px 3px'
+            padding: '2px 3px',
           }}
         />
       ) : (
-        <Image
-          size="large"
-          src="https://react.semantic-ui.com/images/wireframe/image.png"
-        />
+        <Image size="large" src={imgUrl} />
       )}
 
       {userPlayers?.length !== 0 &&

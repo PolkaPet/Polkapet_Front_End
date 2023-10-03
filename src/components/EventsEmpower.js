@@ -111,10 +111,10 @@ const CardContentBlock = ({ events }) => (
               }}
             >
               <div>
-                Pet killed Id: <strong>{event?.petId}</strong>
+                Pet Id: <strong>{event?.petId}</strong>
               </div>
               <div>
-                New power: <strong>{event?.power}</strong>
+                New powered: <strong>{event?.power}</strong>
               </div>
             </div>
           </Feed.Event>
