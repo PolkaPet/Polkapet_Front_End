@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { Button, Card, Modal, Form, Label, Loader } from 'semantic-ui-react';
+import { Button, Card, Modal, Form, Label } from 'semantic-ui-react';
 
 import PolkapetAvatar from './PolkapetAvatar';
 import { useSubstrateState } from '../substrate-lib';
@@ -425,7 +425,7 @@ const PolkapetCardsDetail = () => {
                 )}
               </p>
 
-              <LoaderStatus status={status} />
+              <LoaderStatus status={status} color="black" />
 
               {polkapet?.owner === currentAccount?.address ? (
                 <>
