@@ -54,7 +54,13 @@ function Main() {
           <Link to="/mintnft">MintNFT</Link>
           <Link to="/minigame/create">Mini Game</Link>
           <Link to="/world-env">World Env</Link>
-          <Link to="/whitepaper">Whitepaper</Link>
+          <a
+            href="https://google.com"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Whitepaper
+          </a>
           {/* <Link to="/community">Community</Link> */}
           {/* <Link to="/qa">Q&A</Link> */}
           {/* <Link to="/white-paper">White Paper</Link>
