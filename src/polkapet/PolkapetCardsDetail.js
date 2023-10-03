@@ -57,6 +57,7 @@ const TransferModal = props => {
         </Button>
         <TxButton
           label="Transfer"
+          color="blue"
           type="SIGNED-TX"
           setStatus={setStatus}
           onClick={confirmAndClose}
@@ -121,6 +122,7 @@ const SetPrice = props => {
 
         <TxButton
           label="Set Price"
+          color="blue"
           type="SIGNED-TX"
           setStatus={setStatus}
           onClick={confirmAndClose}
@@ -239,6 +241,7 @@ const RemovePrice = props => {
     //     </Button>
     <TxButton
       label="Remove Price"
+      color="blue"
       type="SIGNED-TX"
       setStatus={setStatus}
       onClick={confirmAndClose}
@@ -286,6 +289,7 @@ const EmpowerPet = props => {
     //     </Button>
     <TxButton
       label="Empower Pet"
+      color="blue"
       type="SIGNED-TX"
       setStatus={setStatus}
       onClick={confirmAndClose}
@@ -312,6 +316,7 @@ const RespawnPet = props => {
   return (
     <TxButton
       label="Respawn Pet"
+      color="blue"
       type="SIGNED-TX"
       setStatus={setStatus}
       onClick={confirmAndClose}

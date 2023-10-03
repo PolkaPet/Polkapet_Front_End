@@ -75,7 +75,7 @@ export default function CreateMinigame(props) {
           </Form>
         </Modal.Content>
         <Modal.Actions>
-          <LoaderStatus status={status} />
+          <LoaderStatus status={status} color={'#000'} />
 
           <TxButton
             label="Create"

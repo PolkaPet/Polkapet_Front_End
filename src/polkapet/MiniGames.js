@@ -57,44 +57,150 @@ export default function MiniGames(props) {
 
   useEffect(subscribeCount, [api, keyring]);
 
+  const [gameStatus, setGameStatus] = useState('All');
+
   const myGames = useMemo(
     () =>
-      miniGames.filter(item => {
-        if (checked === true) {
-          return currentAccount?.address === item?.owner;
-        } else {
+      miniGames
+        .filter(item => {
+          if (checked === true) {
+            return currentAccount?.address === item?.owner;
+          }
+
           return item;
-        }
-      }),
-    [checked, currentAccount?.address, miniGames]
+        })
+        .filter(item => {
+          if (gameStatus === 'All') {
+            return item;
+          } else {
+            return item?.status === gameStatus;
+          }
+        }),
+    [checked, currentAccount?.address, gameStatus, miniGames]
   );
 
   return (
     <Container>
       <Grid.Column width={16}>
         <h1 style={{ color: 'white', margin: '30px auto' }}>Mini Game</h1>
+
         <div
           style={{
             display: 'flex',
             alignItems: 'center',
             color: '#fff',
             justifyContent: 'end',
-            margin: '20px auto',
+            margin: '20px',
           }}
         >
           <div
             style={{
-              marginRight: '10px',
+              display: 'flex',
+              alignItems: 'center',
+              color: '#fff',
+              justifyContent: 'end',
+              margin: '20px',
             }}
           >
-            Filter my Game
+            <div
+              style={{
+                marginRight: '10px',
+              }}
+            >
+              All Status
+            </div>
+            <Checkbox
+              checked={gameStatus === 'All'}
+              onClick={() => setGameStatus('All')}
+            />
           </div>
-          <Checkbox
-            checked={checked}
-            onClick={() => {
-              setChecked(!checked);
+
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              color: '#fff',
+              justifyContent: 'end',
+              margin: '20px',
             }}
-          />
+          >
+            <div
+              style={{
+                marginRight: '10px',
+              }}
+            >
+              Prepare Games
+            </div>
+            <Checkbox
+              checked={gameStatus === 'Prepare'}
+              onClick={() => setGameStatus('Prepare')}
+            />
+          </div>
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              color: '#fff',
+              justifyContent: 'end',
+              margin: '20px',
+            }}
+          >
+            <div
+              style={{
+                marginRight: '10px',
+              }}
+            >
+              OnGoing Game
+            </div>
+            <Checkbox
+              checked={gameStatus === 'OnGoing'}
+              onClick={() => setGameStatus('OnGoing')}
+            />
+          </div>
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              color: '#fff',
+              justifyContent: 'end',
+              margin: '20px',
+            }}
+          >
+            <div
+              style={{
+                marginRight: '10px',
+              }}
+            >
+              Finish Games
+            </div>
+            <Checkbox
+              checked={gameStatus === 'Finish'}
+              onClick={() => setGameStatus('Finish')}
+            />
+          </div>
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              color: '#fff',
+              justifyContent: 'end',
+              margin: '20px',
+            }}
+          >
+            <div
+              style={{
+                marginRight: '10px',
+              }}
+            >
+              My Games
+            </div>
+            <Checkbox
+              checked={checked}
+              onClick={() => {
+                setChecked(!checked);
+              }}
+            />
+          </div>
         </div>
 
         <MiniGameCards miniGames={myGames} setStatus={setStatus} />

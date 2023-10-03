@@ -278,7 +278,7 @@ function JoinGameButton({ gameId }) {
         onOpen={() => setOpen(true)}
         open={open}
         trigger={
-          <Button basic color="blue">
+          <Button basic color="green">
             Join game
           </Button>
         }
@@ -295,7 +295,7 @@ function JoinGameButton({ gameId }) {
             />
           </Form>
         </Modal.Content>
-        <Modal.Actions>
+        <Modal.Actions style={{ textAlign: 'center' }}>
           <LoaderStatus status={status} color="#000" />
           <TxButton
             label="Join"

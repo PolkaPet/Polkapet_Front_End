@@ -56,7 +56,7 @@ const MiniGameCard = props => {
         </Card.Description>
       </Card.Content>
       <Card.Content extra style={{ textAlign: 'center' }}>
-        <Button basic color="green" onClick={() => handleClick(gameId)}>
+        <Button basic color="blue" onClick={() => handleClick(gameId)}>
           View Game
         </Button>{' '}
       </Card.Content>
