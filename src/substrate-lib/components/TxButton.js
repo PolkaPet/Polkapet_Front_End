@@ -10,7 +10,7 @@ import { shortenAddress } from '../../utils';
 
 function TxButton({
   attrs = null,
-  color = 'blue',
+  color = 'green',
   disabled = false,
   label,
   setStatus,
