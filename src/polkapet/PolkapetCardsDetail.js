@@ -56,7 +56,6 @@ const TransferModal = props => {
           Cancel
         </Button>
         <TxButton
-          disabled
           label="Transfer"
           type="SIGNED-TX"
           setStatus={setStatus}
