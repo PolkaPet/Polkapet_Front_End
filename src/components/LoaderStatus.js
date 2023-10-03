@@ -8,8 +8,12 @@ export default function LoaderStatus({ status, color = '#fff' }) {
         overflowWrap: 'break-word',
         color,
         display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
         marginLeft: 'auto',
         marginRight: 'auto',
+        marginUp: '2px',
+        marginDown: '2px',
       }}
     >
       {!status || status?.includes('Finalized') ? null : (

@@ -219,11 +219,12 @@ const ListOfPlayer = ({ players }) => {
 };
 
 const StartGameButton = ({ gameId }) => {
+  // eslint-disable-next-line no-unused-vars
   const [status, setStatus] = useState('');
 
   return (
     <>
-      <LoaderStatus status={status}/>
+      <LoaderStatus status={status} color="white" />
 
       <TxButton
         label="Start Game"
