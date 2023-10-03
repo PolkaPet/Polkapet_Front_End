@@ -160,13 +160,15 @@ const MiniGameDetail = () => {
             </div>
           )}
 
-          <Grid columns={12} stackable>
-            <Grid.Column width={8}>
-              <RacingChart gameId={gameId} players={playersData} />
-            </Grid.Column>
-            <Grid.Column width={4}>
-              <ListOfPlayer players={playersData} />
-            </Grid.Column>
+          <Grid>
+            <Grid.Row columns={12}>
+              <Grid.Column width={10}>
+                <RacingChart gameId={gameId} players={playersData} />
+              </Grid.Column>
+              <Grid.Column width={6}>
+                <ListOfPlayer players={playersData} />
+              </Grid.Column>
+            </Grid.Row>
           </Grid>
         </div>
       </Container>

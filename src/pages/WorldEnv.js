@@ -50,10 +50,6 @@ const WorldEnv = () => {
         <div style={{ color: '#fff', marginTop: '90px' }}>
           <Grid columns={3} stackable>
             <Grid.Column>
-              <h1>World Environment</h1>
-              <OvalBoostNumber />
-            </Grid.Column>
-            <Grid.Column>
               <h1>Unlucky Pet</h1>
               <div
                 style={{
@@ -65,6 +61,12 @@ const WorldEnv = () => {
                 <Events />
               </div>
             </Grid.Column>
+
+            <Grid.Column>
+              <h1>World Environment</h1>
+              <OvalBoostNumber />
+            </Grid.Column>
+
             <Grid.Column>
               <h1>Empower Pet</h1>
               <div

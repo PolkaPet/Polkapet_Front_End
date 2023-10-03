@@ -81,7 +81,12 @@ export default function EventsEmpower(props) {
 const CardContentBlock = ({ events }) => (
   <Card
     width="100%"
-    style={{ color: 'grey', overflow: 'hidden', justifyContent: 'center' }}
+    style={{
+      color: 'grey',
+      overflow: 'hidden',
+      justifyContent: 'center',
+      maxHeight: '900px',
+    }}
   >
     <Card.Content>
       <Feed
