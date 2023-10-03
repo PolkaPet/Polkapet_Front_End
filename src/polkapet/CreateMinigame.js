@@ -23,7 +23,7 @@ export default function CreateMinigame(props) {
   };
 
   useEffect(() => {
-    if (status === 'Tx InBlock') {
+    if (status === 'Tx Finalized') {
       setOpen(false);
     }
   }, [status]);

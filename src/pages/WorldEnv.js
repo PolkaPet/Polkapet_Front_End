@@ -6,6 +6,7 @@ import { Dimmer, Loader, Grid, Message, Container } from 'semantic-ui-react';
 import Header from '../components/Header';
 import Events from '../components/Events';
 import OvalBoostNumber from '../components/OvalBoostNumber';
+import EventsEmpower from '../components/EventsEmpower';
 
 const WorldEnv = () => {
   const { apiState, apiError, keyringState } = useSubstrateState();
@@ -47,13 +48,13 @@ const WorldEnv = () => {
 
       <Container>
         <div style={{ color: '#fff', marginTop: '90px' }}>
-          <Grid columns={2} stackable>
+          <Grid columns={3} stackable>
             <Grid.Column>
               <h1>World Environment</h1>
               <OvalBoostNumber />
             </Grid.Column>
             <Grid.Column>
-              <h1>Pet Kill Activity</h1>
+              <h1>Unlucky Pet</h1>
               <div
                 style={{
                   width: '100%',
@@ -62,6 +63,18 @@ const WorldEnv = () => {
                 }}
               >
                 <Events />
+              </div>
+            </Grid.Column>
+            <Grid.Column>
+              <h1>Empower Pet</h1>
+              <div
+                style={{
+                  width: '100%',
+                  display: 'flex',
+                  justifyContent: 'center',
+                }}
+              >
+                <EventsEmpower />
               </div>
             </Grid.Column>
           </Grid>

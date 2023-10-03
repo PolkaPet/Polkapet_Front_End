@@ -29,7 +29,7 @@ const MiniGameCard = props => {
     navigate(`/minigame/${gameId}`);
   }
   const imgUrl = `${process.env.PUBLIC_URL}/assets/logoPartner/partner_${
-    gameId % 5 + 1
+    (gameId % 5) + 1
   }.jpeg`;
   return (
     <Card style={{ width: '300px', height: '450px' }}>
@@ -44,12 +44,14 @@ const MiniGameCard = props => {
           <h3>Game Id: {gameId}</h3>
         </Card.Meta>
         <Card.Description>
-          <p style={{ overflowWrap: 'break-word' }}>Status: {status}</p>
           <p style={{ overflowWrap: 'break-word' }}>
-            Description: {description}
+            Status: <strong>{status}</strong>
           </p>
           <p style={{ overflowWrap: 'break-word' }}>
-            Reward: {convertBNtoNumber(reward)} $LCW
+            Description: <strong>{description}</strong>
+          </p>
+          <p style={{ overflowWrap: 'break-word' }}>
+            Reward: <strong>{`${convertBNtoNumber(reward)} $LCW`}</strong>
           </p>
         </Card.Description>
       </Card.Content>
