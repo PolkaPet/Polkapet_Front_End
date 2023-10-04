@@ -45,7 +45,7 @@
   position: fixed;
   /* margin-bottom: 13rem; */
   top: 0;
-  z-index: 1;
+  z-index: 101;
   right: 0;
   left: 0;
   background: #100f17;
@@ -174,9 +174,9 @@ button#create {
 }
 
 @media screen and (max-width: 978px) {
-  a:not(#logo) {
+  /* a:not(#logo) {
     display: none;
-  }
+  } */
 
   #logo {
     font-size: 18px;
@@ -292,7 +292,7 @@ button#create {
     color: #ffffff;
     cursor: pointer;
   }
-  
+
 
   .video-responsive {
     overflow: hidden;
@@ -314,13 +314,13 @@ button#create {
 
   0% {
     border-left: 1px solid red;
-    
+
   }
 
   50%{
     border-left: 1px solid red;
     border-bottom: 1px solid red;
-    
+
   }
   100%{
 
